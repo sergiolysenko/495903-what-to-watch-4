@@ -7,12 +7,14 @@ const MainMovieData = {
   GENRE: `Drama`,
   YEAR: 2014
 };
+const movieTitles = [`Fantastic Beasts`, `Bohemian Rhapsody`, `Macbeth`, `Snatch`, `Moonrise Kingdom`, `Seven Years in Tibet`];
 
 ReactDOM.render(
     <App
       mainCardTitle={MainMovieData.TITLE}
       mainCardGenre={MainMovieData.GENRE}
       mainCardYear={MainMovieData.YEAR}
+      movieTitles={movieTitles}
     />,
     document.querySelector(`#root`)
 );
