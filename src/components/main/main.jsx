@@ -1,6 +1,9 @@
 import React from "react";
 
-const Main = () => {
+const Main = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const {mainCardTitle, mainCardGenre, mainCardYear} = props;
+
   return (
     <React.Fragment>
       <section className="movie-card">
@@ -33,10 +36,10 @@ const Main = () => {
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="movie-card__title">{mainCardTitle}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">Drama</span>
-                <span className="movie-card__year">2014</span>
+                <span className="movie-card__genre">{mainCardGenre}</span>
+                <span className="movie-card__year">{mainCardYear}</span>
               </p>
 
               <div className="movie-card__buttons">
