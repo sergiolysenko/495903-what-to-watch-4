@@ -1,20 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-const SmallCard = (props) => {
-  const {movieTitle} = props;
-
-  return (
-    <article className="small-movie-card catalog__movies-card">
-      <div className="small-movie-card__image">
-        <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-      </div>
-      <h3 className="small-movie-card__title">
-        <a className="small-movie-card__link" href="movie-page.html">{movieTitle}</a>
-      </h3>
-    </article>
-  );
-};
+import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
 
 const Main = (props) => {
   const {mainCardTitle, mainCardGenre, mainCardYear, movieTitles} = props;
@@ -115,7 +101,7 @@ const Main = (props) => {
 
           <div className="catalog__movies-list">
 
-            {movieTitles.map((it, i) => <SmallCard key={it + i} movieTitle={it} />)}
+            {movieTitles.map((title, i) => <SmallMovieCard key={title + i} title={title} />)}
 
           </div>
 
@@ -147,10 +133,6 @@ Main.propTypes = {
   mainCardGenre: PropTypes.string.isRequired,
   mainCardYear: PropTypes.number.isRequired,
   movieTitles: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
-SmallCard.propTypes = {
-  movieTitle: PropTypes.string.isRequired
 };
 
 export default Main;
