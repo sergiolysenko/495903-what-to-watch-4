@@ -22,9 +22,10 @@ App.propTypes = {
   mainCardTitle: PropTypes.string.isRequired,
   mainCardGenre: PropTypes.string.isRequired,
   mainCardYear: PropTypes.number.isRequired,
-  movies: PropTypes.arrayOf(
-      PropTypes.string.isRequired
-  ).isRequired,
+  movies: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 export default App;
