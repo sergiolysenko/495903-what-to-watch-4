@@ -8,7 +8,7 @@ export default class MoviesList extends React.PureComponent {
     this.state = {
       activeCard: null,
     };
-    this._handleCardHover = this._handleCardHover.bind(this);
+    this.handleCardHover = this.handleCardHover.bind(this);
   }
 
   render() {
@@ -16,16 +16,16 @@ export default class MoviesList extends React.PureComponent {
     return (
       <div className="catalog__movies-list">
         {movies.map((movie, i) => <SmallMovieCard
-          key={movie + i}
+          key={movie.title + i}
           movie={movie}
           onTitleClick={onTitleClick}
-          onHover={this._handleCardHover}
+          onHover={this.handleCardHover}
         />)}
       </div>
     );
   }
 
-  _handleCardHover(activeMovie) {
+  handleCardHover(activeMovie) {
     this.setState({
       activeCard: activeMovie
     });
