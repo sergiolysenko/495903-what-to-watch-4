@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
+import MoviesList from "../movies-list/movies-list.jsx";
 
 const Main = (props) => {
-  const {mainCardTitle, mainCardGenre, mainCardYear,
-    movies, onMovieTitleClick} = props;
+  const {mainCardTitle, mainCardGenre, mainCardYear, movies, onMovieTitleClick} = props;
 
   return (
     <React.Fragment>
@@ -100,15 +99,10 @@ const Main = (props) => {
             </li>
           </ul>
 
-          <div className="catalog__movies-list">
-
-            {movies.map((movie, i) => <SmallMovieCard
-              key={movie + i}
-              movie={movie}
-              onMovieTitleClick={onMovieTitleClick}
-            />)}
-
-          </div>
+          <MoviesList
+            movies={movies}
+            onTitleClick={onMovieTitleClick}
+          />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
@@ -137,9 +131,10 @@ Main.propTypes = {
   mainCardTitle: PropTypes.string.isRequired,
   mainCardGenre: PropTypes.string.isRequired,
   mainCardYear: PropTypes.number.isRequired,
-  movies: PropTypes.arrayOf(
-      PropTypes.string.isRequired
-  ).isRequired,
+  movies: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired
+  })).isRequired,
   onMovieTitleClick: PropTypes.func.isRequired
 };
 
