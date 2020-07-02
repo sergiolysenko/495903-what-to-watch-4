@@ -3,14 +3,15 @@
 exports[`Render SmallMovieCard 1`] = `
 <article
   className="small-movie-card catalog__movies-card"
+  onMouseEnter={[Function]}
 >
   <div
     className="small-movie-card__image"
   >
     <img
-      alt="Fantastic Beasts: The Crimes of Grindelwald"
+      alt="title"
       height="175"
-      src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+      src="../../img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
       width="280"
     />
   </div>
@@ -22,7 +23,7 @@ exports[`Render SmallMovieCard 1`] = `
       href="movie-page.html"
       onClick={[Function]}
     >
-      Fantastic Beasts
+      Fantastic Beasts: The Crimes of Grindelwald
     </a>
   </h3>
 </article>
