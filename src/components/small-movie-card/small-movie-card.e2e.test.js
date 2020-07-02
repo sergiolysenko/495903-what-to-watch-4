@@ -9,24 +9,53 @@ Enzyme.configure({
 
 const movie = {
   title: `Fantastic Beasts: The Crimes of Grindelwald`,
-  src: `../../img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+  cardImg: `../../img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+  genre: `Drama`,
+  year: 2014,
+  backgroundImg: `img/bg-the-grand-budapest-hotel.jpg`,
+  posterImg: `img/the-grand-budapest-hotel-poster.jpg`,
+  rating: `8,9`,
+  ratingCount: 240,
+  description: `finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
+  director: `Wes Andreson`,
+  starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`]
+};
+
+const mockEvent = {
+  preventDefault() {}
 };
 
 describe(`SmallMovieCardComponent`, () => {
   it(`Check click on the title`, () => {
-    const onTitleClick = jest.fn();
+    const onClick = jest.fn();
 
     const smallMovieCard = shallow(
         <SmallMovieCard
           movie={movie}
-          onTitleClick={onTitleClick}
+          onClick={onClick}
           onHover={()=>{}}
         />
     );
     const smallMovieTitle = smallMovieCard.find(`.small-movie-card__link`);
-    smallMovieTitle.simulate(`click`);
+    smallMovieTitle.simulate(`click`, mockEvent);
 
-    expect(onTitleClick.mock.calls.length).toBe(1);
+    expect(onClick.mock.calls.length).toBe(1);
+  });
+
+  it(`Check click on the card`, () => {
+    const onClick = jest.fn();
+
+    const smallMovieCard = shallow(
+        <SmallMovieCard
+          movie={movie}
+          onClick={onClick}
+          onHover={()=>{}}
+        />
+    );
+    const smallMovieTitle = smallMovieCard.find(`article.small-movie-card`);
+    smallMovieTitle.simulate(`click`, mockEvent);
+
+    expect(onClick.mock.calls.length).toBe(1);
   });
 
   it(`Check if state changed by hover on the card`, () => {
@@ -35,7 +64,7 @@ describe(`SmallMovieCardComponent`, () => {
     const smallMovieCard = shallow(
         <SmallMovieCard
           movie={movie}
-          onTitleClick={()=>{}}
+          onClick={()=>{}}
           onHover={onHover}
         />
     );

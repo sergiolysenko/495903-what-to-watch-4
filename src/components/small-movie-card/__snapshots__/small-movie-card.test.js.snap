@@ -3,6 +3,7 @@
 exports[`Render SmallMovieCard 1`] = `
 <article
   className="small-movie-card catalog__movies-card"
+  onClick={[Function]}
   onMouseEnter={[Function]}
 >
   <div

@@ -12,13 +12,13 @@ export default class MoviesList extends React.PureComponent {
   }
 
   render() {
-    const {movies, onTitleClick} = this.props;
+    const {movies, onClick} = this.props;
     return (
       <div className="catalog__movies-list">
         {movies.map((movie, i) => <SmallMovieCard
           key={movie.title + i}
           movie={movie}
-          onTitleClick={onTitleClick}
+          onClick={onClick}
           onHover={this.handleCardHover}
         />)}
       </div>
@@ -35,7 +35,15 @@ export default class MoviesList extends React.PureComponent {
 MoviesList.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired
+    genre: PropTypes.string.isRequired,
+    year: PropTypes.number.isRequired,
+    backgroundImg: PropTypes.string.isRequired,
+    posterImg: PropTypes.string.isRequired,
+    rating: PropTypes.string.isRequired,
+    ratingCount: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    director: PropTypes.string.isRequired,
+    starring: PropTypes.arrayOf(PropTypes.string).isRequired,
   })).isRequired,
-  onTitleClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired
 };
