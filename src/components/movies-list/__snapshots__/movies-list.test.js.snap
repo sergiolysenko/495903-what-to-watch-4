@@ -8,16 +8,12 @@ exports[`Render SmallMovieCard 1`] = `
     className="small-movie-card catalog__movies-card"
     onClick={[Function]}
     onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     <div
       className="small-movie-card__image"
     >
-      <img
-        alt="title"
-        height="175"
-        src="../../img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-        width="280"
-      />
+      <video />
     </div>
     <h3
       className="small-movie-card__title"
@@ -35,16 +31,12 @@ exports[`Render SmallMovieCard 1`] = `
     className="small-movie-card catalog__movies-card"
     onClick={[Function]}
     onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     <div
       className="small-movie-card__image"
     >
-      <img
-        alt="title"
-        height="175"
-        src="../../img/bohemian-rhapsody.jpg"
-        width="280"
-      />
+      <video />
     </div>
     <h3
       className="small-movie-card__title"
@@ -62,16 +54,12 @@ exports[`Render SmallMovieCard 1`] = `
     className="small-movie-card catalog__movies-card"
     onClick={[Function]}
     onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     <div
       className="small-movie-card__image"
     >
-      <img
-        alt="title"
-        height="175"
-        src="../../img/macbeth.jpg"
-        width="280"
-      />
+      <video />
     </div>
     <h3
       className="small-movie-card__title"
@@ -89,16 +77,12 @@ exports[`Render SmallMovieCard 1`] = `
     className="small-movie-card catalog__movies-card"
     onClick={[Function]}
     onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     <div
       className="small-movie-card__image"
     >
-      <img
-        alt="title"
-        height="175"
-        src="../../img/aviator.jpg"
-        width="280"
-      />
+      <video />
     </div>
     <h3
       className="small-movie-card__title"
@@ -116,16 +100,12 @@ exports[`Render SmallMovieCard 1`] = `
     className="small-movie-card catalog__movies-card"
     onClick={[Function]}
     onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     <div
       className="small-movie-card__image"
     >
-      <img
-        alt="title"
-        height="175"
-        src="../../img/what-we-do-in-the-shadows.jpg"
-        width="280"
-      />
+      <video />
     </div>
     <h3
       className="small-movie-card__title"
@@ -143,16 +123,12 @@ exports[`Render SmallMovieCard 1`] = `
     className="small-movie-card catalog__movies-card"
     onClick={[Function]}
     onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     <div
       className="small-movie-card__image"
     >
-      <img
-        alt="title"
-        height="175"
-        src="../../img/revenant.jpg"
-        width="280"
-      />
+      <video />
     </div>
     <h3
       className="small-movie-card__title"
@@ -170,16 +146,12 @@ exports[`Render SmallMovieCard 1`] = `
     className="small-movie-card catalog__movies-card"
     onClick={[Function]}
     onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     <div
       className="small-movie-card__image"
     >
-      <img
-        alt="title"
-        height="175"
-        src="../../img/johnny-english.jpg"
-        width="280"
-      />
+      <video />
     </div>
     <h3
       className="small-movie-card__title"
@@ -197,16 +169,12 @@ exports[`Render SmallMovieCard 1`] = `
     className="small-movie-card catalog__movies-card"
     onClick={[Function]}
     onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     <div
       className="small-movie-card__image"
     >
-      <img
-        alt="title"
-        height="175"
-        src="../../img/pulp-fiction.jpg"
-        width="280"
-      />
+      <video />
     </div>
     <h3
       className="small-movie-card__title"

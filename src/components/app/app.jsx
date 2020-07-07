@@ -7,9 +7,12 @@ import MoviePage from "../movie-page/movie-page.jsx";
 class App extends React.PureComponent {
   constructor(props) {
     super(props);
+
     this.state = {
       selectedMovie: null,
     };
+
+    this.handleCardClick = this.handleCardClick.bind(this);
   }
 
   renderApp() {
@@ -22,14 +25,16 @@ class App extends React.PureComponent {
           mainCardGenre={mainCardGenre}
           mainCardYear={mainCardYear}
           movies={movies}
-          onMovieClick={(movie) => {
-            this.setState({
-              selectedMovie: movie,
-            });
-          }}
+          onMovieClick={this.handleCardClick}
         />);
     }
     return (<MoviePage movie={this.state.selectedMovie}/>);
+  }
+
+  handleCardClick(movie) {
+    this.setState({
+      selectedMovie: movie,
+    });
   }
 
   render() {

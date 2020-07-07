@@ -13,6 +13,7 @@ export default class MoviesList extends React.PureComponent {
 
   render() {
     const {movies, onClick} = this.props;
+
     return (
       <div className="catalog__movies-list">
         {movies.map((movie, i) => <SmallMovieCard
@@ -27,7 +28,7 @@ export default class MoviesList extends React.PureComponent {
 
   handleCardHover(activeMovie) {
     this.setState({
-      activeCard: activeMovie
+      activeCard: activeMovie,
     });
   }
 }
@@ -44,6 +45,7 @@ MoviesList.propTypes = {
     description: PropTypes.string.isRequired,
     director: PropTypes.string.isRequired,
     starring: PropTypes.arrayOf(PropTypes.string).isRequired,
+    preview: PropTypes.string.isRequired,
   })).isRequired,
   onClick: PropTypes.func.isRequired
 };

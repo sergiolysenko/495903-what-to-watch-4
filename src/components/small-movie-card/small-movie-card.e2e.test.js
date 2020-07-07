@@ -18,7 +18,8 @@ const movie = {
   ratingCount: 240,
   description: `finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
   director: `Wes Andreson`,
-  starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`]
+  starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`],
+  preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
 };
 
 const mockEvent = {
