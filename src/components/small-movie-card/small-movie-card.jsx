@@ -30,17 +30,17 @@ export default class SmallMovieCard extends React.PureComponent {
 
   render() {
     const {movie, onClick, onHover} = this.props;
-    const {title, cardImg, preview} = movie;
+    const {id, title, cardImg, preview} = movie;
 
     return <article
       onMouseEnter={() => {
         this.handleHover();
-        onHover(movie);
+        onHover(id);
       }}
       onMouseLeave={() => this.handleOut()}
       onClick={(evt) => {
         evt.preventDefault();
-        onClick(movie);
+        onClick(id);
       }}
       className="small-movie-card catalog__movies-card">
 
@@ -58,7 +58,7 @@ export default class SmallMovieCard extends React.PureComponent {
         <a
           onClick={(evt) => {
             evt.preventDefault();
-            onClick(movie);
+            onClick(id);
           }}
           className="small-movie-card__link"
           href="movie-page.html">{title}</a>
@@ -69,6 +69,7 @@ export default class SmallMovieCard extends React.PureComponent {
 
 SmallMovieCard.propTypes = {
   movie: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     cardImg: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
