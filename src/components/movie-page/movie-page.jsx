@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 
 const getRatingLevel = (raiting) => {
   const validRaiting = Number(raiting.replace(`,`, `.`));
-  if (validRaiting >= 10) {
-    return `Awesome`;
-  }
   if (validRaiting >= 8 && validRaiting < 10) {
     return `Very good`;
   }
@@ -18,7 +15,7 @@ const getRatingLevel = (raiting) => {
   if (validRaiting < 3) {
     return `Bad`;
   }
-  return null;
+  return `Awesome`;
 };
 
 const MoviePage = (props) => {

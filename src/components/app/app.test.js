@@ -22,7 +22,8 @@ const movies = [
     ratingCount: 240,
     description: `finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
     director: `Wes Andreson`,
-    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`]
+    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`],
+    preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
   },
   {
     title: `Bohemian Rhapsody`,
@@ -35,7 +36,8 @@ const movies = [
     ratingCount: 240,
     description: `Zero, a junior lobby boy, becomes Gustave's `,
     director: `Wes Andreson`,
-    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`]
+    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`],
+    preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
   },
   {
     title: `Macbeth`,
@@ -48,7 +50,8 @@ const movies = [
     ratingCount: 240,
     description: `In When of a priceless painting and the chief suspect in her murder.`,
     director: `Wes Andreson`,
-    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`]
+    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`],
+    preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
   },
   {
     title: `Aviator`,
@@ -61,7 +64,8 @@ const movies = [
     ratingCount: 188,
     description: `In the 1930s, the Grand Budapest chief suspect in her murder.`,
     director: `Leo Dicaprio`,
-    starring: [`Bill Billy`, `Edward Smith`, `Jude Musk`, `Willem Dafoe`]
+    starring: [`Bill Billy`, `Edward Smith`, `Jude Musk`, `Willem Dafoe`],
+    preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
   },
   {
     title: `What We Do in the Shadows`,
@@ -74,7 +78,8 @@ const movies = [
     ratingCount: 240,
     description: `In the 1930s, the Grand Budapest Hotel is `,
     director: `Wes Andreson`,
-    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`]
+    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`],
+    preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
   },
   {
     title: `Revenant`,
@@ -87,7 +92,8 @@ const movies = [
     ratingCount: 240,
     description: `chief suspect in her murder.`,
     director: `Wes Andreson`,
-    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`]
+    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`],
+    preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
   },
   {
     title: `Johnny English`,
@@ -100,7 +106,8 @@ const movies = [
     ratingCount: 240,
     description: `Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
     director: `Wes Andreson`,
-    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`]
+    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`],
+    preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
   },
   {
     title: `Pulp Fiction`,
@@ -113,7 +120,8 @@ const movies = [
     ratingCount: 240,
     description: `In the 1930s`,
     director: `Wes Andreson`,
-    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`]
+    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`],
+    preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`
   },
 ];
 
@@ -125,8 +133,11 @@ it(`Render App`, () => {
       mainCardYear={TestSettings.MAIN_CARD_YEAR}
       movies={movies}
       onMovieClick={onMovieClick}
-    />)
-    .toJSON();
+    />, {
+      createNodeMock: () => {
+        return {};
+      }
+    }).toJSON();
 
   expect(tree).toMatchSnapshot();
 });
