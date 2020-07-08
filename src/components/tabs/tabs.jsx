@@ -20,7 +20,7 @@ class Tabs extends React.PureComponent {
   }
 
   renderSelectedTab() {
-    const {movie} = this.props;
+    const {movie, reviews} = this.props;
 
     switch (this.state.activePage) {
       case MoviePages.DETAILS:
@@ -32,6 +32,7 @@ class Tabs extends React.PureComponent {
         return (
           <MoviePageReviews
             movie={movie}
+            reviews={reviews}
           />);
       default:
         return (
@@ -81,7 +82,17 @@ Tabs.propTypes = {
     director: PropTypes.string.isRequired,
     starring: PropTypes.arrayOf(PropTypes.string).isRequired,
     runTime: PropTypes.number.isRequired,
-  }).isRequired
+  }).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+    rating: PropTypes.number.isRequired,
+    comment: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 export default Tabs;

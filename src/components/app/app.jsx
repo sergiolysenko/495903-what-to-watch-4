@@ -17,7 +17,7 @@ class App extends React.PureComponent {
   }
 
   renderApp() {
-    const {mainCardTitle, mainCardGenre, mainCardYear, movies} = this.props;
+    const {mainCardTitle, mainCardGenre, mainCardYear, movies, reviews} = this.props;
 
     if (this.state.selectedMovie === null) {
       return (
@@ -34,6 +34,7 @@ class App extends React.PureComponent {
       <MoviePage
         movie={chosenMovie}
         movies={movies}
+        reviews={reviews}
         onMovieClick={this.handleCardClick}
       />);
   }
@@ -45,7 +46,7 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const {movies} = this.props;
+    const {movies, reviews} = this.props;
     return (
       <BrowserRouter>
         <Switch>
@@ -57,6 +58,7 @@ class App extends React.PureComponent {
               movie={movies[0]}
               movies={movies}
               onMovieClick={this.handleCardClick}
+              reviews={reviews}
             />
           </Route>
         </Switch>
@@ -83,6 +85,16 @@ App.propTypes = {
     starring: PropTypes.arrayOf(PropTypes.string).isRequired,
     preview: PropTypes.string.isRequired,
     runTime: PropTypes.number.isRequired,
+  })).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+    rating: PropTypes.number.isRequired,
+    comment: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
   })).isRequired,
 };
 

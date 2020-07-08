@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {reviews} from "../../mocks/reviews.js";
 import {getMovieReviews} from "../utils/utils.js";
 
 const MoviePageReviews = (props) => {
-  const {movie} = props;
+  const {movie, reviews} = props;
   const reviewsList = getMovieReviews(movie.id, reviews);
   if (!reviewsList) {
     return null;
@@ -38,7 +37,17 @@ const MoviePageReviews = (props) => {
 MoviePageReviews.propTypes = {
   movie: PropTypes.shape({
     id: PropTypes.number.isRequired,
-  })
+  }),
+  reviews: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+    rating: PropTypes.number.isRequired,
+    comment: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 export default MoviePageReviews;

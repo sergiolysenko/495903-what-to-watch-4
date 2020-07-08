@@ -11,7 +11,7 @@ class MoviePage extends React.PureComponent {
   }
 
   render() {
-    const {movie, movies, onMovieClick} = this.props;
+    const {movie, movies, reviews, onMovieClick} = this.props;
     const {id, title, genre, year, backgroundImg, posterImg} = movie;
 
     const similarMovies = getSimilarMoviesByGenre(movies, genre, id).slice(0, SIMILAR_MOVIES_COUNT);
@@ -76,6 +76,7 @@ class MoviePage extends React.PureComponent {
 
             <Tabs
               movie={movie}
+              reviews={reviews}
             />
 
           </div>
@@ -138,6 +139,16 @@ MoviePage.propTypes = {
     starring: PropTypes.arrayOf(PropTypes.string).isRequired,
     preview: PropTypes.string.isRequired,
     runTime: PropTypes.number.isRequired,
+  })).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+    rating: PropTypes.number.isRequired,
+    comment: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
   })).isRequired,
   onMovieClick: PropTypes.func.isRequired,
 };
