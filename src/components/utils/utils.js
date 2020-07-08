@@ -16,11 +16,36 @@ const getRatingLevel = (raiting) => {
 };
 
 const getMovieReviews = (movieId, reviews) => {
+  if (!reviews) {
+    return [];
+  }
   return reviews.filter((review) => review.id === movieId);
 };
 
 const findMovieById = (movies, id) => {
+  if (!movies) {
+    return [];
+  }
   return movies.find((movie) => movie.id === id);
 };
 
-export {getRatingLevel, findMovieById, getMovieReviews};
+const removeCurrentMovieFromSimilar = (arr, id) => {
+  if (!arr) {
+    return [];
+  }
+  const indexOfCurrentMovie = arr.findIndex((movie) => movie.id === id);
+  if (indexOfCurrentMovie > -1) {
+    arr.splice(indexOfCurrentMovie, 1);
+  }
+  return arr;
+};
+
+const getSimilarMoviesByGenre = (movies, genre, id) => {
+  if (!movies) {
+    return [];
+  }
+  const AllSimilarMovies = movies.filter((movie) => movie.genre === genre);
+  return removeCurrentMovieFromSimilar(AllSimilarMovies, id);
+};
+
+export {getRatingLevel, findMovieById, getMovieReviews, getSimilarMoviesByGenre};

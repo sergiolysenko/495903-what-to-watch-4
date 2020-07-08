@@ -75,6 +75,6 @@ describe(`SmallMovieCardComponent`, () => {
 
     card.simulate(`mouseenter`);
     expect(onHover).toHaveBeenCalledTimes(1);
-    expect(onHover.mock.calls[0][0]).toMatchObject(movie);
+    expect(onHover.mock.calls[0][0]).toBe(movie.id);
   });
 });

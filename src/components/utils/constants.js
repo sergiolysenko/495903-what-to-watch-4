@@ -11,4 +11,6 @@ const MoviePages = {
   REVIEWS: `Reviews`,
 };
 
-export {VideoPreview, MoviePages};
+const SIMILAR_MOVIES_COUNT = 4;
+
+export {VideoPreview, MoviePages, SIMILAR_MOVIES_COUNT};

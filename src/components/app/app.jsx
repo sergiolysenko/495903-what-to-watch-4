@@ -30,7 +30,12 @@ class App extends React.PureComponent {
         />);
     }
     const chosenMovie = findMovieById(movies, this.state.selectedMovie);
-    return (<MoviePage movie={chosenMovie}/>);
+    return (
+      <MoviePage
+        movie={chosenMovie}
+        movies={movies}
+        onMovieClick={this.handleCardClick}
+      />);
   }
 
   handleCardClick(id) {
@@ -48,7 +53,11 @@ class App extends React.PureComponent {
             {this.renderApp()}
           </Route>
           <Route exact path="/movie-page">
-            <MoviePage movie={movies[0]}/>
+            <MoviePage
+              movie={movies[0]}
+              movies={movies}
+              onMovieClick={this.handleCardClick}
+            />
           </Route>
         </Switch>
       </BrowserRouter>

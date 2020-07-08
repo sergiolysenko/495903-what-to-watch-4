@@ -19,7 +19,7 @@ class Tabs extends React.PureComponent {
     this.setState({activePage: tabName});
   }
 
-  renderChosenTab() {
+  renderSelectedTab() {
     const {movie} = this.props;
 
     switch (this.state.activePage) {
@@ -60,7 +60,7 @@ class Tabs extends React.PureComponent {
           </ul>
         </nav>
 
-        {this.renderChosenTab()}
+        {this.renderSelectedTab()}
 
       </div>
     );
