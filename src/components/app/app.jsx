@@ -3,6 +3,7 @@ import Main from "../main/main.jsx";
 import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import MoviePage from "../movie-page/movie-page.jsx";
+import {findMovieById} from "../utils/utils.js";
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -16,7 +17,7 @@ class App extends React.PureComponent {
   }
 
   renderApp() {
-    const {mainCardTitle, mainCardGenre, mainCardYear, movies} = this.props;
+    const {mainCardTitle, mainCardGenre, mainCardYear, movies, reviews} = this.props;
 
     if (this.state.selectedMovie === null) {
       return (
@@ -28,17 +29,24 @@ class App extends React.PureComponent {
           onMovieClick={this.handleCardClick}
         />);
     }
-    return (<MoviePage movie={this.state.selectedMovie}/>);
+    const chosenMovie = findMovieById(movies, this.state.selectedMovie);
+    return (
+      <MoviePage
+        movie={chosenMovie}
+        movies={movies}
+        reviews={reviews}
+        onMovieClick={this.handleCardClick}
+      />);
   }
 
-  handleCardClick(movie) {
+  handleCardClick(id) {
     this.setState({
-      selectedMovie: movie,
+      selectedMovie: id,
     });
   }
 
   render() {
-    const {movies} = this.props;
+    const {movies, reviews} = this.props;
     return (
       <BrowserRouter>
         <Switch>
@@ -46,7 +54,12 @@ class App extends React.PureComponent {
             {this.renderApp()}
           </Route>
           <Route exact path="/movie-page">
-            <MoviePage movie={movies[0]}/>
+            <MoviePage
+              movie={movies[0]}
+              movies={movies}
+              onMovieClick={this.handleCardClick}
+              reviews={reviews}
+            />
           </Route>
         </Switch>
       </BrowserRouter>
@@ -59,6 +72,7 @@ App.propTypes = {
   mainCardGenre: PropTypes.string.isRequired,
   mainCardYear: PropTypes.number.isRequired,
   movies: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     year: PropTypes.number.isRequired,
@@ -69,6 +83,18 @@ App.propTypes = {
     description: PropTypes.string.isRequired,
     director: PropTypes.string.isRequired,
     starring: PropTypes.arrayOf(PropTypes.string).isRequired,
+    preview: PropTypes.string.isRequired,
+    runTime: PropTypes.number.isRequired,
+  })).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+    rating: PropTypes.number.isRequired,
+    comment: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
   })).isRequired,
 };
 

@@ -1,9 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import SmallMovieCard from "./small-movie-card.jsx";
-
-const onClick = () => {};
-const onHover = () => {};
+import MoviePageDetails from "./movie-page-details.jsx";
 
 const movie = {
   id: 1,
@@ -22,18 +19,15 @@ const movie = {
   runTime: 125
 };
 
-it(`Render SmallMovieCard`, () => {
+it(`Render MoviePageDetails`, () => {
   const tree = renderer
-    .create(<SmallMovieCard
+    .create(<MoviePageDetails
       movie={movie}
-      onClick={onClick}
-      onHover={onHover}
     />, {
       createNodeMock: () => {
         return {};
       }
-    })
-    .toJSON();
+    }).toJSON();
 
   expect(tree).toMatchSnapshot();
 });

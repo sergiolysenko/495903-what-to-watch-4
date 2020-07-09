@@ -5,4 +5,12 @@ const VideoPreview = {
   INTERVAL: 1000
 };
 
-export {VideoPreview};
+const MoviePages = {
+  OVERVIEW: `Overview`,
+  DETAILS: `Details`,
+  REVIEWS: `Reviews`,
+};
+
+const SIMILAR_MOVIES_COUNT = 4;
+
+export {VideoPreview, MoviePages, SIMILAR_MOVIES_COUNT};

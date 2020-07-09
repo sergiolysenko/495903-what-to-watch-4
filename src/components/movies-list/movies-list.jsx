@@ -35,6 +35,7 @@ export default class MoviesList extends React.PureComponent {
 
 MoviesList.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     year: PropTypes.number.isRequired,
@@ -46,6 +47,7 @@ MoviesList.propTypes = {
     director: PropTypes.string.isRequired,
     starring: PropTypes.arrayOf(PropTypes.string).isRequired,
     preview: PropTypes.string.isRequired,
+    runTime: PropTypes.number.isRequired,
   })).isRequired,
   onClick: PropTypes.func.isRequired
 };
