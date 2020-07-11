@@ -11,6 +11,19 @@ const MoviePages = {
   REVIEWS: `Reviews`,
 };
 
+const Genres = {
+  ALL: `All genres`,
+  COMEDIES: `Comedies`,
+  CRIME: `Crime`,
+  DOCUMENTARY: `Documentary`,
+  DRAMA: `Drama`,
+  HORROR: `Horror`,
+  KIDS_FAMILY: `Kids & Family`,
+  ROMANCE: `Romance`,
+  SCI_FI: `Sci-Fi`,
+  THRILLERS: `Thrillers`,
+};
+
 const SIMILAR_MOVIES_COUNT = 4;
 
-export {VideoPreview, MoviePages, SIMILAR_MOVIES_COUNT};
+export {VideoPreview, MoviePages, SIMILAR_MOVIES_COUNT, Genres};

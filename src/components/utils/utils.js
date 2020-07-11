@@ -48,4 +48,8 @@ const getSimilarMoviesByGenre = (movies, genre, id) => {
   return removeCurrentMovieFromSimilar(AllSimilarMovies, id);
 };
 
-export {getRatingLevel, findMovieById, getMovieReviews, getSimilarMoviesByGenre};
+const extend = (a, b) => {
+  return Object.assign({}, a, b);
+};
+
+export {getRatingLevel, findMovieById, getMovieReviews, getSimilarMoviesByGenre, extend};
