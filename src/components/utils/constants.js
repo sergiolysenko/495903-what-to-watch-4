@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const VideoPreview = {
   IS_MUTED: true,
   WIDTH: 280,
@@ -28,4 +30,19 @@ const SIMILAR_MOVIES_COUNT = 4;
 
 const MAX_GENRE_LIST = 10;
 
-export {VideoPreview, MoviePages, SIMILAR_MOVIES_COUNT, Genres, MAX_GENRE_LIST};
+const movieShape = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  genre: PropTypes.string.isRequired,
+  year: PropTypes.number.isRequired,
+  backgroundImg: PropTypes.string.isRequired,
+  posterImg: PropTypes.string.isRequired,
+  rating: PropTypes.string.isRequired,
+  ratingCount: PropTypes.number.isRequired,
+  description: PropTypes.string.isRequired,
+  director: PropTypes.string.isRequired,
+  starring: PropTypes.arrayOf(PropTypes.string).isRequired,
+  runTime: PropTypes.number.isRequired,
+});
+
+export {VideoPreview, MoviePages, SIMILAR_MOVIES_COUNT, Genres, MAX_GENRE_LIST, movieShape};

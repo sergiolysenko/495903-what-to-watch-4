@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {MAX_GENRE_LIST} from "../utils/constants.js";
+import {MAX_GENRE_LIST, movieShape} from "../utils/constants.js";
 import {getGenreList} from "../utils/utils.js";
 import {ActionCreator} from "./../../reducer.js";
 
@@ -47,21 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
 GenreList.propTypes = {
   genre: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  allMovies: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    year: PropTypes.number.isRequired,
-    backgroundImg: PropTypes.string.isRequired,
-    posterImg: PropTypes.string.isRequired,
-    rating: PropTypes.string.isRequired,
-    ratingCount: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.arrayOf(PropTypes.string).isRequired,
-    preview: PropTypes.string.isRequired,
-    runTime: PropTypes.number.isRequired,
-  })).isRequired,
+  allMovies: PropTypes.arrayOf(movieShape).isRequired,
 };
 
 export {GenreList};
