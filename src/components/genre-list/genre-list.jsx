@@ -1,14 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {MAX_GENRE_LIST, movieShape} from "../utils/constants.js";
+import {MAX_GENRE_LIST} from "../utils/constants.js";
 import {getGenreList} from "../utils/utils.js";
 import {ActionCreator} from "./../../reducer.js";
 
 const GenreList = (props) => {
-  const {allMovies, genre, onClick} = props;
-  const genreList = Array.from(getGenreList(allMovies));
-  const maxGenreList = genreList.slice(0, MAX_GENRE_LIST);
+  const {genre, maxGenreList, onClick} = props;
+
   return (
     <React.Fragment>
       <ul className="catalog__genres-list">
@@ -32,22 +31,28 @@ const GenreList = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  genre: state.genre,
-  allMovies: state.allMovies,
-});
+const mapStateToProps = (state) => {
+  const {genre, allMovies} = state;
+
+  const maxGenreList = Array.from(getGenreList(allMovies)).slice(0, MAX_GENRE_LIST);
+
+  return {
+    maxGenreList,
+    genre
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   onClick(genre) {
     dispatch(ActionCreator.changeGenre(genre));
-    dispatch(ActionCreator.filteredMovies(genre));
+    dispatch(ActionCreator.resetMoviesCount());
   }
 });
 
 GenreList.propTypes = {
+  maxGenreList: PropTypes.array.isRequired,
   genre: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  allMovies: PropTypes.arrayOf(movieShape).isRequired,
 };
 
 export {GenreList};

@@ -27,6 +27,8 @@ const Genres = {
 };
 
 const SIMILAR_MOVIES_COUNT = 4;
+const SHOWING_MOVIES_COUNT_ON_START = 8;
+const SHOWING_MOVIES_COUNT_BY_BUTTON = 8;
 
 const MAX_GENRE_LIST = 10;
 
@@ -45,4 +47,4 @@ const movieShape = PropTypes.shape({
   runTime: PropTypes.number.isRequired,
 });
 
-export {VideoPreview, MoviePages, SIMILAR_MOVIES_COUNT, Genres, MAX_GENRE_LIST, movieShape};
+export {VideoPreview, MoviePages, SIMILAR_MOVIES_COUNT, Genres, MAX_GENRE_LIST, movieShape, SHOWING_MOVIES_COUNT_BY_BUTTON, SHOWING_MOVIES_COUNT_ON_START};

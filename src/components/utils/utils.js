@@ -59,5 +59,4 @@ const getGenreList = (movies) => {
   return genreList;
 };
 
-
 export {getRatingLevel, findMovieById, getMovieReviews, getSimilarMoviesByGenre, extend, getGenreList};

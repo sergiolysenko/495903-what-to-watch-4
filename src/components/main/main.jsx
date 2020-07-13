@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import MoviesList from "../movies-list/movies-list.jsx";
 import GenreList from "./../genre-list/genre-list.jsx";
 import {movieShape} from "../utils/constants.js";
+import ShowMore from "../show-more/show-more.jsx";
 
 const Main = (props) => {
   const {mainCardTitle, mainCardGenre, mainCardYear, movies, onMovieClick} = props;
@@ -73,9 +74,9 @@ const Main = (props) => {
             onClick={onMovieClick}
           />
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <ShowMore
+            movies={movies}
+          />
         </section>
 
         <footer className="page-footer">

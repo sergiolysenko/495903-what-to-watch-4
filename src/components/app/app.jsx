@@ -6,6 +6,7 @@ import MoviePage from "../movie-page/movie-page.jsx";
 import {findMovieById} from "../utils/utils.js";
 import {connect} from "react-redux";
 import {movieShape} from "../utils/constants.js";
+import {getFilteredMovies} from "../../reducer.js";
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -86,8 +87,18 @@ App.propTypes = {
   })).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  filteredMovies: state.filteredMovies,
-});
+const mapStateToProps = (state) => {
+  const {genre, allMovies, showingMoviesCount} = state;
+  let movies = allMovies;
+  if (genre !== `All genres`) {
+    movies = getFilteredMovies(genre);
+  }
+
+  const displayedNumberOfFilms = movies.slice(0, showingMoviesCount);
+
+  return {
+    filteredMovies: displayedNumberOfFilms
+  };
+};
 
 export default connect(mapStateToProps)(App);
