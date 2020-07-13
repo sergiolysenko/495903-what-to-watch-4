@@ -26,4 +26,6 @@ const Genres = {
 
 const SIMILAR_MOVIES_COUNT = 4;
 
-export {VideoPreview, MoviePages, SIMILAR_MOVIES_COUNT, Genres};
+const MAX_GENRE_LIST = 10;
+
+export {VideoPreview, MoviePages, SIMILAR_MOVIES_COUNT, Genres, MAX_GENRE_LIST};

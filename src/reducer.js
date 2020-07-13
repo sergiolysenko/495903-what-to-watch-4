@@ -1,10 +1,11 @@
 import {extend} from "../src/components/utils/utils.js";
 import {Genres} from "../src/components/utils/constants.js";
-import {movies} from "../src/mocks/movies.js";
+import {allMovies} from "../src/mocks/movies.js";
 
 const initialState = {
   genre: Genres.ALL,
-  movies,
+  allMovies,
+  filteredMovies: allMovies.slice(),
 };
 
 const ActionType = {
@@ -14,17 +15,17 @@ const ActionType = {
 
 
 const getFilteredMovies = (genre) => {
-  const allMovies = initialState.movies;
+  const filteredMovies = initialState.allMovies;
 
   if (genre === Genres.ALL) {
-    return allMovies;
+    return filteredMovies;
   }
 
-  if (!allMovies) {
+  if (!filteredMovies) {
     return [];
   }
 
-  return allMovies.filter((movie) => movie.genre === genre);
+  return filteredMovies.filter((movie) => movie.genre === genre);
 };
 
 const ActionCreator = {
@@ -46,9 +47,10 @@ const reducer = (state = initialState, action) => {
       });
     case ActionType.FILTERED_MOVIES:
       return extend(state, {
-        movies: action.payload,
+        filteredMovies: action.payload,
       });
+    default:
+      return state;
   }
-  return state;
 };
 export {ActionCreator, ActionType, reducer};

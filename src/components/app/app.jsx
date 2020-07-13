@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import MoviePage from "../movie-page/movie-page.jsx";
 import {findMovieById} from "../utils/utils.js";
+import {connect} from "react-redux";
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -17,7 +18,7 @@ class App extends React.PureComponent {
   }
 
   renderApp() {
-    const {mainCardTitle, mainCardGenre, mainCardYear, movies, reviews} = this.props;
+    const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews} = this.props;
 
     if (this.state.selectedMovie === null) {
       return (
@@ -25,15 +26,15 @@ class App extends React.PureComponent {
           mainCardTitle={mainCardTitle}
           mainCardGenre={mainCardGenre}
           mainCardYear={mainCardYear}
-          movies={movies}
+          movies={filteredMovies}
           onMovieClick={this.handleCardClick}
         />);
     }
-    const chosenMovie = findMovieById(movies, this.state.selectedMovie);
+    const chosenMovie = findMovieById(filteredMovies, this.state.selectedMovie);
     return (
       <MoviePage
         movie={chosenMovie}
-        movies={movies}
+        movies={filteredMovies}
         reviews={reviews}
         onMovieClick={this.handleCardClick}
       />);
@@ -46,7 +47,7 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const {movies, reviews} = this.props;
+    const {filteredMovies, reviews} = this.props;
     return (
       <BrowserRouter>
         <Switch>
@@ -55,8 +56,8 @@ class App extends React.PureComponent {
           </Route>
           <Route exact path="/movie-page">
             <MoviePage
-              movie={movies[0]}
-              movies={movies}
+              movie={filteredMovies[0]}
+              movies={filteredMovies}
               onMovieClick={this.handleCardClick}
               reviews={reviews}
             />
@@ -71,7 +72,7 @@ App.propTypes = {
   mainCardTitle: PropTypes.string.isRequired,
   mainCardGenre: PropTypes.string.isRequired,
   mainCardYear: PropTypes.number.isRequired,
-  movies: PropTypes.arrayOf(PropTypes.shape({
+  filteredMovies: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
@@ -98,4 +99,8 @@ App.propTypes = {
   })).isRequired,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  filteredMovies: state.filteredMovies,
+});
+
+export default connect(mapStateToProps)(App);

@@ -52,4 +52,12 @@ const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
 
-export {getRatingLevel, findMovieById, getMovieReviews, getSimilarMoviesByGenre, extend};
+const getGenreList = (movies) => {
+  const genreList = new Set();
+  genreList.add(`All genres`);
+  movies.forEach((movie) => genreList.add(movie.genre));
+  return genreList;
+};
+
+
+export {getRatingLevel, findMovieById, getMovieReviews, getSimilarMoviesByGenre, extend, getGenreList};

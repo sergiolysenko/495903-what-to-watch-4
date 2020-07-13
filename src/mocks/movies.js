@@ -1,4 +1,4 @@
-export default [
+const allMovies = [
   {
     id: 1,
     title: `Fantastic Beasts: The Crimes of Grindelwald`,
@@ -128,3 +128,5 @@ export default [
     runTime: 25,
   },
 ];
+
+export {allMovies};
