@@ -6,23 +6,23 @@ import {getGenreList} from "../utils/utils.js";
 import {ActionCreator} from "./../../reducer.js";
 
 const GenreList = (props) => {
-  const {genre, maxGenreList, onClick} = props;
+  const {activeGenre, genreList, onClick} = props;
 
   return (
     <React.Fragment>
       <ul className="catalog__genres-list">
-        {maxGenreList.map((genreListName, i) => {
+        {genreList.map((genre, i) => {
           return (
             <li
-              key={genreListName + i}
-              className={`catalog__genres-item ${genre === genreListName ? `catalog__genres-item--active` : ``}`}
+              key={genre + i}
+              className={`catalog__genres-item ${activeGenre === genre ? `catalog__genres-item--active` : ``}`}
               onClick={(evt) => {
                 evt.preventDefault();
-                onClick(genreListName);
+                onClick(genre);
               }
               }
             >
-              <a href="#" className="catalog__genres-link">{genreListName}</a>
+              <a href="#" className="catalog__genres-link">{genre}</a>
             </li>
           );
         })}
@@ -33,11 +33,11 @@ const GenreList = (props) => {
 
 const mapStateToProps = (state) => {
   const {genre, allMovies} = state;
-  const genreList = Array.from(getGenreList(allMovies));
-  const maxGenreList = genreList.slice(0, MAX_GENRE_LIST);
+  const genreList = Array.from(getGenreList(allMovies)).slice(0, MAX_GENRE_LIST);
+
   return {
-    genre,
-    maxGenreList,
+    activeGenre: genre,
+    genreList,
   };
 };
 
@@ -48,9 +48,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 GenreList.propTypes = {
-  genre: PropTypes.string.isRequired,
+  activeGenre: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  maxGenreList: PropTypes.array.isRequired,
+  genreList: PropTypes.array.isRequired,
 };
 
 export {GenreList};
