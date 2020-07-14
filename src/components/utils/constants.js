@@ -1,19 +1,19 @@
 import PropTypes from "prop-types";
 
-const VideoPreview = {
+export const VideoPreview = {
   IS_MUTED: true,
   WIDTH: 280,
   HEIGHT: 175,
   INTERVAL: 1000
 };
 
-const MoviePages = {
+export const MoviePages = {
   OVERVIEW: `Overview`,
   DETAILS: `Details`,
   REVIEWS: `Reviews`,
 };
 
-const Genres = {
+export const Genres = {
   ALL: `All genres`,
   COMEDIES: `Comedies`,
   CRIME: `Crime`,
@@ -26,11 +26,11 @@ const Genres = {
   THRILLERS: `Thrillers`,
 };
 
-const SIMILAR_MOVIES_COUNT = 4;
+export const SIMILAR_MOVIES_COUNT = 4;
 
-const MAX_GENRE_LIST = 10;
+export const MAX_GENRE_LIST = 10;
 
-const movieShape = PropTypes.shape({
+export const movieShape = PropTypes.shape({
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
@@ -44,5 +44,3 @@ const movieShape = PropTypes.shape({
   starring: PropTypes.arrayOf(PropTypes.string).isRequired,
   runTime: PropTypes.number.isRequired,
 });
-
-export {VideoPreview, MoviePages, SIMILAR_MOVIES_COUNT, Genres, MAX_GENRE_LIST, movieShape};
