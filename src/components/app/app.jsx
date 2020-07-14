@@ -87,14 +87,16 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const {genre, allMovies} = state;
+  const {genre, allMovies, showingMoviesCount} = state;
   let movies = allMovies;
   if (genre !== Genres.ALL) {
     movies = getFilteredMovies(genre, allMovies);
   }
 
+  const displayedNumberOfFilms = movies.slice(0, showingMoviesCount);
+
   return {
-    filteredMovies: movies
+    filteredMovies: displayedNumberOfFilms
   };
 };
 
