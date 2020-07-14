@@ -5,12 +5,10 @@ import {allMovies} from "../src/mocks/movies.js";
 const initialState = {
   genre: Genres.ALL,
   allMovies,
-  filteredMovies: allMovies.slice(),
 };
 
 const ActionType = {
   CHANGE_GENRE: `CHANGE_GENRE`,
-  FILTERED_MOVIES: `FILTERED_MOVIES`,
 };
 
 
@@ -33,10 +31,6 @@ const ActionCreator = {
     type: ActionType.CHANGE_GENRE,
     payload: genre,
   }),
-  filteredMovies: (genre) => ({
-    type: ActionType.FILTERED_MOVIES,
-    payload: getFilteredMovies(genre),
-  }),
 };
 
 const reducer = (state = initialState, action) => {
@@ -53,4 +47,4 @@ const reducer = (state = initialState, action) => {
       return state;
   }
 };
-export {ActionCreator, ActionType, reducer};
+export {ActionCreator, ActionType, reducer, getFilteredMovies};
