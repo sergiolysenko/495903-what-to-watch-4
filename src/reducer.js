@@ -14,20 +14,6 @@ const ActionType = {
   RESET_MOVIES_COUNT: `RESET_MOVIES_COUNT`,
 };
 
-const getFilteredMovies = (genre) => {
-  const filteredMovies = initialState.allMovies;
-
-  if (genre === Genres.ALL) {
-    return filteredMovies;
-  }
-
-  if (!filteredMovies) {
-    return [];
-  }
-
-  return filteredMovies.filter((movie) => movie.genre === genre);
-};
-
 const ActionCreator = {
   changeGenre: (genre) => ({
     type: ActionType.CHANGE_GENRE,
@@ -61,4 +47,4 @@ const reducer = (state = initialState, action) => {
       return state;
   }
 };
-export {ActionCreator, ActionType, reducer, getFilteredMovies};
+export {ActionCreator, ActionType, reducer};

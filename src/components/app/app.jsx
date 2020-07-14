@@ -3,10 +3,9 @@ import Main from "../main/main.jsx";
 import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import MoviePage from "../movie-page/movie-page.jsx";
-import {findMovieById} from "../utils/utils.js";
 import {connect} from "react-redux";
-import {movieShape} from "../utils/constants.js";
-import {getFilteredMovies} from "../../reducer.js";
+import {findMovieById, getFilteredMovies} from "../utils/utils.js";
+import {movieShape, Genres} from "../utils/constants.js";
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -88,16 +87,14 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const {genre, allMovies, showingMoviesCount} = state;
+  const {genre, allMovies} = state;
   let movies = allMovies;
-  if (genre !== `All genres`) {
-    movies = getFilteredMovies(genre);
+  if (genre !== Genres.ALL) {
+    movies = getFilteredMovies(genre, allMovies);
   }
 
-  const displayedNumberOfFilms = movies.slice(0, showingMoviesCount);
-
   return {
-    filteredMovies: displayedNumberOfFilms
+    filteredMovies: movies
   };
 };
 
