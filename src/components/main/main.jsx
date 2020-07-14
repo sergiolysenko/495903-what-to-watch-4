@@ -6,7 +6,7 @@ import {movieShape} from "../utils/constants.js";
 import ShowMore from "../show-more/show-more.jsx";
 
 const Main = (props) => {
-  const {mainCardTitle, mainCardGenre, mainCardYear, movies, onMovieClick} = props;
+  const {mainCardTitle, mainCardGenre, mainCardYear, movies, isButtonShowMoreDisplayed, onMovieClick} = props;
 
   return (
     <React.Fragment>
@@ -76,6 +76,7 @@ const Main = (props) => {
 
           <ShowMore
             movies={movies}
+            isButtonDisplayed={isButtonShowMoreDisplayed}
           />
         </section>
 
@@ -102,6 +103,7 @@ Main.propTypes = {
   mainCardGenre: PropTypes.string.isRequired,
   mainCardYear: PropTypes.number.isRequired,
   movies: PropTypes.arrayOf(movieShape).isRequired,
+  isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onMovieClick: PropTypes.func.isRequired
 };
 

@@ -16,16 +16,6 @@ const ShowMore = (props) => {
   );
 };
 
-const mapStateToProps = (state, props) => {
-  const {movies} = props;
-  const {showingMoviesCount} = state;
-  const isButtonDisplayed = movies.length >= showingMoviesCount ? true : false;
-
-  return {
-    isButtonDisplayed
-  };
-};
-
 const mapDispatchToProps = (dispatch) => ({
   onClick() {
     dispatch(ActionCreator.increaseShowingMovies());
@@ -38,5 +28,5 @@ ShowMore.propTypes = {
 };
 
 export {ShowMore};
-export default connect(mapStateToProps, mapDispatchToProps)(ShowMore);
+export default connect(null, mapDispatchToProps)(ShowMore);
 

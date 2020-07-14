@@ -95,6 +95,7 @@ it(`Render Main`, () => {
             mainCardGenre={TestSettings.MAIN_CARD_GENRE}
             mainCardYear={TestSettings.MAIN_CARD_YEAR}
             movies={movies}
+            isButtonShowMoreDisplayed={true}
             onMovieClick={onMovieClick}
           />
         </Provider>, {

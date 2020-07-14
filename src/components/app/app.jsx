@@ -19,7 +19,7 @@ class App extends React.PureComponent {
   }
 
   renderApp() {
-    const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews} = this.props;
+    const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed} = this.props;
 
     if (this.state.selectedMovie === null) {
       return (
@@ -29,6 +29,7 @@ class App extends React.PureComponent {
           mainCardYear={mainCardYear}
           movies={filteredMovies}
           onMovieClick={this.handleCardClick}
+          isButtonShowMoreDisplayed={isButtonShowMoreDisplayed}
         />);
     }
     const chosenMovie = findMovieById(filteredMovies, this.state.selectedMovie);
@@ -74,6 +75,7 @@ App.propTypes = {
   mainCardGenre: PropTypes.string.isRequired,
   mainCardYear: PropTypes.number.isRequired,
   filteredMovies: PropTypes.arrayOf(movieShape).isRequired,
+  isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     user: PropTypes.shape({
@@ -88,15 +90,17 @@ App.propTypes = {
 
 const mapStateToProps = (state) => {
   const {genre, allMovies, showingMoviesCount} = state;
+
   let movies = allMovies;
   if (genre !== Genres.ALL) {
     movies = getFilteredMovies(genre, allMovies);
   }
-
+  const isButtonShowMoreDisplayed = movies.length >= showingMoviesCount ? true : false;
   const displayedNumberOfFilms = movies.slice(0, showingMoviesCount);
 
   return {
-    filteredMovies: displayedNumberOfFilms
+    filteredMovies: displayedNumberOfFilms,
+    isButtonShowMoreDisplayed,
   };
 };
 
