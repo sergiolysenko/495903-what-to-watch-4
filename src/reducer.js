@@ -39,10 +39,6 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         genre: action.payload,
       });
-    case ActionType.FILTERED_MOVIES:
-      return extend(state, {
-        filteredMovies: action.payload,
-      });
     default:
       return state;
   }

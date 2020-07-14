@@ -6,9 +6,8 @@ import {getGenreList} from "../utils/utils.js";
 import {ActionCreator} from "./../../reducer.js";
 
 const GenreList = (props) => {
-  const {allMovies, genre, onClick} = props;
-  const genreList = Array.from(getGenreList(allMovies));
-  const maxGenreList = genreList.slice(0, MAX_GENRE_LIST);
+  const {genre, maxGenreList, onClick} = props;
+
   return (
     <React.Fragment>
       <ul className="catalog__genres-list">
@@ -32,22 +31,26 @@ const GenreList = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  genre: state.genre,
-  allMovies: state.allMovies,
-});
+const mapStateToProps = (state) => {
+  const {genre, allMovies} = state;
+  const genreList = Array.from(getGenreList(allMovies));
+  const maxGenreList = genreList.slice(0, MAX_GENRE_LIST);
+  return {
+    genre,
+    maxGenreList,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   onClick(genre) {
     dispatch(ActionCreator.changeGenre(genre));
-    dispatch(ActionCreator.filteredMovies(genre));
   }
 });
 
 GenreList.propTypes = {
   genre: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  allMovies: PropTypes.arrayOf(movieShape).isRequired,
+  maxGenreList: PropTypes.array.isRequired,
 };
 
 export {GenreList};
