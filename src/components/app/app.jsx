@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import MoviePage from "../movie-page/movie-page.jsx";
 import {connect} from "react-redux";
+import {ActionCreator} from "../../reducer.js";
 import {findMovieById, getFilteredMovies} from "../utils/utils.js";
 import {movieShape, Genres} from "../utils/constants.js";
 
@@ -19,7 +20,7 @@ class App extends React.PureComponent {
   }
 
   renderApp() {
-    const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed} = this.props;
+    const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick} = this.props;
 
     if (this.state.selectedMovie === null) {
       return (
@@ -30,6 +31,7 @@ class App extends React.PureComponent {
           movies={filteredMovies}
           onMovieClick={this.handleCardClick}
           isButtonShowMoreDisplayed={isButtonShowMoreDisplayed}
+          onShowMoreClick={onShowMoreClick}
         />);
     }
     const chosenMovie = findMovieById(filteredMovies, this.state.selectedMovie);
@@ -70,24 +72,6 @@ class App extends React.PureComponent {
   }
 }
 
-App.propTypes = {
-  mainCardTitle: PropTypes.string.isRequired,
-  mainCardGenre: PropTypes.string.isRequired,
-  mainCardYear: PropTypes.number.isRequired,
-  filteredMovies: PropTypes.arrayOf(movieShape).isRequired,
-  isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-    rating: PropTypes.number.isRequired,
-    comment: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-  })).isRequired,
-};
-
 const mapStateToProps = (state) => {
   const {genre, allMovies, showingMoviesCount} = state;
 
@@ -104,4 +88,29 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => ({
+  onShowMoreClick() {
+    dispatch(ActionCreator.increaseShowingMovies());
+  }
+});
+
+App.propTypes = {
+  mainCardTitle: PropTypes.string.isRequired,
+  mainCardGenre: PropTypes.string.isRequired,
+  mainCardYear: PropTypes.number.isRequired,
+  filteredMovies: PropTypes.arrayOf(movieShape).isRequired,
+  isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
+  onShowMoreClick: PropTypes.func.isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+    rating: PropTypes.number.isRequired,
+    comment: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+  })).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

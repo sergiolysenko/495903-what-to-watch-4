@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import MoviesList from "../movies-list/movies-list.jsx";
 import GenreList from "./../genre-list/genre-list.jsx";
 import {movieShape} from "../utils/constants.js";
-import ShowMore from "../show-more/show-more.jsx";
+import {ShowMore} from "../show-more/show-more.jsx";
 
 const Main = (props) => {
-  const {mainCardTitle, mainCardGenre, mainCardYear, movies, isButtonShowMoreDisplayed, onMovieClick} = props;
+  const {mainCardTitle, mainCardGenre, mainCardYear, movies, isButtonShowMoreDisplayed, onMovieClick, onShowMoreClick} = props;
 
   return (
     <React.Fragment>
@@ -75,8 +75,8 @@ const Main = (props) => {
           />
 
           <ShowMore
-            movies={movies}
             isButtonDisplayed={isButtonShowMoreDisplayed}
+            onClick={onShowMoreClick}
           />
         </section>
 
@@ -104,7 +104,8 @@ Main.propTypes = {
   mainCardYear: PropTypes.number.isRequired,
   movies: PropTypes.arrayOf(movieShape).isRequired,
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
-  onMovieClick: PropTypes.func.isRequired
+  onMovieClick: PropTypes.func.isRequired,
+  onShowMoreClick: PropTypes.func.isRequired,
 };
 
 export default Main;
