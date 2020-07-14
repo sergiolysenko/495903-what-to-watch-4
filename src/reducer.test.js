@@ -11,7 +11,4 @@ it(`Reducer should change genre if action creator is changeGenre`, ()=>{
   });
 });
 
-it(`Reducer should return filtered movie list by genre if action creator is filteredMovies`, () => {
-  expect(reducer({}, ActionCreator.filteredMovies(Genres.DRAMA)).filteredMovies.every((movie) => movie.genre === Genres.DRAMA)).toEqual(true);
-});
 

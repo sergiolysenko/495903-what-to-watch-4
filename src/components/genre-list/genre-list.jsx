@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {MAX_GENRE_LIST, movieShape} from "../utils/constants.js";
+import {MAX_GENRE_LIST} from "../utils/constants.js";
 import {getGenreList} from "../utils/utils.js";
 import {ActionCreator} from "./../../reducer.js";
 
