@@ -118,6 +118,7 @@ it(`Render App`, () => {
             mainCardYear={TestSettings.MAIN_CARD_YEAR}
             filteredMovies={movies}
             reviews={reviews}
+            isButtonShowMoreDisplayed={true}
           />
         </Provider>, {
           createNodeMock: () => {

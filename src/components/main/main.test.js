@@ -5,7 +5,7 @@ import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
 
 const mockStore = configureStore([]);
-const onMovieClick = () => {};
+const mockFunc = () => {};
 
 const TestSettings = {
   MAIN_CARD_TITLE: `The Grand Budapest Hotel`,
@@ -95,7 +95,9 @@ it(`Render Main`, () => {
             mainCardGenre={TestSettings.MAIN_CARD_GENRE}
             mainCardYear={TestSettings.MAIN_CARD_YEAR}
             movies={movies}
-            onMovieClick={onMovieClick}
+            isButtonShowMoreDisplayed={true}
+            onShowMoreClick={mockFunc}
+            onMovieClick={mockFunc}
           />
         </Provider>, {
           createNodeMock: () => {

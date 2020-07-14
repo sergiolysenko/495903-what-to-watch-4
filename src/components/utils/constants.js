@@ -27,6 +27,8 @@ export const Genres = {
 };
 
 export const SIMILAR_MOVIES_COUNT = 4;
+export const SHOWING_MOVIES_COUNT_ON_START = 8;
+export const SHOWING_MOVIES_COUNT_BY_BUTTON = 8;
 
 export const MAX_GENRE_LIST = 10;
 
