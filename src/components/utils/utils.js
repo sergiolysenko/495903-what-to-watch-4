@@ -1,3 +1,5 @@
+import {Genres} from "./constants.js";
+
 const getRatingLevel = (raiting) => {
   const validRaiting = Number(raiting.replace(`,`, `.`));
   if (validRaiting >= 8 && validRaiting < 10) {
@@ -48,4 +50,27 @@ const getSimilarMoviesByGenre = (movies, genre, id) => {
   return removeCurrentMovieFromSimilar(AllSimilarMovies, id);
 };
 
-export {getRatingLevel, findMovieById, getMovieReviews, getSimilarMoviesByGenre};
+const extend = (a, b) => {
+  return Object.assign({}, a, b);
+};
+
+const getGenreList = (movies) => {
+  const genreList = new Set();
+  genreList.add(Genres.ALL);
+  movies.forEach((movie) => genreList.add(movie.genre));
+  return genreList;
+};
+
+const getFilteredMovies = (genre, movies) => {
+  if (genre === Genres.ALL) {
+    return movies;
+  }
+
+  if (!movies) {
+    return [];
+  }
+
+  return movies.filter((movie) => movie.genre === genre);
+};
+
+export {getRatingLevel, findMovieById, getMovieReviews, getSimilarMoviesByGenre, extend, getGenreList, getFilteredMovies};

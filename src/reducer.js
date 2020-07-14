@@ -1,0 +1,31 @@
+import {extend} from "../src/components/utils/utils.js";
+import {Genres} from "../src/components/utils/constants.js";
+import {allMovies} from "../src/mocks/movies.js";
+
+const initialState = {
+  genre: Genres.ALL,
+  allMovies,
+};
+
+const ActionType = {
+  CHANGE_GENRE: `CHANGE_GENRE`,
+};
+
+const ActionCreator = {
+  changeGenre: (genre) => ({
+    type: ActionType.CHANGE_GENRE,
+    payload: genre,
+  }),
+};
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ActionType.CHANGE_GENRE:
+      return extend(state, {
+        genre: action.payload,
+      });
+    default:
+      return state;
+  }
+};
+export {ActionCreator, ActionType, reducer};
