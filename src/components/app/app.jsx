@@ -79,7 +79,7 @@ const mapStateToProps = (state) => {
   if (genre !== Genres.ALL) {
     movies = getFilteredMovies(genre, allMovies);
   }
-  const isButtonShowMoreDisplayed = movies.length >= showingMoviesCount ? true : false;
+  const isButtonShowMoreDisplayed = movies.length >= showingMoviesCount;
   const displayedNumberOfFilms = movies.slice(0, showingMoviesCount);
 
   return {
