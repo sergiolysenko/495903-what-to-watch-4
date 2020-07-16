@@ -47,6 +47,8 @@ it(`Render Tabs`, () => {
     .create(<Tabs
       movie={movie}
       reviews={reviews}
+      activeItem={`Overview`}
+      handleActive={() => {}}
     />
     ).toJSON();
 

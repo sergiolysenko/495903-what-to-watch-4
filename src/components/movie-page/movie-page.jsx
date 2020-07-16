@@ -4,6 +4,10 @@ import Tabs from "../tabs/tabs.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
 import {getSimilarMoviesByGenre} from "../utils/utils.js";
 import {SIMILAR_MOVIES_COUNT, movieShape} from "../utils/constants.js";
+import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
+
+const MoviesListWrapped = withActiveItem(MoviesList);
+const TabsWrapped = withActiveItem(Tabs);
 
 class MoviePage extends React.PureComponent {
   constructor(props) {
@@ -74,7 +78,7 @@ class MoviePage extends React.PureComponent {
               <img src={posterImg} alt={title + ` poster`} width="218" height="327" />
             </div>
 
-            <Tabs
+            <TabsWrapped
               movie={movie}
               reviews={reviews}
             />
@@ -86,7 +90,7 @@ class MoviePage extends React.PureComponent {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <MoviesList
+          <MoviesListWrapped
             movies={similarMovies}
             onClick={onMovieClick}
           />

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {VideoPreview} from "../../components/utils/constants.js";
 
 const withSmallCardHover = (Component) => {
@@ -43,16 +42,6 @@ const withSmallCardHover = (Component) => {
     }
   }
 
-  WithSmallCardHover.propTypes = {
-    movie: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      cardImg: PropTypes.string.isRequired,
-      preview: PropTypes.string.isRequired,
-    }).isRequired,
-    onClick: PropTypes.func.isRequired,
-    onHover: PropTypes.func.isRequired
-  };
   return WithSmallCardHover;
 };
 

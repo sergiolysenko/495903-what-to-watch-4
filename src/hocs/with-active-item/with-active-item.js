@@ -1,0 +1,36 @@
+import React from "react";
+
+const withActiveItem = (Component) => {
+  class WithActiveItem extends React.PureComponent {
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        activeItem: undefined,
+      };
+
+      this.handleActive = this.handleActive.bind(this);
+    }
+
+    render() {
+      return (
+        <Component
+          {...this.props}
+          handleActive={this.handleActive}
+          activeItem={this.state.activeItem}
+        />
+      );
+    }
+
+    handleActive(item) {
+      this.setState({
+        activeItem: item,
+      });
+    }
+  }
+
+  return WithActiveItem;
+};
+
+
+export default withActiveItem;

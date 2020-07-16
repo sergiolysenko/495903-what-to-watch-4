@@ -6,24 +6,11 @@ import MoviePageReviews from "../movie-page-reviews/movie-page-reviews.jsx";
 import {MoviePages} from "../utils/constants.js";
 import {movieShape} from "../utils/constants.js";
 
-class Tabs extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const Tabs = (props) => {
+  const {movie, reviews, activeItem, handleActive} = props;
 
-    this.state = {
-      activePage: MoviePages.OVERVIEW,
-    };
-    this.handleTabClick = this.handleTabClick.bind(this);
-  }
-
-  handleTabClick(tabName) {
-    this.setState({activePage: tabName});
-  }
-
-  renderSelectedTab() {
-    const {movie, reviews} = this.props;
-
-    switch (this.state.activePage) {
+  const renderSelectedTab = () => {
+    switch (activeItem) {
       case MoviePages.DETAILS:
         return (
           <MoviePageDetails
@@ -41,33 +28,33 @@ class Tabs extends React.PureComponent {
             movie={movie}
           />);
     }
-  }
+  };
 
-  render() {
-    const {activePage} = this.state;
+  return (
+    <div className="movie-card__desc">
+      <nav className="movie-nav movie-card__nav">
+        <ul className="movie-nav__list">
+          {Object.values(MoviePages).map((tabName, i) => (
+            <li
+              key={tabName + i}
+              className={`movie-nav__item ${activeItem === tabName && `movie-nav__item--active`}`}
+              onClick={() => handleActive(tabName)}
+            >
+              <a href="#" className="movie-nav__link">{tabName}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-    return (
-      <div className="movie-card__desc">
-        <nav className="movie-nav movie-card__nav">
-          <ul className="movie-nav__list">
-            {Object.values(MoviePages).map((tabName, i) => (
-              <li
-                key={tabName + i}
-                className={`movie-nav__item ${activePage === tabName && `movie-nav__item--active`}`}
-                onClick={() => this.handleTabClick(tabName)}
-              >
-                <a href="#" className="movie-nav__link">{tabName}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+      {renderSelectedTab()}
 
-        {this.renderSelectedTab()}
+    </div>
+  );
+};
 
-      </div>
-    );
-  }
-}
+Tabs.defaultProps = {
+  activeItem: MoviePages.OVERVIEW,
+};
 
 Tabs.propTypes = {
   movie: movieShape.isRequired,
@@ -81,6 +68,8 @@ Tabs.propTypes = {
     comment: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
   })).isRequired,
+  handleActive: PropTypes.func.isRequired,
+  activeItem: PropTypes.string,
 };
 
 export default Tabs;

@@ -6,38 +6,25 @@ import withSmallCardHover from "../../hocs/with-small-card-hover/with-small-card
 
 const SmallCardWrapped = withSmallCardHover(SmallMovieCard);
 
-export default class MoviesList extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeCard: null,
-    };
-    this.handleCardHover = this.handleCardHover.bind(this);
-  }
+const MoviesList = (props) => {
+  const {movies, onClick, handleActive} = props;
 
-  render() {
-    const {movies, onClick} = this.props;
-
-    return (
-      <div className="catalog__movies-list">
-        {movies.map((movie, i) => <SmallCardWrapped
-          key={movie.title + i}
-          movie={movie}
-          onClick={onClick}
-          onHover={this.handleCardHover}
-        />)}
-      </div>
-    );
-  }
-
-  handleCardHover(activeMovie) {
-    this.setState({
-      activeCard: activeMovie,
-    });
-  }
-}
+  return (
+    <div className="catalog__movies-list">
+      {movies.map((movie, i) => <SmallCardWrapped
+        key={movie.title + i}
+        movie={movie}
+        onClick={onClick}
+        onHover={handleActive}
+      />)}
+    </div>
+  );
+};
 
 MoviesList.propTypes = {
   movies: PropTypes.arrayOf(movieShape).isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  handleActive: PropTypes.func.isRequired,
 };
+
+export default MoviesList;
