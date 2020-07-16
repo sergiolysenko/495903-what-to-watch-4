@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
 import {movieShape} from "../utils/constants.js";
+import withSmallCardHover from "../../hocs/with-small-card-hover/with-small-card-hover.js";
+
+const SmallCardWrapped = withSmallCardHover(SmallMovieCard);
 
 export default class MoviesList extends React.PureComponent {
   constructor(props) {
@@ -17,7 +20,7 @@ export default class MoviesList extends React.PureComponent {
 
     return (
       <div className="catalog__movies-list">
-        {movies.map((movie, i) => <SmallMovieCard
+        {movies.map((movie, i) => <SmallCardWrapped
           key={movie.title + i}
           movie={movie}
           onClick={onClick}
