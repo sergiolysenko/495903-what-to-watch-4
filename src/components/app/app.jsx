@@ -8,89 +8,77 @@ import {ActionCreator} from "../../reducer.js";
 import {findMovieById, getFilteredMovies} from "../utils/utils.js";
 import {movieShape, Genres} from "../utils/constants.js";
 
-class App extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const App = (props) => {
+  const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, id, onCardClick} = props;
 
-    this.state = {
-      selectedMovie: null,
-    };
-
-    this.handleCardClick = this.handleCardClick.bind(this);
-  }
-
-  renderApp() {
-    const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick} = this.props;
-
-    if (this.state.selectedMovie === null) {
+  const renderApp = () => {
+    if (id === -1) {
       return (
         <Main
           mainCardTitle={mainCardTitle}
           mainCardGenre={mainCardGenre}
           mainCardYear={mainCardYear}
           movies={filteredMovies}
-          onMovieClick={this.handleCardClick}
+          onMovieClick={onCardClick}
           isButtonShowMoreDisplayed={isButtonShowMoreDisplayed}
           onShowMoreClick={onShowMoreClick}
         />);
     }
-    const chosenMovie = findMovieById(filteredMovies, this.state.selectedMovie);
+
+    const chosenMovie = findMovieById(filteredMovies, id);
+
     return (
       <MoviePage
         movie={chosenMovie}
         movies={filteredMovies}
         reviews={reviews}
-        onMovieClick={this.handleCardClick}
+        onMovieClick={onCardClick}
       />);
-  }
+  };
 
-  handleCardClick(id) {
-    this.setState({
-      selectedMovie: id,
-    });
-  }
-
-  render() {
-    const {filteredMovies, reviews} = this.props;
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            {this.renderApp()}
-          </Route>
-          <Route exact path="/movie-page">
-            <MoviePage
-              movie={filteredMovies[0]}
-              movies={filteredMovies}
-              onMovieClick={this.handleCardClick}
-              reviews={reviews}
-            />
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    );
-  }
-}
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          {renderApp()}
+        </Route>
+        <Route exact path="/movie-page">
+          <MoviePage
+            movie={filteredMovies[0]}
+            movies={filteredMovies}
+            onMovieClick={onCardClick}
+            reviews={reviews}
+          />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  );
+};
 
 const mapStateToProps = (state) => {
-  const {genre, allMovies, showingMoviesCount} = state;
+  const {genre, id, allMovies, showingMoviesCount} = state;
 
   let movies = allMovies;
   if (genre !== Genres.ALL) {
     movies = getFilteredMovies(genre, allMovies);
   }
   const isButtonShowMoreDisplayed = movies.length >= showingMoviesCount;
+
   const displayedNumberOfFilms = movies.slice(0, showingMoviesCount);
 
   return {
     filteredMovies: displayedNumberOfFilms,
     isButtonShowMoreDisplayed,
+    id,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   onShowMoreClick() {
     dispatch(ActionCreator.increaseShowingMovies());
+  },
+  onCardClick(id) {
+    dispatch(ActionCreator.changeMovie(id));
   }
 });
 
@@ -101,6 +89,7 @@ App.propTypes = {
   filteredMovies: PropTypes.arrayOf(movieShape).isRequired,
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onShowMoreClick: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     user: PropTypes.shape({
@@ -111,6 +100,7 @@ App.propTypes = {
     comment: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
   })).isRequired,
+  onCardClick: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
