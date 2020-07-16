@@ -37,6 +37,9 @@ describe(`SmallMovieCardComponent`, () => {
           movie={movie}
           onClick={onClick}
           onHover={()=>{}}
+          isPlaying={true}
+          onMouseEnter={()=>{}}
+          onMouseLeave={()=>{}}
         />
     );
     const smallMovieTitle = smallMovieCard.find(`.small-movie-card__link`);
@@ -53,6 +56,9 @@ describe(`SmallMovieCardComponent`, () => {
           movie={movie}
           onClick={onClick}
           onHover={()=>{}}
+          isPlaying={true}
+          onMouseEnter={()=>{}}
+          onMouseLeave={()=>{}}
         />
     );
     const smallMovieTitle = smallMovieCard.find(`article.small-movie-card`);
@@ -69,6 +75,9 @@ describe(`SmallMovieCardComponent`, () => {
           movie={movie}
           onClick={()=>{}}
           onHover={onHover}
+          isPlaying={true}
+          onMouseEnter={()=>{}}
+          onMouseLeave={()=>{}}
         />
     );
     const card = smallMovieCard.find(`.small-movie-card`);

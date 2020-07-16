@@ -2,8 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import SmallMovieCard from "./small-movie-card.jsx";
 
-const onClick = () => {};
-const onHover = () => {};
+const mockFunc = () => {};
 
 const movie = {
   id: 1,
@@ -26,8 +25,11 @@ it(`Render SmallMovieCard`, () => {
   const tree = renderer
     .create(<SmallMovieCard
       movie={movie}
-      onClick={onClick}
-      onHover={onHover}
+      isPlaying={true}
+      onClick={mockFunc}
+      onHover={mockFunc}
+      onMouseEnter={mockFunc}
+      onMouseLeave={mockFunc}
     />, {
       createNodeMock: () => {
         return {};
