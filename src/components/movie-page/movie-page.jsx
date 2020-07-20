@@ -2,18 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import Tabs from "../tabs/tabs.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
-import {getSimilarMoviesByGenre} from "../utils/utils.js";
-import {SIMILAR_MOVIES_COUNT, movieShape} from "../utils/constants.js";
+import {movieShape} from "../utils/constants.js";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
 
 const MoviesListWrapped = withActiveItem(MoviesList);
 const TabsWrapped = withActiveItem(Tabs);
 
 const MoviePage = (props) => {
-  const {movie, movies, reviews, onMovieClick} = props;
-  const {id, title, genre, year, backgroundImg, posterImg} = movie;
-
-  const similarMovies = getSimilarMoviesByGenre(movies, genre, id).slice(0, SIMILAR_MOVIES_COUNT);
+  const {movie, reviews, onMovieClick, similarMovies} = props;
+  const {title, genre, year, backgroundImg, posterImg} = movie;
 
   return (<React.Fragment>
     <section className="movie-card movie-card--full">
@@ -111,6 +108,7 @@ const MoviePage = (props) => {
 MoviePage.propTypes = {
   movie: movieShape.isRequired,
   movies: PropTypes.arrayOf(movieShape).isRequired,
+  similarMovies: PropTypes.arrayOf(movieShape).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     user: PropTypes.shape({

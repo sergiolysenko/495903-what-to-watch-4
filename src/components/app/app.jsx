@@ -6,10 +6,11 @@ import MoviePage from "../movie-page/movie-page.jsx";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer.js";
 import {findMovieById, getFilteredMovies} from "../utils/utils.js";
-import {movieShape, Genres} from "../utils/constants.js";
+import {movieShape, Genres, SIMILAR_MOVIES_COUNT} from "../utils/constants.js";
+import {getSimilarMoviesByGenre} from "../utils/utils.js";
 
 const App = (props) => {
-  const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, id, onCardClick, chosenMovie} = props;
+  const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, id, onCardClick, chosenMovie, similarMoviesToChosen} = props;
 
   const renderApp = () => {
     if (id === -1) {
@@ -29,6 +30,7 @@ const App = (props) => {
       <MoviePage
         movie={chosenMovie}
         movies={filteredMovies}
+        similarMovies={similarMoviesToChosen}
         reviews={reviews}
         onMovieClick={onCardClick}
       />);
@@ -43,6 +45,7 @@ const App = (props) => {
         <Route exact path="/movie-page">
           <MoviePage
             movie={filteredMovies[0]}
+            similarMovies={similarMoviesToChosen}
             movies={filteredMovies}
             onMovieClick={onCardClick}
             reviews={reviews}
@@ -57,20 +60,27 @@ const mapStateToProps = (state) => {
   const {genre, id, allMovies, showingMoviesCount} = state;
 
   let movies = allMovies;
+  let chosenMovie = {};
+  let similarMoviesToChosen = [];
+
   if (genre !== Genres.ALL) {
     movies = getFilteredMovies(genre, allMovies);
   }
-  const isButtonShowMoreDisplayed = movies.length >= showingMoviesCount;
 
+  const isButtonShowMoreDisplayed = movies.length >= showingMoviesCount;
   const displayedNumberOfFilms = movies.slice(0, showingMoviesCount);
 
-  const chosenMovie = findMovieById(displayedNumberOfFilms, id);
+  if (id !== -1) {
+    chosenMovie = findMovieById(displayedNumberOfFilms, id);
+    similarMoviesToChosen = getSimilarMoviesByGenre(movies, chosenMovie.genre, id).slice(0, SIMILAR_MOVIES_COUNT);
+  }
 
   return {
     filteredMovies: displayedNumberOfFilms,
     isButtonShowMoreDisplayed,
     id,
     chosenMovie,
+    similarMoviesToChosen,
   };
 };
 
@@ -92,6 +102,7 @@ App.propTypes = {
   onShowMoreClick: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   chosenMovie: PropTypes.object,
+  similarMoviesToChosen: PropTypes.array,
   reviews: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     user: PropTypes.shape({
