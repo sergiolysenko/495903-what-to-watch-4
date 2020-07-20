@@ -9,7 +9,7 @@ import {findMovieById, getFilteredMovies} from "../utils/utils.js";
 import {movieShape, Genres} from "../utils/constants.js";
 
 const App = (props) => {
-  const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, id, onCardClick} = props;
+  const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, id, onCardClick, chosenMovie} = props;
 
   const renderApp = () => {
     if (id === -1) {
@@ -24,8 +24,6 @@ const App = (props) => {
           onShowMoreClick={onShowMoreClick}
         />);
     }
-
-    const chosenMovie = findMovieById(filteredMovies, id);
 
     return (
       <MoviePage
@@ -66,10 +64,13 @@ const mapStateToProps = (state) => {
 
   const displayedNumberOfFilms = movies.slice(0, showingMoviesCount);
 
+  const chosenMovie = findMovieById(displayedNumberOfFilms, id);
+
   return {
     filteredMovies: displayedNumberOfFilms,
     isButtonShowMoreDisplayed,
     id,
+    chosenMovie,
   };
 };
 
@@ -90,6 +91,7 @@ App.propTypes = {
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onShowMoreClick: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
+  chosenMovie: PropTypes.object,
   reviews: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     user: PropTypes.shape({
