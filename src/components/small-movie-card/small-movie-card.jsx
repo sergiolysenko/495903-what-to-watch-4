@@ -4,14 +4,13 @@ import VideoPlayer from "../video-player/video-player.jsx";
 import {VideoPreview} from "../utils/constants.js";
 
 const SmallMovieCard = (props) => {
-  const {movie, isPlaying, onClick, onHover, onMouseEnter, onMouseLeave} = props;
+  const {movie, isPlaying, onClick, onMouseEnter, onMouseLeave} = props;
   const {id, title, cardImg, preview} = movie;
 
   return (
     <article
       onMouseEnter={() => {
         onMouseEnter();
-        onHover(id);
       }}
       onMouseLeave={() => onMouseLeave()}
       onClick={(evt) => {
@@ -52,7 +51,6 @@ SmallMovieCard.propTypes = {
   }).isRequired,
   isPlaying: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
-  onHover: PropTypes.func.isRequired,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
 };

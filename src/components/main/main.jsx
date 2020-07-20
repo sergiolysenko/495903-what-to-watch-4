@@ -4,9 +4,6 @@ import MoviesList from "../movies-list/movies-list.jsx";
 import GenreList from "./../genre-list/genre-list.jsx";
 import {movieShape} from "../utils/constants.js";
 import {ShowMore} from "../show-more/show-more.jsx";
-import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
-
-const MoviesListWrapped = withActiveItem(MoviesList);
 
 const Main = (props) => {
   const {mainCardTitle, mainCardGenre, mainCardYear, movies, isButtonShowMoreDisplayed, onMovieClick, onShowMoreClick} = props;
@@ -72,7 +69,7 @@ const Main = (props) => {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenreList />
-          <MoviesListWrapped
+          <MoviesList
             movies={movies}
             onClick={onMovieClick}
           />

@@ -68,22 +68,20 @@ describe(`SmallMovieCardComponent`, () => {
   });
 
   it(`Check if state changed by hover on the card`, () => {
-    const onHover = jest.fn();
+    const onMouseEnter = jest.fn();
 
     const smallMovieCard = shallow(
         <SmallMovieCard
           movie={movie}
           onClick={()=>{}}
-          onHover={onHover}
           isPlaying={true}
-          onMouseEnter={()=>{}}
+          onMouseEnter={onMouseEnter}
           onMouseLeave={()=>{}}
         />
     );
     const card = smallMovieCard.find(`.small-movie-card`);
 
     card.simulate(`mouseenter`);
-    expect(onHover).toHaveBeenCalledTimes(1);
-    expect(onHover.mock.calls[0][0]).toBe(movie.id);
+    expect(onMouseEnter).toHaveBeenCalledTimes(1);
   });
 });
