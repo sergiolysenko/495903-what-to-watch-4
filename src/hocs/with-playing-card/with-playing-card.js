@@ -1,8 +1,8 @@
 import React from "react";
 import {VideoPreview} from "../../components/utils/constants.js";
 
-const withSmallCardHover = (Component) => {
-  class WithSmallCardHover extends React.PureComponent {
+const withPlayingCard = (Component) => {
+  class WithPlayingCard extends React.PureComponent {
     constructor(props) {
       super(props);
 
@@ -42,8 +42,8 @@ const withSmallCardHover = (Component) => {
     }
   }
 
-  return WithSmallCardHover;
+  return WithPlayingCard;
 };
 
-export default withSmallCardHover;
+export default withPlayingCard;
 

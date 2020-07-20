@@ -98,9 +98,14 @@ it(`Render MoviePage`, () => {
     .create(<MoviePage
       movie={movie}
       movies={movies}
+      similarMovies={movies}
       reviews={reviews}
       onMovieClick={() => {}}
-    />)
+    />, {
+      createNodeMock: () => {
+        return {};
+      }
+    })
       .toJSON();
 
   expect(tree).toMatchSnapshot();

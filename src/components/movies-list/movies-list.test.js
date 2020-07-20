@@ -71,7 +71,7 @@ const movies = [
   },
 ];
 
-it(`Render SmallMovieCard`, () => {
+it(`Render MoviesList`, () => {
   const tree = renderer
     .create(<MoviesList
       movies={movies}
