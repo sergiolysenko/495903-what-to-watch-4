@@ -7,6 +7,7 @@ const initialState = {
   genre: Genres.ALL,
   allMovies,
   showingMoviesCount: SHOWING_MOVIES_COUNT_ON_START,
+  isPlayerOpen: false,
 };
 
 const ActionType = {
@@ -14,6 +15,7 @@ const ActionType = {
   CHANGE_MOVIE_ID: `CHANGE_MOVIE_ID`,
   SHOW_MORE_MOVIES: `SHOW_MORE_MOVIES`,
   RESET_MOVIES_COUNT: `RESET_MOVIES_COUNT`,
+  OPEN_PLAYER: `OPEN_PLAYER`,
 };
 
 const ActionCreator = {
@@ -33,6 +35,10 @@ const ActionCreator = {
     type: ActionType.RESET_MOVIES_COUNT,
     payload: SHOWING_MOVIES_COUNT_ON_START,
   }),
+  openPlayer: () => ({
+    type: ActionType.OPEN_PLAYER,
+    payload: true
+  })
 };
 
 const reducer = (state = initialState, action) => {
@@ -52,6 +58,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.RESET_MOVIES_COUNT:
       return extend(state, {
         showingMoviesCount: action.payload,
+      });
+    case ActionType.OPEN_PLAYER:
+      return extend(state, {
+        isPlayerOpen: action.payload,
       });
     default:
       return state;

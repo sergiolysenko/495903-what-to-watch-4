@@ -4,9 +4,11 @@ import MoviesList from "../movies-list/movies-list.jsx";
 import GenreList from "./../genre-list/genre-list.jsx";
 import {movieShape} from "../utils/constants.js";
 import {ShowMore} from "../show-more/show-more.jsx";
+import PlayButton from "../play-button/play-button.jsx";
+
 
 const Main = (props) => {
-  const {mainCardTitle, mainCardGenre, mainCardYear, movies, isButtonShowMoreDisplayed, onMovieClick, onShowMoreClick} = props;
+  const {mainCardTitle, mainCardGenre, mainCardYear, movies, isButtonShowMoreDisplayed, onMovieClick, onShowMoreClick, onPlayClick} = props;
 
   return (
     <React.Fragment>
@@ -47,12 +49,9 @@ const Main = (props) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
+                <PlayButton
+                  onPlayClick={() => onPlayClick()}
+                />
                 <button className="btn btn--list movie-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
@@ -106,6 +105,7 @@ Main.propTypes = {
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onMovieClick: PropTypes.func.isRequired,
   onShowMoreClick: PropTypes.func.isRequired,
+  onPlayClick: PropTypes.func.isRequired,
 };
 
 export default Main;

@@ -4,12 +4,13 @@ import Tabs from "../tabs/tabs.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
 import {movieShape} from "../utils/constants.js";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
+import PlayButton from "../play-button/play-button.jsx";
 
 const MoviesListWrapped = withActiveItem(MoviesList);
 const TabsWrapped = withActiveItem(Tabs);
 
 const MoviePage = (props) => {
-  const {movie, reviews, onMovieClick, similarMovies} = props;
+  const {movie, reviews, onMovieClick, onPlayClick, similarMovies} = props;
   const {title, genre, year, backgroundImg, posterImg} = movie;
 
   return (<React.Fragment>
@@ -46,12 +47,11 @@ const MoviePage = (props) => {
             </p>
 
             <div className="movie-card__buttons">
-              <button className="btn btn--play movie-card__button" type="button">
-                <svg viewBox="0 0 19 19" width="19" height="19">
-                  <use xlinkHref="#play-s"></use>
-                </svg>
-                <span>Play</span>
-              </button>
+
+              <PlayButton
+                onPlayClick={onPlayClick}
+              />
+
               <button className="btn btn--list movie-card__button" type="button">
                 <svg viewBox="0 0 19 20" width="19" height="20">
                   <use xlinkHref="#add"></use>
@@ -120,6 +120,7 @@ MoviePage.propTypes = {
     date: PropTypes.string.isRequired,
   })).isRequired,
   onMovieClick: PropTypes.func.isRequired,
+  onPlayClick: PropTypes.func.isRequired,
 };
 
 export default MoviePage;

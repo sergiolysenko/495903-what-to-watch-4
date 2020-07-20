@@ -8,6 +8,7 @@ const withPlayingCard = (Component) => {
 
       this.state = {
         isPlaying: false,
+        isStopped: true,
       };
 
       this.handleHover = this.handleHover.bind(this);
@@ -19,7 +20,10 @@ const withPlayingCard = (Component) => {
     }
 
     handleHover() {
-      this.videoTimer = setTimeout(() => this.setState({isPlaying: true}), VideoPreview.INTERVAL);
+      this.videoTimer = setTimeout(() => this.setState({
+        isPlaying: true,
+        isStopped: false,
+      }), VideoPreview.INTERVAL);
     }
 
     handleOut() {
@@ -27,6 +31,7 @@ const withPlayingCard = (Component) => {
 
       this.setState({
         isPlaying: false,
+        isStopped: true,
       });
     }
 
@@ -34,6 +39,7 @@ const withPlayingCard = (Component) => {
       return (
         <Component
           {...this.props}
+          isStopped={this.state.isStopped}
           isPlaying={this.state.isPlaying}
           onMouseEnter={this.handleHover}
           onMouseLeave={this.handleOut}

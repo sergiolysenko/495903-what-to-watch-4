@@ -1,10 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import VideoPlayer from "../video-player/video-player.jsx";
 import {VideoPreview} from "../utils/constants.js";
+import VideoPlayer from "../video-player/video-player.jsx";
+import withVideoPlayer from "../../hocs/with-video-player/with-video-player.js";
+
+const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 const SmallMovieCard = (props) => {
-  const {movie, isPlaying, onClick, onMouseEnter, onMouseLeave} = props;
+  const {movie, isPlaying, onClick, onMouseEnter, onMouseLeave, isStopped} = props;
   const {id, title, cardImg, preview} = movie;
 
   return (
@@ -20,7 +23,8 @@ const SmallMovieCard = (props) => {
       className="small-movie-card catalog__movies-card">
 
       <div className="small-movie-card__image">
-        <VideoPlayer
+        <VideoPlayerWrapped
+          isStopped={isStopped}
           isMuted={VideoPreview.IS_MUTED}
           poster={cardImg}
           source={preview}
@@ -50,6 +54,7 @@ SmallMovieCard.propTypes = {
     preview: PropTypes.string.isRequired,
   }).isRequired,
   isPlaying: PropTypes.bool.isRequired,
+  isStopped: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
