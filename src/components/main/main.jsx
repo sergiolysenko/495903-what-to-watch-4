@@ -8,13 +8,15 @@ import PlayButton from "../play-button/play-button.jsx";
 
 
 const Main = (props) => {
-  const {mainCardTitle, mainCardGenre, mainCardYear, movies, isButtonShowMoreDisplayed, onMovieClick, onShowMoreClick, onPlayClick} = props;
+  const {mainCard, movies, isButtonShowMoreDisplayed, onMovieClick, onShowMoreClick, onPlayClick} = props;
+
+  const {title, genre, year, backgroundImg, posterImg} = mainCard;
 
   return (
     <React.Fragment>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={backgroundImg} alt={title} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -38,19 +40,19 @@ const Main = (props) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={posterImg} alt={`${title} + poster`} width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{mainCardTitle}</h2>
+              <h2 className="movie-card__title">{title}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{mainCardGenre}</span>
-                <span className="movie-card__year">{mainCardYear}</span>
+                <span className="movie-card__genre">{genre}</span>
+                <span className="movie-card__year">{year}</span>
               </p>
 
               <div className="movie-card__buttons">
                 <PlayButton
-                  onPlayClick={() => onPlayClick()}
+                  onPlayClick={() => onPlayClick(mainCard)}
                 />
                 <button className="btn btn--list movie-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
@@ -98,9 +100,7 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  mainCardTitle: PropTypes.string.isRequired,
-  mainCardGenre: PropTypes.string.isRequired,
-  mainCardYear: PropTypes.number.isRequired,
+  mainCard: PropTypes.object,
   movies: PropTypes.arrayOf(movieShape).isRequired,
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onMovieClick: PropTypes.func.isRequired,

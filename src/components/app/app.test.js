@@ -108,6 +108,7 @@ it(`Render App`, () => {
     filteredMovies: movies,
     allMovies: movies,
     id: -1,
+    isPlayerOpen: false,
   });
 
   const tree = renderer
@@ -121,6 +122,7 @@ it(`Render App`, () => {
             reviews={reviews}
             isButtonShowMoreDisplayed={true}
             id={-1}
+            isPlayerOpen={false}
           />
         </Provider>, {
           createNodeMock: () => {

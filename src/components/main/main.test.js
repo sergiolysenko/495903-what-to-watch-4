@@ -98,6 +98,7 @@ it(`Render Main`, () => {
             isButtonShowMoreDisplayed={true}
             onShowMoreClick={mockFunc}
             onMovieClick={mockFunc}
+            onPlayClick={mockFunc}
           />
         </Provider>, {
           createNodeMock: () => {

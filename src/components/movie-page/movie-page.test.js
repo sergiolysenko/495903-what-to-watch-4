@@ -93,6 +93,8 @@ const movie = {
   runTime: 125,
 };
 
+const mockFunc = () => {};
+
 it(`Render MoviePage`, () => {
   const tree = renderer
     .create(<MoviePage
@@ -100,7 +102,8 @@ it(`Render MoviePage`, () => {
       movies={movies}
       similarMovies={movies}
       reviews={reviews}
-      onMovieClick={() => {}}
+      onMovieClick={mockFunc}
+      onPlayClick={mockFunc}
     />, {
       createNodeMock: () => {
         return {};

@@ -14,24 +14,22 @@ import withVideoPlayer from "../../hocs/with-video-player/with-video-player.js";
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 const App = (props) => {
-  const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, id, onCardClick, onPlayClick, isPlayerOpen, chosenMovie, similarMoviesToChosen} = props;
+  const {mainCard, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, id, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen} = props;
 
   const renderApp = () => {
-    if (isPlayerOpen) {
+    if (playingMovie) {
       return <VideoPlayerWrapped
         isMuted={false}
-        poster={filteredMovies[0].cardImg}
-        source={filteredMovies[0].preview}
+        poster={playingMovie.cardImg}
+        source={playingMovie.videoLink}
         isPlaying={true}
-        isControlled={isPlayerOpen}
+        onPlayClick={onPlayClick}
       />;
     }
     if (id === -1) {
       return (
         <Main
-          mainCardTitle={mainCardTitle}
-          mainCardGenre={mainCardGenre}
-          mainCardYear={mainCardYear}
+          mainCard={mainCard}
           movies={filteredMovies}
           onMovieClick={onCardClick}
           isButtonShowMoreDisplayed={isButtonShowMoreDisplayed}
@@ -73,7 +71,7 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const {genre, id, allMovies, showingMoviesCount, isPlayerOpen} = state;
+  const {genre, id, allMovies, mainCard, showingMoviesCount, playingMovie} = state;
 
   let movies = allMovies;
   let chosenMovie = {};
@@ -92,12 +90,13 @@ const mapStateToProps = (state) => {
   }
 
   return {
+    mainCard,
     filteredMovies: displayedNumberOfFilms,
     isButtonShowMoreDisplayed,
     id,
     chosenMovie,
     similarMoviesToChosen,
-    isPlayerOpen,
+    playingMovie,
   };
 };
 
@@ -108,15 +107,13 @@ const mapDispatchToProps = (dispatch) => ({
   onCardClick(id) {
     dispatch(ActionCreator.changeMovie(id));
   },
-  onPlayClick() {
-    dispatch(ActionCreator.openPlayer());
+  onPlayClick(movie) {
+    dispatch(ActionCreator.openPlayer(movie));
   },
 });
 
 App.propTypes = {
-  mainCardTitle: PropTypes.string.isRequired,
-  mainCardGenre: PropTypes.string.isRequired,
-  mainCardYear: PropTypes.number.isRequired,
+  mainCard: PropTypes.object,
   filteredMovies: PropTypes.arrayOf(movieShape).isRequired,
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onShowMoreClick: PropTypes.func.isRequired,
@@ -135,7 +132,7 @@ App.propTypes = {
   })).isRequired,
   onCardClick: PropTypes.func.isRequired,
   onPlayClick: PropTypes.func.isRequired,
-  isPlayerOpen: PropTypes.bool.isRequired,
+  playingMovie: PropTypes.object,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

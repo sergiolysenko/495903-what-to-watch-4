@@ -28,7 +28,12 @@ it(`Check if state is playing`, () => {
         isPlaying={isPlaying}
         width={VideoPreview.WIDTH}
         height={VideoPreview.HEIGHT}
-      />
+        progress={10}
+        timeLeft={`10`}
+        handleFullScreen={() => {}}
+      >
+        <video />
+      </VideoPlayer>
   );
   expect(videoPlayer.props().isPlaying).toBe(isPlaying);
 });
@@ -43,7 +48,12 @@ it(`Check if state is not playing`, () => {
         isPlaying={isPlaying}
         width={VideoPreview.WIDTH}
         height={VideoPreview.HEIGHT}
-      />
+        progress={10}
+        timeLeft={`10`}
+        handleFullScreen={() => {}}
+      >
+        <video />
+      </VideoPlayer>
   );
   expect(videoPlayer.props().isPlaying).toBe(isPlaying);
 });

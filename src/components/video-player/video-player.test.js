@@ -23,7 +23,12 @@ it(`VideoPlayer is rendered correctly`, () => {
         isPlaying={true}
         width={VideoPreview.WIDTH}
         height={VideoPreview.HEIGHT}
-      />, {
+        progress={10}
+        timeLeft={`10`}
+        handleFullScreen={() => {}}
+      >
+        <video />
+      </VideoPlayer>, {
         createNodeMock: () => {
           return {};
         }

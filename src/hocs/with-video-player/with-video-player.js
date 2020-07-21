@@ -13,24 +13,20 @@ const withVideoPlayer = (Component) => {
         isPlaying: this.props.isPlaying,
         progress: 0,
         timeLeft: `00:00:00`,
-        isFullScreen: false,
       };
 
       this.handlePlayClick = this.handlePlayClick.bind(this);
       this.handleFullScreen = this.handleFullScreen.bind(this);
+      this.handleMovieTime = this.handleMovieTime.bind(this);
     }
 
     handleFullScreen() {
-      const {isFullScreen} = this.state;
       const video = this.videoRef.current;
 
-      if (isFullScreen) {
+      if (video.fullscreenElement) {
         video.exitFullScreen();
-        this.setState({isFullScreen: false});
       } else {
         video.requestFullscreen();
-        this.setState({isFullScreen: true});
-        video.fullscreenElement = false;
       }
     }
 
@@ -44,44 +40,30 @@ const withVideoPlayer = (Component) => {
       video.height = height;
       video.poster = poster;
 
-      video.oncanplaythrough = () => this.setState({
-        isLoading: false,
+      video.ontimeupdate = () => this.setState({
+        progress: Math.floor(video.currentTime / video.duration * 100),
+        timeLeft: secondsToTime(video.duration - video.currentTime),
       });
-
-      video.onplay = () => {
-        this.setState({
-          isPlaying: true,
-        });
-      };
-
-      video.onpause = () => this.setState({
-        isPlaying: false,
-      });
-      video.onloadedmetadata = () => {
-        video.ontimeupdate = () => this.setState({
-          progress: Math.floor(video.currentTime / video.duration * 100),
-          timeLeft: secondsToTime(video.duration - video.currentTime),
-        });
-      };
-
     }
 
-    componentDidUpdate(nextProps) {
+    handleMovieTime(evt) {
       const video = this.videoRef.current;
-      const {isPlaying} = this.props;
-      if (nextProps.isPlaying !== isPlaying) {
-        this.setState({
-          isPlaying,
-        });
-      }
+
+      const percent = evt.nativeEvent.offsetX / evt.target.offsetWidth;
+      video.currentTime = percent * video.duration;
+      this.setState({
+        progress: Math.floor(percent * video.duration),
+        timeLeft: secondsToTime(video.duration - video.currentTime),
+      });
+    }
+
+    componentDidUpdate() {
+      const video = this.videoRef.current;
 
       if (this.state.isPlaying) {
         video.play();
       } else {
         video.pause();
-      }
-      if (this.props.isStopped) {
-        video.load();
       }
     }
 
@@ -96,7 +78,6 @@ const withVideoPlayer = (Component) => {
 
     render() {
       const {isPlaying, progress, timeLeft} = this.state;
-      const {isControlled} = this.props;
 
       return (
         <Component
@@ -104,11 +85,14 @@ const withVideoPlayer = (Component) => {
           isPlaying={isPlaying}
           progress={progress}
           timeLeft={timeLeft}
-          isControlled={isControlled}
           handlePlayClick={this.handlePlayClick}
           handleFullScreen={this.handleFullScreen}
+          handleMovieTime={this.handleMovieTime}
         >
-          <video className={isControlled && `player__video`}
+          <video
+            autoPlay={true}
+            onClick={this.handlePlayClick}
+            className="player__video"
             ref={this.videoRef}
           />
         </Component>
@@ -126,8 +110,6 @@ const withVideoPlayer = (Component) => {
     width: PropTypes.number,
     height: PropTypes.number,
     isPlaying: PropTypes.bool,
-    isStopped: PropTypes.bool,
-    isControlled: PropTypes.bool,
   };
 
   return WithVideoPlayer;

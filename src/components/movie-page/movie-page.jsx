@@ -49,7 +49,7 @@ const MoviePage = (props) => {
             <div className="movie-card__buttons">
 
               <PlayButton
-                onPlayClick={onPlayClick}
+                onPlayClick={() => onPlayClick(movie)}
               />
 
               <button className="btn btn--list movie-card__button" type="button">
