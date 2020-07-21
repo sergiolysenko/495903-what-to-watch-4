@@ -88,8 +88,8 @@ const mapDispatchToProps = (dispatch) => ({
   onShowMoreClick() {
     dispatch(ActionCreator.increaseShowingMovies());
   },
-  onCardClick(chosenMovieId) {
-    dispatch(ActionCreator.changeMovie(chosenMovieId));
+  onCardClick(id) {
+    dispatch(ActionCreator.changeMovie(id));
   }
 });
 

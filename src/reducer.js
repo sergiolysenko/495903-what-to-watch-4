@@ -21,9 +21,9 @@ const ActionCreator = {
     type: ActionType.CHANGE_GENRE,
     payload: genre,
   }),
-  changeMovie: (chosenMovieId) => ({
+  changeMovie: (id) => ({
     type: ActionType.CHANGE_MOVIE_ID,
-    payload: chosenMovieId,
+    payload: id,
   }),
   increaseShowingMovies: () => ({
     type: ActionType.SHOW_MORE_MOVIES,
@@ -43,7 +43,7 @@ const reducer = (state = initialState, action) => {
       });
     case ActionType.CHANGE_MOVIE_ID:
       return extend(state, {
-        id: action.payload,
+        chosenMovieId: action.payload,
       });
     case ActionType.SHOW_MORE_MOVIES:
       return extend(state, {
