@@ -10,10 +10,10 @@ import {movieShape, Genres, SIMILAR_MOVIES_COUNT} from "../utils/constants.js";
 import {getSimilarMoviesByGenre} from "../utils/utils.js";
 
 const App = (props) => {
-  const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, id, onCardClick, chosenMovie, similarMoviesToChosen} = props;
+  const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, chosenMovie, similarMoviesToChosen} = props;
 
   const renderApp = () => {
-    if (id === -1) {
+    if (chosenMovieId === -1) {
       return (
         <Main
           mainCardTitle={mainCardTitle}
@@ -57,7 +57,7 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const {genre, id, allMovies, showingMoviesCount} = state;
+  const {genre, chosenMovieId, allMovies, showingMoviesCount} = state;
 
   let movies = allMovies;
   let chosenMovie = {};
@@ -70,15 +70,15 @@ const mapStateToProps = (state) => {
   const isButtonShowMoreDisplayed = movies.length >= showingMoviesCount;
   const displayedNumberOfFilms = movies.slice(0, showingMoviesCount);
 
-  if (id !== -1) {
-    chosenMovie = findMovieById(displayedNumberOfFilms, id);
-    similarMoviesToChosen = getSimilarMoviesByGenre(movies, chosenMovie.genre, id).slice(0, SIMILAR_MOVIES_COUNT);
+  if (chosenMovieId !== -1) {
+    chosenMovie = findMovieById(displayedNumberOfFilms, chosenMovieId);
+    similarMoviesToChosen = getSimilarMoviesByGenre(movies, chosenMovie.genre, chosenMovieId).slice(0, SIMILAR_MOVIES_COUNT);
   }
 
   return {
     filteredMovies: displayedNumberOfFilms,
     isButtonShowMoreDisplayed,
-    id,
+    chosenMovieId,
     chosenMovie,
     similarMoviesToChosen,
   };
@@ -88,8 +88,8 @@ const mapDispatchToProps = (dispatch) => ({
   onShowMoreClick() {
     dispatch(ActionCreator.increaseShowingMovies());
   },
-  onCardClick(id) {
-    dispatch(ActionCreator.changeMovie(id));
+  onCardClick(chosenMovieId) {
+    dispatch(ActionCreator.changeMovie(chosenMovieId));
   }
 });
 
@@ -100,7 +100,7 @@ App.propTypes = {
   filteredMovies: PropTypes.arrayOf(movieShape).isRequired,
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onShowMoreClick: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired,
+  chosenMovieId: PropTypes.number.isRequired,
   chosenMovie: PropTypes.object,
   similarMoviesToChosen: PropTypes.array,
   reviews: PropTypes.arrayOf(PropTypes.shape({
