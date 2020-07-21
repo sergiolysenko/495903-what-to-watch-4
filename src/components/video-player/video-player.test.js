@@ -13,6 +13,8 @@ const movie = {
   cardImg: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
 };
 
+const mockFunc = () => {};
+
 it(`VideoPlayer is rendered correctly`, () => {
 
   const tree = renderer.create(
@@ -25,7 +27,9 @@ it(`VideoPlayer is rendered correctly`, () => {
         height={VideoPreview.HEIGHT}
         progress={10}
         timeLeft={`10`}
-        handleFullScreen={() => {}}
+        handleFullScreen={mockFunc}
+        onPlayClick={mockFunc}
+        handleMovieTime={mockFunc}
       >
         <video />
       </VideoPlayer>, {

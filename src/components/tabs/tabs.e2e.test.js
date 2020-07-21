@@ -32,7 +32,8 @@ const movie = {
   director: `Wes Andreson`,
   starring: [`Bill Murray`, `Edward Norton`],
   preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
-  runTime: 125
+  runTime: 125,
+  videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
 };
 
 it(`Check if state changes by click on details and rended MoviePageDetails component`, () => {
