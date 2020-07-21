@@ -14,7 +14,7 @@ import withVideoPlayer from "../../hocs/with-video-player/with-video-player.js";
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 const App = (props) => {
-  const {mainCard, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, id, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen} = props;
+  const {mainCard, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen} = props;
 
   const renderApp = () => {
     if (playingMovie) {
@@ -26,7 +26,7 @@ const App = (props) => {
         onPlayClick={onPlayClick}
       />;
     }
-    if (id === -1) {
+    if (chosenMovieId === -1) {
       return (
         <Main
           mainCard={mainCard}
@@ -71,7 +71,7 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const {genre, id, allMovies, mainCard, showingMoviesCount, playingMovie} = state;
+  const {genre, chosenMovieId, allMovies, mainCard, showingMoviesCount, playingMovie} = state;
 
   let movies = allMovies;
   let chosenMovie = {};
@@ -84,16 +84,16 @@ const mapStateToProps = (state) => {
   const isButtonShowMoreDisplayed = movies.length >= showingMoviesCount;
   const displayedNumberOfFilms = movies.slice(0, showingMoviesCount);
 
-  if (id !== -1) {
-    chosenMovie = findMovieById(displayedNumberOfFilms, id);
-    similarMoviesToChosen = getSimilarMoviesByGenre(movies, chosenMovie.genre, id).slice(0, SIMILAR_MOVIES_COUNT);
+  if (chosenMovieId !== -1) {
+    chosenMovie = findMovieById(displayedNumberOfFilms, chosenMovieId);
+    similarMoviesToChosen = getSimilarMoviesByGenre(movies, chosenMovie.genre, chosenMovieId).slice(0, SIMILAR_MOVIES_COUNT);
   }
 
   return {
     mainCard,
     filteredMovies: displayedNumberOfFilms,
     isButtonShowMoreDisplayed,
-    id,
+    chosenMovieId,
     chosenMovie,
     similarMoviesToChosen,
     playingMovie,
@@ -117,7 +117,7 @@ App.propTypes = {
   filteredMovies: PropTypes.arrayOf(movieShape).isRequired,
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onShowMoreClick: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired,
+  chosenMovieId: PropTypes.number.isRequired,
   chosenMovie: PropTypes.object,
   similarMoviesToChosen: PropTypes.array,
   reviews: PropTypes.arrayOf(PropTypes.shape({
