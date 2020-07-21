@@ -6,6 +6,7 @@ import Tabs from "./tabs.jsx";
 Enzyme.configure({
   adapter: new Adapter(),
 });
+
 const reviews = [
   {
     "id": 1,
