@@ -5,7 +5,6 @@ import MoviesList from "../movies-list/movies-list.jsx";
 import {movieShape} from "../utils/constants.js";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
 
-const MoviesListWrapped = withActiveItem(MoviesList);
 const TabsWrapped = withActiveItem(Tabs);
 
 const MoviePage = (props) => {
@@ -82,7 +81,7 @@ const MoviePage = (props) => {
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
 
-        <MoviesListWrapped
+        <MoviesList
           movies={similarMovies}
           onClick={onMovieClick}
         />
