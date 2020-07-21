@@ -2,39 +2,27 @@ import React from "react";
 import PropTypes from "prop-types";
 import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
 import {movieShape} from "../utils/constants.js";
+import withPlayingCard from "../../hocs/with-playing-card/with-playing-card.js";
 
-export default class MoviesList extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeCard: null,
-    };
-    this.handleCardHover = this.handleCardHover.bind(this);
-  }
+const SmallCardWrapped = withPlayingCard(SmallMovieCard);
 
-  render() {
-    const {movies, onClick} = this.props;
+const MoviesList = (props) => {
+  const {movies, onClick} = props;
 
-    return (
-      <div className="catalog__movies-list">
-        {movies.map((movie, i) => <SmallMovieCard
-          key={movie.title + i}
-          movie={movie}
-          onClick={onClick}
-          onHover={this.handleCardHover}
-        />)}
-      </div>
-    );
-  }
-
-  handleCardHover(activeMovie) {
-    this.setState({
-      activeCard: activeMovie,
-    });
-  }
-}
+  return (
+    <div className="catalog__movies-list">
+      {movies.map((movie, i) => <SmallCardWrapped
+        key={movie.title + i}
+        movie={movie}
+        onClick={onClick}
+      />)}
+    </div>
+  );
+};
 
 MoviesList.propTypes = {
   movies: PropTypes.arrayOf(movieShape).isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
+
+export default MoviesList;

@@ -3,41 +3,16 @@ import PropTypes from "prop-types";
 import VideoPlayer from "../video-player/video-player.jsx";
 import {VideoPreview} from "../utils/constants.js";
 
-export default class SmallMovieCard extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const SmallMovieCard = (props) => {
+  const {movie, isPlaying, onClick, onMouseEnter, onMouseLeave} = props;
+  const {id, title, cardImg, preview} = movie;
 
-    this.state = {
-      isPlaying: false,
-    };
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.videoTimer);
-  }
-
-  handleHover() {
-    this.videoTimer = setTimeout(() => this.setState({isPlaying: true}), VideoPreview.INTERVAL);
-  }
-
-  handleOut() {
-    clearTimeout(this.videoTimer);
-
-    this.setState({
-      isPlaying: false,
-    });
-  }
-
-  render() {
-    const {movie, onClick, onHover} = this.props;
-    const {id, title, cardImg, preview} = movie;
-
-    return <article
+  return (
+    <article
       onMouseEnter={() => {
-        this.handleHover();
-        onHover(id);
+        onMouseEnter();
       }}
-      onMouseLeave={() => this.handleOut()}
+      onMouseLeave={() => onMouseLeave()}
       onClick={(evt) => {
         evt.preventDefault();
         onClick(id);
@@ -49,7 +24,7 @@ export default class SmallMovieCard extends React.PureComponent {
           isMuted={VideoPreview.IS_MUTED}
           poster={cardImg}
           source={preview}
-          isPlaying={this.state.isPlaying}
+          isPlaying={isPlaying}
           width={VideoPreview.WIDTH}
           height={VideoPreview.HEIGHT}
         />
@@ -63,9 +38,9 @@ export default class SmallMovieCard extends React.PureComponent {
           className="small-movie-card__link"
           href="movie-page.html">{title}</a>
       </h3>
-    </article>;
-  }
-}
+    </article>
+  );
+};
 
 SmallMovieCard.propTypes = {
   movie: PropTypes.shape({
@@ -74,6 +49,10 @@ SmallMovieCard.propTypes = {
     cardImg: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
   }).isRequired,
+  isPlaying: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
-  onHover: PropTypes.func.isRequired
+  onMouseEnter: PropTypes.func.isRequired,
+  onMouseLeave: PropTypes.func.isRequired,
 };
+
+export default SmallMovieCard;

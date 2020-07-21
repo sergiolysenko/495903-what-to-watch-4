@@ -6,91 +6,90 @@ import MoviePage from "../movie-page/movie-page.jsx";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer.js";
 import {findMovieById, getFilteredMovies} from "../utils/utils.js";
-import {movieShape, Genres} from "../utils/constants.js";
+import {movieShape, Genres, SIMILAR_MOVIES_COUNT} from "../utils/constants.js";
+import {getSimilarMoviesByGenre} from "../utils/utils.js";
 
-class App extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const App = (props) => {
+  const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, chosenMovie, similarMoviesToChosen} = props;
 
-    this.state = {
-      selectedMovie: null,
-    };
-
-    this.handleCardClick = this.handleCardClick.bind(this);
-  }
-
-  renderApp() {
-    const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick} = this.props;
-
-    if (this.state.selectedMovie === null) {
+  const renderApp = () => {
+    if (chosenMovieId === -1) {
       return (
         <Main
           mainCardTitle={mainCardTitle}
           mainCardGenre={mainCardGenre}
           mainCardYear={mainCardYear}
           movies={filteredMovies}
-          onMovieClick={this.handleCardClick}
+          onMovieClick={onCardClick}
           isButtonShowMoreDisplayed={isButtonShowMoreDisplayed}
           onShowMoreClick={onShowMoreClick}
         />);
     }
-    const chosenMovie = findMovieById(filteredMovies, this.state.selectedMovie);
+
     return (
       <MoviePage
         movie={chosenMovie}
         movies={filteredMovies}
+        similarMovies={similarMoviesToChosen}
         reviews={reviews}
-        onMovieClick={this.handleCardClick}
+        onMovieClick={onCardClick}
       />);
-  }
+  };
 
-  handleCardClick(id) {
-    this.setState({
-      selectedMovie: id,
-    });
-  }
-
-  render() {
-    const {filteredMovies, reviews} = this.props;
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            {this.renderApp()}
-          </Route>
-          <Route exact path="/movie-page">
-            <MoviePage
-              movie={filteredMovies[0]}
-              movies={filteredMovies}
-              onMovieClick={this.handleCardClick}
-              reviews={reviews}
-            />
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    );
-  }
-}
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          {renderApp()}
+        </Route>
+        <Route exact path="/movie-page">
+          <MoviePage
+            movie={filteredMovies[0]}
+            similarMovies={similarMoviesToChosen}
+            movies={filteredMovies}
+            onMovieClick={onCardClick}
+            reviews={reviews}
+          />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  );
+};
 
 const mapStateToProps = (state) => {
-  const {genre, allMovies, showingMoviesCount} = state;
+  const {genre, chosenMovieId, allMovies, showingMoviesCount} = state;
 
   let movies = allMovies;
+  let chosenMovie = {};
+  let similarMoviesToChosen = [];
+
   if (genre !== Genres.ALL) {
     movies = getFilteredMovies(genre, allMovies);
   }
-  const isButtonShowMoreDisplayed = movies.length >= showingMoviesCount ? true : false;
+
+  const isButtonShowMoreDisplayed = movies.length >= showingMoviesCount;
   const displayedNumberOfFilms = movies.slice(0, showingMoviesCount);
+
+  if (chosenMovieId !== -1) {
+    chosenMovie = findMovieById(displayedNumberOfFilms, chosenMovieId);
+    similarMoviesToChosen = getSimilarMoviesByGenre(movies, chosenMovie.genre, chosenMovieId).slice(0, SIMILAR_MOVIES_COUNT);
+  }
 
   return {
     filteredMovies: displayedNumberOfFilms,
     isButtonShowMoreDisplayed,
+    chosenMovieId,
+    chosenMovie,
+    similarMoviesToChosen,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   onShowMoreClick() {
     dispatch(ActionCreator.increaseShowingMovies());
+  },
+  onCardClick(id) {
+    dispatch(ActionCreator.changeMovie(id));
   }
 });
 
@@ -101,6 +100,9 @@ App.propTypes = {
   filteredMovies: PropTypes.arrayOf(movieShape).isRequired,
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onShowMoreClick: PropTypes.func.isRequired,
+  chosenMovieId: PropTypes.number.isRequired,
+  chosenMovie: PropTypes.object,
+  similarMoviesToChosen: PropTypes.array,
   reviews: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     user: PropTypes.shape({
@@ -111,6 +113,7 @@ App.propTypes = {
     comment: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
   })).isRequired,
+  onCardClick: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

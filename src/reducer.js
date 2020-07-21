@@ -3,6 +3,7 @@ import {Genres, SHOWING_MOVIES_COUNT_ON_START, SHOWING_MOVIES_COUNT_BY_BUTTON} f
 import {allMovies} from "../src/mocks/movies.js";
 
 const initialState = {
+  chosenMovieId: -1,
   genre: Genres.ALL,
   allMovies,
   showingMoviesCount: SHOWING_MOVIES_COUNT_ON_START,
@@ -10,6 +11,7 @@ const initialState = {
 
 const ActionType = {
   CHANGE_GENRE: `CHANGE_GENRE`,
+  CHANGE_MOVIE_ID: `CHANGE_MOVIE_ID`,
   SHOW_MORE_MOVIES: `SHOW_MORE_MOVIES`,
   RESET_MOVIES_COUNT: `RESET_MOVIES_COUNT`,
 };
@@ -18,6 +20,10 @@ const ActionCreator = {
   changeGenre: (genre) => ({
     type: ActionType.CHANGE_GENRE,
     payload: genre,
+  }),
+  changeMovie: (id) => ({
+    type: ActionType.CHANGE_MOVIE_ID,
+    payload: id,
   }),
   increaseShowingMovies: () => ({
     type: ActionType.SHOW_MORE_MOVIES,
@@ -34,6 +40,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.CHANGE_GENRE:
       return extend(state, {
         genre: action.payload,
+      });
+    case ActionType.CHANGE_MOVIE_ID:
+      return extend(state, {
+        chosenMovieId: action.payload,
       });
     case ActionType.SHOW_MORE_MOVIES:
       return extend(state, {

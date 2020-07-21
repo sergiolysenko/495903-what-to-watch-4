@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import MoviesList from "./movies-list.jsx";
 
-const onClick = () => {};
+const mockFunc = () => {};
 
 const movies = [
   {
@@ -71,11 +71,12 @@ const movies = [
   },
 ];
 
-it(`Render SmallMovieCard`, () => {
+it(`Render MoviesList`, () => {
   const tree = renderer
     .create(<MoviesList
       movies={movies}
-      onClick={onClick}
+      onClick={mockFunc}
+      handleActive={mockFunc}
     />, {
       createNodeMock: () => {
         return {};

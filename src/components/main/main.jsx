@@ -73,11 +73,11 @@ const Main = (props) => {
             movies={movies}
             onClick={onMovieClick}
           />
-
-          <ShowMore
-            isButtonDisplayed={isButtonShowMoreDisplayed}
-            onClick={onShowMoreClick}
-          />
+          {isButtonShowMoreDisplayed &&
+            <ShowMore
+              onClick={onShowMoreClick}
+            />
+          }
         </section>
 
         <footer className="page-footer">

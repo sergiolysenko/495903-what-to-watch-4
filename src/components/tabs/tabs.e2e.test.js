@@ -36,37 +36,19 @@ const movie = {
 };
 
 it(`Check if state changes by click on details and rended MoviePageDetails component`, () => {
+  const handleActive = jest.fn();
 
   const tabsComponent = mount(
       <Tabs
         reviews={reviews}
         movie={movie}
+        activeItem={`Overview`}
+        handleActive={handleActive}
       />
   );
   const tabs = tabsComponent.find(`.movie-nav__item`);
   const detailsTab = tabs.at(1);
 
   detailsTab.simulate(`click`);
-  expect(tabsComponent.state().activePage).toBe(`Details`);
-  expect(tabsComponent.find(`MoviePageDetails`).length).toBe(1);
-  expect(tabsComponent.find(`MoviePageReviews`).length).toBe(0);
-  expect(tabsComponent.find(`MoviePageOverview`).length).toBe(0);
-});
-
-it(`Check if state changes by click on reviews and rended MoviePageReviews component`, () => {
-
-  const tabsComponent = mount(
-      <Tabs
-        reviews={reviews}
-        movie={movie}
-      />
-  );
-  const tabs = tabsComponent.find(`.movie-nav__item`);
-  const detailsTab = tabs.at(2);
-
-  detailsTab.simulate(`click`);
-  expect(tabsComponent.state().activePage).toBe(`Reviews`);
-  expect(tabsComponent.find(`MoviePageDetails`).length).toBe(0);
-  expect(tabsComponent.find(`MoviePageReviews`).length).toBe(1);
-  expect(tabsComponent.find(`MoviePageOverview`).length).toBe(0);
+  expect(handleActive.mock.calls.length).toBe(1);
 });

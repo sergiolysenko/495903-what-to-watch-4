@@ -106,7 +106,8 @@ it(`Render App`, () => {
   const store = mockStore({
     genre: `All genres`,
     filteredMovies: movies,
-    allMovies: movies
+    allMovies: movies,
+    chosenMovieId: -1,
   });
 
   const tree = renderer
@@ -119,6 +120,7 @@ it(`Render App`, () => {
             filteredMovies={movies}
             reviews={reviews}
             isButtonShowMoreDisplayed={true}
+            chosenMovieId={-1}
           />
         </Provider>, {
           createNodeMock: () => {
