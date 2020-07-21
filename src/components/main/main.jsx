@@ -6,7 +6,6 @@ import {movieShape} from "../utils/constants.js";
 import {ShowMore} from "../show-more/show-more.jsx";
 import PlayButton from "../play-button/play-button.jsx";
 
-
 const Main = (props) => {
   const {mainCard, movies, isButtonShowMoreDisplayed, onMovieClick, onShowMoreClick, onPlayClick} = props;
 
