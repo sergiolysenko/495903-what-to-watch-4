@@ -40,7 +40,7 @@ export const movieShape = PropTypes.shape({
   year: PropTypes.number.isRequired,
   backgroundImg: PropTypes.string.isRequired,
   posterImg: PropTypes.string.isRequired,
-  rating: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
   ratingCount: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
   director: PropTypes.string.isRequired,

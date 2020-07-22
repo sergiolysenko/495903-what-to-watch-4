@@ -10,10 +10,12 @@ const TabsWrapped = withActiveItem(Tabs);
 
 const MoviePage = (props) => {
   const {movie, reviews, onMovieClick, onPlayClick, similarMovies} = props;
-  const {title, genre, year, backgroundImg, posterImg} = movie;
+  const {title, genre, year, backgroundImg, posterImg, backgroundColor} = movie;
 
   return (<React.Fragment>
-    <section className="movie-card movie-card--full">
+    <section
+      style={{backgroundColor}}
+      className="movie-card movie-card--full">
       <div className="movie-card__hero">
         <div className="movie-card__bg">
           <img src={backgroundImg} alt={title} />
@@ -105,7 +107,7 @@ const MoviePage = (props) => {
 };
 
 MoviePage.propTypes = {
-  movie: movieShape.isRequired,
+  movie: PropTypes.object,
   movies: PropTypes.arrayOf(movieShape).isRequired,
   similarMovies: PropTypes.arrayOf(movieShape).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape({

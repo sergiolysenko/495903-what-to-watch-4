@@ -1,7 +1,6 @@
 import {Genres} from "./constants.js";
 
-const getRatingLevel = (raiting) => {
-  const validRaiting = Number(raiting.replace(`,`, `.`));
+const getRatingLevel = (validRaiting) => {
   if (validRaiting >= 8 && validRaiting < 10) {
     return `Very good`;
   }
