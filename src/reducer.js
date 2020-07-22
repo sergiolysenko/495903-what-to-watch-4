@@ -1,18 +1,19 @@
 import {extend} from "../src/components/utils/utils.js";
 import {Genres, SHOWING_MOVIES_COUNT_ON_START, SHOWING_MOVIES_COUNT_BY_BUTTON} from "../src/components/utils/constants.js";
-import {allMovies} from "../src/mocks/movies.js";
+import {adaptMovies} from "./adapter/movies.js";
 import mainCard from "../src/mocks/main-card.js";
 
 const initialState = {
   chosenMovieId: -1,
   genre: Genres.ALL,
-  allMovies,
+  allMovies: [],
   mainCard,
   showingMoviesCount: SHOWING_MOVIES_COUNT_ON_START,
   playingMovie: null,
 };
 
 const ActionType = {
+  LOAD_MOVIES: `LOAD_MOVIES`,
   CHANGE_GENRE: `CHANGE_GENRE`,
   CHANGE_MOVIE_ID: `CHANGE_MOVIE_ID`,
   SHOW_MORE_MOVIES: `SHOW_MORE_MOVIES`,
@@ -21,6 +22,10 @@ const ActionType = {
 };
 
 const ActionCreator = {
+  loadMovies: (movies) => ({
+    type: ActionType.LOAD_MOVIES,
+    payload: movies,
+  }),
   changeGenre: (genre) => ({
     type: ActionType.CHANGE_GENRE,
     payload: genre,
@@ -43,8 +48,21 @@ const ActionCreator = {
   })
 };
 
+const Operation = {
+  loadMovies: () => (dispatch, getState, api) => {
+    return api.get(`/films`)
+      .then((response) => {
+        dispatch(ActionCreator.loadMovies(response.data));
+      });
+  },
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.LOAD_MOVIES:
+      return extend(state, {
+        allMovies: adaptMovies(action.payload),
+      });
     case ActionType.CHANGE_GENRE:
       return extend(state, {
         genre: action.payload,
@@ -69,4 +87,4 @@ const reducer = (state = initialState, action) => {
       return state;
   }
 };
-export {ActionCreator, ActionType, reducer};
+export {ActionCreator, ActionType, reducer, Operation};
