@@ -4,12 +4,14 @@ import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import MoviePage from "../movie-page/movie-page.jsx";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../reducer.js";
+import {ActionCreator} from "../../reducer/state/state.js";
 import {findMovieById, getFilteredMovies} from "../utils/utils.js";
 import {movieShape, Genres, SIMILAR_MOVIES_COUNT} from "../utils/constants.js";
 import {getSimilarMoviesByGenre} from "../utils/utils.js";
 import VideoPlayer from "../video-player/video-player.jsx";
 import withVideoPlayer from "../../hocs/with-video-player/with-video-player.js";
+import {getMovies, getMainMovie} from "../../reducer/data/selectors.js";
+import {getChosenMovieId, getGenre, getPlayingMovie, getShowingMoviesCount} from "../../reducer/state/selectors.js";
 
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
@@ -71,9 +73,12 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const {genre, chosenMovieId, allMovies, mainCard, showingMoviesCount, playingMovie} = state;
+  const allMovies = getMovies(state);
+  const chosenMovieId = getChosenMovieId(state);
+  const genre = getGenre(state);
+  const showingMoviesCount = getShowingMoviesCount(state);
 
-  let movies = allMovies;
+  let movies = allMovies.slice();
   let chosenMovie = {};
   let similarMoviesToChosen = [];
 
@@ -90,13 +95,13 @@ const mapStateToProps = (state) => {
   }
 
   return {
-    mainCard,
+    mainCard: getMainMovie(state),
     filteredMovies: displayedNumberOfFilms,
     isButtonShowMoreDisplayed,
     chosenMovieId,
     chosenMovie,
     similarMoviesToChosen,
-    playingMovie,
+    playingMovie: getPlayingMovie(state),
   };
 };
 

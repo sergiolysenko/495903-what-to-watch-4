@@ -20,4 +20,4 @@ const adaptMovie = (movie) => ({
 
 const adaptMovies = (movies) => movies.map((movie) => adaptMovie(movie));
 
-export {adaptMovies};
+export {adaptMovie, adaptMovies};

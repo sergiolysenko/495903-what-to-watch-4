@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {MAX_GENRE_LIST} from "../utils/constants.js";
 import {getGenreList} from "../utils/utils.js";
-import {ActionCreator} from "./../../reducer.js";
+import {getMovies} from "../../reducer/data/selectors.js";
+import {getGenre} from "../../reducer/state/selectors.js";
+import {ActionCreator} from "../../reducer/state/state.js";
 
 const GenreList = (props) => {
   const {activeGenre, genreList, onClick} = props;
@@ -32,7 +34,9 @@ const GenreList = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const {genre, allMovies} = state;
+  const allMovies = getMovies(state);
+  const genre = getGenre(state);
+
   const genreList = Array.from(getGenreList(allMovies)).slice(0, MAX_GENRE_LIST);
 
   return {

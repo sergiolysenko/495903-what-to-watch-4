@@ -1,5 +1,5 @@
 import {reducer, ActionCreator} from "./reducer.js";
-import {Genres} from "./components/utils/constants.js";
+import {Genres} from "../components/utils/constants.js";
 
 it(`Reducer without additional parameters should return initial state genre`, () => {
   expect(reducer(void 0, {}).genre).toEqual(Genres.ALL);
