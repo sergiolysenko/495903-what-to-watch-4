@@ -50,7 +50,7 @@ const MoviePage = (props) => {
             <div className="movie-card__buttons">
 
               <PlayButton
-                onPlayClick={() => onPlayClick(movie)}
+                onPlayClick={() => onPlayClick(movie.id)}
               />
 
               <button className="btn btn--list movie-card__button" type="button">

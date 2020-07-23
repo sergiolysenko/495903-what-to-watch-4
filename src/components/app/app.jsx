@@ -5,7 +5,7 @@ import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer/app-state/app-state.js";
 import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen} from "../../reducer/app-state/selectors.js";
-import {getMainMovie, getFilteredMoviesByGenre} from "../../reducer/data/selectors.js";
+import {getMovies, getMainMovie, getFilteredMoviesByGenre} from "../../reducer/data/selectors.js";
 import MoviePage from "../movie-page/movie-page.jsx";
 import VideoPlayer from "../video-player/video-player.jsx";
 import withVideoPlayer from "../../hocs/with-video-player/with-video-player.js";
@@ -14,7 +14,7 @@ import {movieShape} from "../utils/constants.js";
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 const App = (props) => {
-  const {mainCard, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen} = props;
+  const {mainCard, movies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen} = props;
 
   const renderApp = () => {
     if (playingMovie) {
@@ -31,7 +31,7 @@ const App = (props) => {
       return (
         <Main
           mainCard={mainCard}
-          movies={filteredMovies}
+          movies={movies}
           onMovieClick={onCardClick}
           isButtonShowMoreDisplayed={isButtonShowMoreDisplayed}
           onShowMoreClick={onShowMoreClick}
@@ -42,7 +42,7 @@ const App = (props) => {
     return (
       <MoviePage
         movie={chosenMovie}
-        movies={filteredMovies}
+        movies={movies}
         similarMovies={similarMoviesToChosen}
         reviews={reviews}
         onMovieClick={onCardClick}
@@ -58,9 +58,9 @@ const App = (props) => {
         </Route>
         <Route exact path="/movie-page">
           <MoviePage
-            movie={filteredMovies[0]}
+            movie={movies[0]}
             similarMovies={similarMoviesToChosen}
-            movies={filteredMovies}
+            movies={movies}
             onMovieClick={onCardClick}
             reviews={reviews}
             onPlayClick={onPlayClick}
@@ -73,17 +73,18 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
   const genre = getGenre(state);
-  const movies = getFilteredMoviesByGenre(state, genre);
-  const listOfDisplayedMovies = getListOfDisplayedMovies(state, movies);
+  const movies = getMovies(state);
+  const filteredMovies = getFilteredMoviesByGenre(state, genre);
+  const displayedMoviesByButton = getListOfDisplayedMovies(state, filteredMovies);
 
   return {
     mainCard: getMainMovie(state),
-    filteredMovies: listOfDisplayedMovies,
-    isButtonShowMoreDisplayed: displayShowMoreButton(state, listOfDisplayedMovies),
+    movies: displayedMoviesByButton,
+    isButtonShowMoreDisplayed: displayShowMoreButton(state, displayedMoviesByButton),
     chosenMovieId: getChosenMovieId(state),
-    chosenMovie: getChosenMovie(state, movies),
-    similarMoviesToChosen: getSilimalMoviesToChosen(state, movies),
-    playingMovie: getPlayingMovie(state),
+    chosenMovie: getChosenMovie(state, filteredMovies),
+    similarMoviesToChosen: getSilimalMoviesToChosen(state, filteredMovies),
+    playingMovie: getPlayingMovie(state, movies),
   };
 };
 
@@ -94,14 +95,14 @@ const mapDispatchToProps = (dispatch) => ({
   onCardClick(id) {
     dispatch(ActionCreator.changeMovie(id));
   },
-  onPlayClick(movie) {
-    dispatch(ActionCreator.openPlayer(movie));
+  onPlayClick(id) {
+    dispatch(ActionCreator.openPlayer(id));
   },
 });
 
 App.propTypes = {
   mainCard: PropTypes.object,
-  filteredMovies: PropTypes.arrayOf(movieShape).isRequired,
+  movies: PropTypes.arrayOf(movieShape).isRequired,
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onShowMoreClick: PropTypes.func.isRequired,
   chosenMovieId: PropTypes.number.isRequired,

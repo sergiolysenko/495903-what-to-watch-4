@@ -51,7 +51,7 @@ const Main = (props) => {
 
               <div className="movie-card__buttons">
                 <PlayButton
-                  onPlayClick={() => onPlayClick(mainCard)}
+                  onPlayClick={() => onPlayClick(mainCard.id)}
                 />
                 <button className="btn btn--list movie-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">

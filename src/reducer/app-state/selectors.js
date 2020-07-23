@@ -11,9 +11,17 @@ export const getGenre = (state) => {
   return state[NameSpace.APP_STATE].genre;
 };
 
-export const getPlayingMovie = (state) => {
+const getPlayingMovieId = (state) => {
   return state[NameSpace.APP_STATE].playingMovie;
 };
+
+export const getPlayingMovie = createSelector(
+    getPlayingMovieId,
+    (state, movies) => movies,
+    (playingMovieId, movies) => {
+      return findMovieById(movies, playingMovieId);
+    }
+);
 
 export const getShowingMoviesCount = (state) => {
   return state[NameSpace.APP_STATE].showingMoviesCount;
