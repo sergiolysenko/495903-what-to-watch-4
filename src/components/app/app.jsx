@@ -42,7 +42,6 @@ const App = (props) => {
     return (
       <MoviePage
         movie={chosenMovie}
-        movies={movies}
         similarMovies={similarMoviesToChosen}
         reviews={reviews}
         onMovieClick={onCardClick}
@@ -60,7 +59,6 @@ const App = (props) => {
           <MoviePage
             movie={movies[0]}
             similarMovies={similarMoviesToChosen}
-            movies={movies}
             onMovieClick={onCardClick}
             reviews={reviews}
             onPlayClick={onPlayClick}

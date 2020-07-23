@@ -108,7 +108,6 @@ const MoviePage = (props) => {
 
 MoviePage.propTypes = {
   movie: PropTypes.object,
-  movies: PropTypes.arrayOf(movieShape).isRequired,
   similarMovies: PropTypes.arrayOf(movieShape).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
