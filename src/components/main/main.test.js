@@ -7,12 +7,6 @@ import {Provider} from "react-redux";
 const mockStore = configureStore([]);
 const mockFunc = () => {};
 
-const TestSettings = {
-  MAIN_CARD_TITLE: `The Grand Budapest Hotel`,
-  MAIN_CARD_GENRE: `Drama`,
-  MAIN_CARD_YEAR: 2014,
-};
-
 const movies = [
   {
     id: 1,
@@ -28,6 +22,7 @@ const movies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
   {
@@ -44,6 +39,7 @@ const movies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 99,
   },
   {
@@ -60,6 +56,7 @@ const movies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 200,
   },
   {
@@ -76,6 +73,7 @@ const movies = [
     director: `Leo Dicaprio`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 188,
   },
 ];
@@ -91,13 +89,12 @@ it(`Render Main`, () => {
     .create(
         <Provider store={store}>
           <Main
-            mainCardTitle={TestSettings.MAIN_CARD_TITLE}
-            mainCardGenre={TestSettings.MAIN_CARD_GENRE}
-            mainCardYear={TestSettings.MAIN_CARD_YEAR}
+            mainCard={movies[0]}
             movies={movies}
             isButtonShowMoreDisplayed={true}
             onShowMoreClick={mockFunc}
             onMovieClick={mockFunc}
+            onPlayClick={mockFunc}
           />
         </Provider>, {
           createNodeMock: () => {

@@ -1,58 +1,74 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default class VideoPlayer extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const VideoPlayer = (props) => {
+  const {children, progress, timeLeft, handlePlayClick, isPlaying, handleFullScreen, onPlayClick, handleMovieTime} = props;
 
-    this.videoRef = React.createRef();
-  }
+  return (
+    <div className="player">
+      {children}
 
-  componentDidMount() {
-    const {isMuted, source, poster, width, height} = this.props;
+      <button
+        onClick={() => onPlayClick(null)}
+        type="button" className="player__exit">Exit</button>
 
-    const video = this.videoRef.current;
-    video.muted = isMuted;
-    video.src = source;
-    video.width = width;
-    video.height = height;
-    video.poster = poster;
-  }
+      <div className="player__controls">
+        <div className="player__controls-row">
+          <div
+            onClick={(evt) => handleMovieTime(evt)}
+            className="player__time">
+            <progress className="player__progress" value={progress} max="100"></progress>
+            <div className="player__toggler"
+              style={{left: `${progress}%`}}>Toggler</div>
+          </div>
+          <div className="player__time-value">{timeLeft}</div>
+        </div>
 
-  componentWillUnmount() {
-    const video = this.videoRef.current;
+        <div className="player__controls-row">
+          {isPlaying ?
+            <button
+              onClick={handlePlayClick}
+              type="button" className="player__play">
+              <svg viewBox="0 0 14 21" width="14" height="21">
+                <use xlinkHref="#pause"></use>
+              </svg>
+              <span>Pause</span>
+            </button> :
+            <button
+              onClick={handlePlayClick}
+              type="button" className="player__play">
+              <svg viewBox="0 0 19 19" width="19" height="19">
+                <use xlinkHref="#play-s"></use>
+              </svg>
+              <span>Play</span>
+            </button>
+          }
 
-    video.onplay = null;
-    video.onpause = null;
-    video.ontimeupdate = null;
-    video.src = ``;
+          <div className="player__name">Transpotting</div>
 
-  }
-
-  render() {
-    return (
-      <video
-        ref={this.videoRef}
-      />);
-  }
-
-  componentDidUpdate() {
-    const video = this.videoRef.current;
-
-    if (this.props.isPlaying) {
-      video.play();
-    } else {
-      video.load();
-    }
-  }
-}
-
-VideoPlayer.propTypes = {
-  isMuted: PropTypes.bool.isRequired,
-  source: PropTypes.string.isRequired,
-  poster: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
+          <button
+            onClick={handleFullScreen}
+            type="button" className="player__full-screen">
+            <svg viewBox="0 0 27 27" width="27" height="27">
+              <use xlinkHref="#full-screen"></use>
+            </svg>
+            <span>Full screen</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
+VideoPlayer.propTypes = {
+  children: PropTypes.node.isRequired,
+  handlePlayClick: PropTypes.func,
+  onPlayClick: PropTypes.func,
+  isPlaying: PropTypes.bool,
+  progress: PropTypes.number.isRequired,
+  handleFullScreen: PropTypes.func.isRequired,
+  timeLeft: PropTypes.string.isRequired,
+  handleMovieTime: PropTypes.func.isRequired,
+};
+
+export default VideoPlayer;

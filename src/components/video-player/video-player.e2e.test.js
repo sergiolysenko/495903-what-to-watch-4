@@ -13,6 +13,7 @@ const movie = {
   preview: `https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4`,
   cardImg: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
 };
+const mockFunc = () => {};
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -28,7 +29,14 @@ it(`Check if state is playing`, () => {
         isPlaying={isPlaying}
         width={VideoPreview.WIDTH}
         height={VideoPreview.HEIGHT}
-      />
+        progress={10}
+        timeLeft={`10`}
+        handleFullScreen={mockFunc}
+        onPlayClick={mockFunc}
+        handleMovieTime={mockFunc}
+      >
+        <video />
+      </VideoPlayer>
   );
   expect(videoPlayer.props().isPlaying).toBe(isPlaying);
 });
@@ -43,7 +51,14 @@ it(`Check if state is not playing`, () => {
         isPlaying={isPlaying}
         width={VideoPreview.WIDTH}
         height={VideoPreview.HEIGHT}
-      />
+        progress={10}
+        timeLeft={`10`}
+        handleFullScreen={mockFunc}
+        onPlayClick={mockFunc}
+        handleMovieTime={mockFunc}
+      >
+        <video />
+      </VideoPlayer>
   );
   expect(videoPlayer.props().isPlaying).toBe(isPlaying);
 });

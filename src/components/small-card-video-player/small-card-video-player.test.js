@@ -1,6 +1,6 @@
-import VideoPlayer from "./video-player.jsx";
 import React from "react";
 import renderer from "react-test-renderer";
+import SmallCardVideoPlayer from "./small-card-video-player.js";
 
 const VideoPreview = {
   WIDTH: 200,
@@ -13,26 +13,17 @@ const movie = {
   cardImg: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
 };
 
-const mockFunc = () => {};
-
-it(`VideoPlayer is rendered correctly`, () => {
+it(`Render SmallCardVideoPlayer`, () => {
 
   const tree = renderer.create(
-      <VideoPlayer
+      <SmallCardVideoPlayer
         isMuted={VideoPreview.IS_MUTED}
         poster={movie.cardImg}
         source={movie.preview}
-        isPlaying={true}
         width={VideoPreview.WIDTH}
         height={VideoPreview.HEIGHT}
-        progress={10}
-        timeLeft={`10`}
-        handleFullScreen={mockFunc}
-        onPlayClick={mockFunc}
-        handleMovieTime={mockFunc}
-      >
-        <video />
-      </VideoPlayer>, {
+        isPlaying={true}
+      />, {
         createNodeMock: () => {
           return {};
         }

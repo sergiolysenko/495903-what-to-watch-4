@@ -73,4 +73,11 @@ const getFilteredMovies = (genre, movies) => {
   return movies.filter((movie) => movie.genre === genre);
 };
 
-export {getRatingLevel, findMovieById, getMovieReviews, getSimilarMoviesByGenre, extend, getGenreList, getFilteredMovies};
+const secondsToTime = (seconds) => {
+  const date = new Date(0);
+  date.setSeconds(seconds);
+  const timeString = date.toISOString().substring(11, 19);
+  return timeString;
+};
+
+export {getRatingLevel, findMovieById, getMovieReviews, getSimilarMoviesByGenre, extend, getGenreList, getFilteredMovies, secondsToTime};

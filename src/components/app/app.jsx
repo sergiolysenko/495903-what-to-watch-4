@@ -8,21 +8,34 @@ import {ActionCreator} from "../../reducer.js";
 import {findMovieById, getFilteredMovies} from "../utils/utils.js";
 import {movieShape, Genres, SIMILAR_MOVIES_COUNT} from "../utils/constants.js";
 import {getSimilarMoviesByGenre} from "../utils/utils.js";
+import VideoPlayer from "../video-player/video-player.jsx";
+import withVideoPlayer from "../../hocs/with-video-player/with-video-player.js";
+
+const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 const App = (props) => {
-  const {mainCardTitle, mainCardGenre, mainCardYear, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, chosenMovie, similarMoviesToChosen} = props;
+  const {mainCard, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen} = props;
 
   const renderApp = () => {
+    if (playingMovie) {
+      return <VideoPlayerWrapped
+        isMuted={false}
+        poster={playingMovie.cardImg}
+        source={playingMovie.videoLink}
+        isPlaying={true}
+        onPlayClick={onPlayClick}
+      />;
+    }
+
     if (chosenMovieId === -1) {
       return (
         <Main
-          mainCardTitle={mainCardTitle}
-          mainCardGenre={mainCardGenre}
-          mainCardYear={mainCardYear}
+          mainCard={mainCard}
           movies={filteredMovies}
           onMovieClick={onCardClick}
           isButtonShowMoreDisplayed={isButtonShowMoreDisplayed}
           onShowMoreClick={onShowMoreClick}
+          onPlayClick={onPlayClick}
         />);
     }
 
@@ -33,6 +46,7 @@ const App = (props) => {
         similarMovies={similarMoviesToChosen}
         reviews={reviews}
         onMovieClick={onCardClick}
+        onPlayClick={onPlayClick}
       />);
   };
 
@@ -49,6 +63,7 @@ const App = (props) => {
             movies={filteredMovies}
             onMovieClick={onCardClick}
             reviews={reviews}
+            onPlayClick={onPlayClick}
           />
         </Route>
       </Switch>
@@ -57,7 +72,7 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const {genre, chosenMovieId, allMovies, showingMoviesCount} = state;
+  const {genre, chosenMovieId, allMovies, mainCard, showingMoviesCount, playingMovie} = state;
 
   let movies = allMovies;
   let chosenMovie = {};
@@ -76,11 +91,13 @@ const mapStateToProps = (state) => {
   }
 
   return {
+    mainCard,
     filteredMovies: displayedNumberOfFilms,
     isButtonShowMoreDisplayed,
     chosenMovieId,
     chosenMovie,
     similarMoviesToChosen,
+    playingMovie,
   };
 };
 
@@ -90,13 +107,14 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onCardClick(id) {
     dispatch(ActionCreator.changeMovie(id));
-  }
+  },
+  onPlayClick(movie) {
+    dispatch(ActionCreator.openPlayer(movie));
+  },
 });
 
 App.propTypes = {
-  mainCardTitle: PropTypes.string.isRequired,
-  mainCardGenre: PropTypes.string.isRequired,
-  mainCardYear: PropTypes.number.isRequired,
+  mainCard: PropTypes.object,
   filteredMovies: PropTypes.arrayOf(movieShape).isRequired,
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onShowMoreClick: PropTypes.func.isRequired,
@@ -114,6 +132,8 @@ App.propTypes = {
     date: PropTypes.string.isRequired,
   })).isRequired,
   onCardClick: PropTypes.func.isRequired,
+  onPlayClick: PropTypes.func.isRequired,
+  playingMovie: PropTypes.object,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

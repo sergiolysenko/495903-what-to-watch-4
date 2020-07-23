@@ -35,6 +35,7 @@ export const MAX_GENRE_LIST = 10;
 export const movieShape = PropTypes.shape({
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
+  cardImg: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   year: PropTypes.number.isRequired,
   backgroundImg: PropTypes.string.isRequired,
@@ -45,4 +46,6 @@ export const movieShape = PropTypes.shape({
   director: PropTypes.string.isRequired,
   starring: PropTypes.arrayOf(PropTypes.string).isRequired,
   runTime: PropTypes.number.isRequired,
+  preview: PropTypes.string.isRequired,
+  videoLink: PropTypes.string.isRequired,
 });

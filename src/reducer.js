@@ -1,12 +1,15 @@
 import {extend} from "../src/components/utils/utils.js";
 import {Genres, SHOWING_MOVIES_COUNT_ON_START, SHOWING_MOVIES_COUNT_BY_BUTTON} from "../src/components/utils/constants.js";
 import {allMovies} from "../src/mocks/movies.js";
+import mainCard from "../src/mocks/main-card.js";
 
 const initialState = {
   chosenMovieId: -1,
   genre: Genres.ALL,
   allMovies,
+  mainCard,
   showingMoviesCount: SHOWING_MOVIES_COUNT_ON_START,
+  playingMovie: null,
 };
 
 const ActionType = {
@@ -14,6 +17,7 @@ const ActionType = {
   CHANGE_MOVIE_ID: `CHANGE_MOVIE_ID`,
   SHOW_MORE_MOVIES: `SHOW_MORE_MOVIES`,
   RESET_MOVIES_COUNT: `RESET_MOVIES_COUNT`,
+  OPEN_PLAYER: `OPEN_PLAYER`,
 };
 
 const ActionCreator = {
@@ -33,6 +37,10 @@ const ActionCreator = {
     type: ActionType.RESET_MOVIES_COUNT,
     payload: SHOWING_MOVIES_COUNT_ON_START,
   }),
+  openPlayer: (movie) => ({
+    type: ActionType.OPEN_PLAYER,
+    payload: movie
+  })
 };
 
 const reducer = (state = initialState, action) => {
@@ -52,6 +60,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.RESET_MOVIES_COUNT:
       return extend(state, {
         showingMoviesCount: action.payload,
+      });
+    case ActionType.OPEN_PLAYER:
+      return extend(state, {
+        playingMovie: action.payload,
       });
     default:
       return state;

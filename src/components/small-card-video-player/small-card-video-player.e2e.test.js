@@ -1,6 +1,11 @@
-import VideoPlayer from "./video-player.jsx";
 import React from "react";
-import renderer from "react-test-renderer";
+import Enzyme, {mount} from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import SmallCardVideoPlayer from "./small-card-video-player.js";
+
+Enzyme.configure({
+  adapter: new Adapter(),
+});
 
 const VideoPreview = {
   WIDTH: 200,
@@ -13,30 +18,21 @@ const movie = {
   cardImg: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
 };
 
-const mockFunc = () => {};
-
-it(`VideoPlayer is rendered correctly`, () => {
-
-  const tree = renderer.create(
-      <VideoPlayer
+it(`Check if state is playing`, () => {
+  const isPlaying = true;
+  const smallCardVideoPlayer = mount(
+      <SmallCardVideoPlayer
         isMuted={VideoPreview.IS_MUTED}
         poster={movie.cardImg}
         source={movie.preview}
-        isPlaying={true}
+        isPlaying={isPlaying}
         width={VideoPreview.WIDTH}
         height={VideoPreview.HEIGHT}
-        progress={10}
-        timeLeft={`10`}
-        handleFullScreen={mockFunc}
-        onPlayClick={mockFunc}
-        handleMovieTime={mockFunc}
-      >
-        <video />
-      </VideoPlayer>, {
+      />, {
         createNodeMock: () => {
           return {};
         }
-      }).toJSON();
-
-  expect(tree).toMatchSnapshot();
+      }
+  );
+  expect(smallCardVideoPlayer.props().isPlaying).toBe(isPlaying);
 });

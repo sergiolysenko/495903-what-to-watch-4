@@ -13,6 +13,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
   {
@@ -29,6 +30,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
+    videoLink: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
     runTime: 99,
   },
   {
@@ -45,6 +47,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 200,
   },
   {
@@ -61,6 +64,7 @@ const allMovies = [
     director: `Leo Dicaprio`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
+    videoLink: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
     runTime: 188,
   },
   {
@@ -77,6 +81,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 179,
   },
   {
@@ -93,6 +98,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
+    videoLink: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
     runTime: 254,
   },
   {
@@ -109,6 +115,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 38,
   },
   {
@@ -125,6 +132,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`],
     preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
+    videoLink: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
     runTime: 25,
   },
   {
@@ -141,6 +149,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
   {
@@ -157,6 +166,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
   {
@@ -173,6 +183,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
   {
@@ -189,6 +200,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
   {
@@ -205,6 +217,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
   {
@@ -221,6 +234,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
   {
@@ -237,6 +251,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
   {
@@ -253,6 +268,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
   {
@@ -269,6 +285,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
   {
@@ -285,6 +302,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
   {
@@ -301,6 +319,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
   {
@@ -317,6 +336,7 @@ const allMovies = [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tony Revoloru`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`, `Jeff Goldblum`],
     preview: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     runTime: 125
   },
 ];
