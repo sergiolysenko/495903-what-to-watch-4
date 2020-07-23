@@ -7,25 +7,34 @@ import {ActionCreator} from "../../reducer/app-state/app-state.js";
 import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen} from "../../reducer/app-state/selectors.js";
 import {getMainMovie, getFilteredMoviesByGenre} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus} from "../../reducer/user/selector.js";
+import {Operation} from "../../reducer/user/user.js";
 import MoviePage from "../movie-page/movie-page.jsx";
 import VideoPlayer from "../video-player/video-player.jsx";
 import withVideoPlayer from "../../hocs/with-video-player/with-video-player.js";
 import {movieShape} from "../utils/constants.js";
+import {SingIn} from "../sing-in/sing-in.jsx";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 const App = (props) => {
-  const {mainCard, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus} = props;
+  const {mainCard, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus, onSingInClick} = props;
 
   const renderApp = () => {
     if (playingMovie) {
-      return <VideoPlayerWrapped
-        isMuted={false}
-        poster={playingMovie.cardImg}
-        source={playingMovie.videoLink}
-        isPlaying={true}
-        onPlayClick={onPlayClick}
-      />;
+      if (authorizationStatus === AuthorizationStatus.AUTH) {
+        return <VideoPlayerWrapped
+          isMuted={false}
+          poster={playingMovie.cardImg}
+          source={playingMovie.videoLink}
+          isPlaying={true}
+          onPlayClick={onPlayClick}
+        />;
+      } else if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+        return <SingIn
+          onSingInClick={onSingInClick}
+        />;
+      }
     }
 
     if (chosenMovieId === -1) {
@@ -68,6 +77,11 @@ const App = (props) => {
             onPlayClick={onPlayClick}
           />
         </Route>
+        <Route exact path="/sing-in">
+          <SingIn
+            onSingInClick={onSingInClick}
+          />
+        </Route>
       </Switch>
     </BrowserRouter>
   );
@@ -100,6 +114,9 @@ const mapDispatchToProps = (dispatch) => ({
   onPlayClick(movie) {
     dispatch(ActionCreator.openPlayer(movie));
   },
+  onSingInClick(authData) {
+    dispatch(Operation.login(authData));
+  }
 });
 
 App.propTypes = {
@@ -124,6 +141,7 @@ App.propTypes = {
   onPlayClick: PropTypes.func.isRequired,
   playingMovie: PropTypes.object,
   authorizationStatus: PropTypes.string.isRequired,
+  onSingInClick: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

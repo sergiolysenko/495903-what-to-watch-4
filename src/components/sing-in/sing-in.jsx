@@ -1,9 +1,28 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const UserPage = (props) => {
-  const {} = props;
-  return (
-    <div className="user-page">
+class SingIn extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.emailRef = React.createRef();
+    this.passwordRef = React.createRef();
+
+    this.handleSubmitClick = this.handleSubmitClick.bind(this);
+  }
+
+  handleSubmitClick(evt) {
+    const {onSingInClick} = this.props;
+    evt.preventDefault();
+
+    onSingInClick({
+      email: this.emailRef.current.value,
+      password: this.passwordRef.current.value,
+    });
+  }
+
+  render() {
+    return <div className="user-page">
       <header className="page-header user-page__head">
         <div className="logo">
           <a href="main.html" className="logo__link">
@@ -20,16 +39,23 @@ const UserPage = (props) => {
         <form action="#" className="sign-in__form">
           <div className="sign-in__fields">
             <div className="sign-in__field">
-              <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
+              <input
+                ref={this.emailRef}
+                className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
             <div className="sign-in__field">
-              <input className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" />
+              <input
+                ref={this.passwordRef}
+                className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>
           </div>
           <div className="sign-in__submit">
-            <button className="sign-in__btn" type="submit">Sign in</button>
+            <button
+              onClick={this.handleSubmitClick}
+              className="sign-in__btn"
+              type="submit">Sign in</button>
           </div>
         </form>
       </div>
@@ -47,7 +73,12 @@ const UserPage = (props) => {
           <p>© 2019 What to watch Ltd.</p>
         </div>
       </footer>
-    </div>);
+    </div>;
+  }
+}
+
+SingIn.propTypes = {
+  onSingInClick: PropTypes.func.isRequired,
 };
 
-export {UserPage};
+export {SingIn};
