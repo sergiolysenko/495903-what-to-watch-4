@@ -10,7 +10,7 @@ const initialState = {
 };
 
 const ActionType = {
-  REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`
+  REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
 };
 
 const ActionCreator = {
@@ -28,6 +28,18 @@ const Operation = {
     })
     .catch((err) =>{
       throw (err);
+    });
+  },
+  login: (authData) => (dispatch, getState, api) => {
+    return api.post(`/login`, {
+      email: authData.email,
+      password: authData.password,
+    })
+    .then(() => {
+      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+    })
+    .catch((err) => {
+      throw err;
     });
   }
 };

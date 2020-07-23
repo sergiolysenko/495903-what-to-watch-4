@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer/app-state/app-state.js";
 import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen} from "../../reducer/app-state/selectors.js";
 import {getMainMovie, getFilteredMoviesByGenre} from "../../reducer/data/selectors.js";
+import {getAuthorizationStatus} from "../../reducer/user/selector.js";
 import MoviePage from "../movie-page/movie-page.jsx";
 import VideoPlayer from "../video-player/video-player.jsx";
 import withVideoPlayer from "../../hocs/with-video-player/with-video-player.js";
@@ -14,7 +15,7 @@ import {movieShape} from "../utils/constants.js";
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 const App = (props) => {
-  const {mainCard, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen} = props;
+  const {mainCard, filteredMovies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus} = props;
 
   const renderApp = () => {
     if (playingMovie) {
@@ -36,6 +37,7 @@ const App = (props) => {
           isButtonShowMoreDisplayed={isButtonShowMoreDisplayed}
           onShowMoreClick={onShowMoreClick}
           onPlayClick={onPlayClick}
+          authorizationStatus={authorizationStatus}
         />);
     }
 
@@ -84,6 +86,7 @@ const mapStateToProps = (state) => {
     chosenMovie: getChosenMovie(state, movies),
     similarMoviesToChosen: getSilimalMoviesToChosen(state, movies),
     playingMovie: getPlayingMovie(state),
+    authorizationStatus: getAuthorizationStatus(state),
   };
 };
 
@@ -120,6 +123,7 @@ App.propTypes = {
   onCardClick: PropTypes.func.isRequired,
   onPlayClick: PropTypes.func.isRequired,
   playingMovie: PropTypes.object,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
