@@ -11,8 +11,7 @@ const withVideoPlayer = (Component) => {
 
       this.state = {
         isPlaying: this.props.isPlaying,
-        progress: 0,
-        timeLeft: `00:00:00`,
+        currentTime: 0,
       };
 
       this.handlePlayClick = this.handlePlayClick.bind(this);
@@ -40,10 +39,11 @@ const withVideoPlayer = (Component) => {
       video.height = height;
       video.poster = poster;
 
-      video.ontimeupdate = () => this.setState({
-        progress: Math.floor(video.currentTime / video.duration * 100),
-        timeLeft: secondsToTime(video.duration - video.currentTime),
-      });
+      video.ontimeupdate = () => {
+        this.setState({
+          currentTime: video.currentTime,
+        });
+      };
     }
 
     handleMovieTime(evt) {
@@ -51,10 +51,6 @@ const withVideoPlayer = (Component) => {
 
       const percent = evt.nativeEvent.offsetX / evt.target.offsetWidth;
       video.currentTime = percent * video.duration;
-      this.setState({
-        progress: Math.floor(percent * video.duration),
-        timeLeft: secondsToTime(video.duration - video.currentTime),
-      });
     }
 
     componentDidUpdate() {
@@ -77,7 +73,14 @@ const withVideoPlayer = (Component) => {
     }
 
     render() {
-      const {isPlaying, progress, timeLeft} = this.state;
+      const {isPlaying} = this.state;
+      const video = this.videoRef.current;
+      let progress = 0;
+      let timeLeft = `00:00:00`;
+      if (video) {
+        progress = Math.floor(this.state.currentTime / video.duration * 100);
+        timeLeft = secondsToTime(video.duration - this.state.currentTime);
+      }
 
       return (
         <Component

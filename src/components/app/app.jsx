@@ -26,6 +26,7 @@ const App = (props) => {
         onPlayClick={onPlayClick}
       />;
     }
+
     if (chosenMovieId === -1) {
       return (
         <Main
