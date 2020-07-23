@@ -8,8 +8,6 @@ const withVideoPlayer = (Component) => {
       super(props);
 
       this.videoRef = React.createRef();
-      this.progress = 0;
-      this.timeLeft = `00:00:00`;
 
       this.state = {
         isPlaying: this.props.isPlaying,
@@ -45,8 +43,6 @@ const withVideoPlayer = (Component) => {
         this.setState({
           currentTime: video.currentTime,
         });
-        this.progress = Math.floor(this.state.currentTime / video.duration * 100);
-        this.timeLeft = secondsToTime(video.duration - this.state.currentTime);
       };
     }
 
@@ -78,13 +74,20 @@ const withVideoPlayer = (Component) => {
 
     render() {
       const {isPlaying} = this.state;
+      const video = this.videoRef.current;
+      let progress = 0;
+      let timeLeft = `00:00:00`;
+      if (video) {
+        progress = Math.floor(this.state.currentTime / video.duration * 100);
+        timeLeft = secondsToTime(video.duration - this.state.currentTime);
+      }
 
       return (
         <Component
           {...this.props}
           isPlaying={isPlaying}
-          progress={this.progress}
-          timeLeft={this.timeLeft}
+          progress={progress}
+          timeLeft={timeLeft}
           handlePlayClick={this.handlePlayClick}
           handleFullScreen={this.handleFullScreen}
           handleMovieTime={this.handleMovieTime}
