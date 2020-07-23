@@ -4,6 +4,11 @@ exports[`Render MoviePage 1`] = `
 Array [
   <section
     className="movie-card movie-card--full"
+    style={
+      Object {
+        "backgroundColor": undefined,
+      }
+    }
   >
     <div
       className="movie-card__hero"
@@ -202,7 +207,7 @@ Array [
             <div
               className="movie-rating__score"
             >
-              5,6
+              5
             </div>
             <p
               className="movie-rating__meta"

@@ -3,6 +3,7 @@ import renderer from "react-test-renderer";
 import App from "./app.jsx";
 import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
+import NameSpace from "../../reducer/name-space.js";
 
 const mockStore = configureStore([]);
 
@@ -38,7 +39,7 @@ const movies = [
     year: 2014,
     backgroundImg: `img/bg-the-grand-budapest-hotel.jpg`,
     posterImg: `img/the-grand-budapest-hotel-poster.jpg`,
-    rating: `6,3`,
+    rating: 5,
     ratingCount: 40,
     description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege. Gustave prides himself on providing first-class service to the hotel's guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave's lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
     director: `Wes Andreson`,
@@ -55,7 +56,7 @@ const movies = [
     year: 2000,
     backgroundImg: `img/bg-the-grand-budapest-hotel.jpg`,
     posterImg: `img/the-grand-budapest-hotel-poster.jpg`,
-    rating: `2,2`,
+    rating: 5,
     ratingCount: 240,
     description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege. Gustave prides himself on providing first-class service to the hotel's guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave's lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
     director: `Wes Andreson`,
@@ -72,7 +73,7 @@ const movies = [
     year: 2002,
     backgroundImg: `img/bg-the-grand-budapest-hotel.jpg`,
     posterImg: `img/the-grand-budapest-hotel-poster.jpg`,
-    rating: `4,3`,
+    rating: 5,
     ratingCount: 240,
     description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege. Gustave prides himself on providing first-class service to the hotel's guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave's lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
     director: `Wes Andreson`,
@@ -89,7 +90,7 @@ const movies = [
     year: 1988,
     backgroundImg: `img/bg-the-grand-budapest-hotel.jpg`,
     posterImg: `img/the-grand-budapest-hotel-poster.jpg`,
-    rating: `5,6`,
+    rating: 3,
     ratingCount: 188,
     description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege. Gustave prides himself on providing first-class service to the hotel's guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave's lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
     director: `Leo Dicaprio`,
@@ -103,12 +104,16 @@ const mockFucnc = () => {};
 
 it(`Render App`, () => {
   const store = mockStore({
-    genre: `All genres`,
-    filteredMovies: movies,
-    allMovies: movies,
-    chosenMovieId: -1,
-    isPlayerOpen: false,
-    mainCard: movies[0],
+    [NameSpace.APP_STATE]: {
+      chosenMovieId: -1,
+      genre: `All genres`,
+      showingMoviesCount: 8,
+      playingMovie: null,
+    },
+    [NameSpace.DATA]: {
+      allMovies: movies,
+      mainCard: movies[0],
+    },
   });
 
   const tree = renderer

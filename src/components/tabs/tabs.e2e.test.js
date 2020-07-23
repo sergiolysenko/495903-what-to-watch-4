@@ -27,7 +27,7 @@ const movie = {
   year: 2014,
   backgroundImg: `img/bg-the-grand-budapest-hotel.jpg`,
   posterImg: `img/the-grand-budapest-hotel-poster.jpg`,
-  rating: `6,3`,
+  rating: 3,
   ratingCount: 40,
   description: `chief suspect in her murder.`,
   director: `Wes Andreson`,
