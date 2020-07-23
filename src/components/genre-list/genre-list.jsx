@@ -4,8 +4,8 @@ import {connect} from "react-redux";
 import {MAX_GENRE_LIST} from "../utils/constants.js";
 import {getGenreList} from "../utils/utils.js";
 import {getMovies} from "../../reducer/data/selectors.js";
-import {getGenre} from "../../reducer/state/selectors.js";
-import {ActionCreator} from "../../reducer/state/state.js";
+import {getGenre} from "../../reducer/app-state/selectors.js";
+import {ActionCreator} from "../../reducer/app-state/app-state.js";
 
 const GenreList = (props) => {
   const {activeGenre, genreList, onClick} = props;

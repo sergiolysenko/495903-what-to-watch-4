@@ -2,16 +2,14 @@ import React from "react";
 import Main from "../main/main.jsx";
 import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
-import MoviePage from "../movie-page/movie-page.jsx";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../reducer/state/state.js";
-import {findMovieById, getFilteredMovies} from "../utils/utils.js";
-import {movieShape, Genres, SIMILAR_MOVIES_COUNT} from "../utils/constants.js";
-import {getSimilarMoviesByGenre} from "../utils/utils.js";
+import {ActionCreator} from "../../reducer/app-state/app-state.js";
+import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen} from "../../reducer/app-state/selectors.js";
+import {getMainMovie, getFilteredMoviesByGenre} from "../../reducer/data/selectors.js";
+import MoviePage from "../movie-page/movie-page.jsx";
 import VideoPlayer from "../video-player/video-player.jsx";
 import withVideoPlayer from "../../hocs/with-video-player/with-video-player.js";
-import {getMovies, getMainMovie} from "../../reducer/data/selectors.js";
-import {getChosenMovieId, getGenre, getPlayingMovie, getShowingMoviesCount} from "../../reducer/state/selectors.js";
+import {movieShape} from "../utils/constants.js";
 
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
@@ -73,34 +71,17 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const allMovies = getMovies(state);
-  const chosenMovieId = getChosenMovieId(state);
   const genre = getGenre(state);
-  const showingMoviesCount = getShowingMoviesCount(state);
-
-  let movies = allMovies.slice();
-  let chosenMovie = {};
-  let similarMoviesToChosen = [];
-
-  if (genre !== Genres.ALL) {
-    movies = getFilteredMovies(genre, allMovies);
-  }
-
-  const isButtonShowMoreDisplayed = movies.length >= showingMoviesCount;
-  const displayedNumberOfFilms = movies.slice(0, showingMoviesCount);
-
-  if (chosenMovieId !== -1) {
-    chosenMovie = findMovieById(displayedNumberOfFilms, chosenMovieId);
-    similarMoviesToChosen = getSimilarMoviesByGenre(movies, chosenMovie.genre, chosenMovieId).slice(0, SIMILAR_MOVIES_COUNT);
-  }
+  const movies = getFilteredMoviesByGenre(state, genre);
+  const listOfDisplayedMovies = getListOfDisplayedMovies(state, movies);
 
   return {
     mainCard: getMainMovie(state),
-    filteredMovies: displayedNumberOfFilms,
-    isButtonShowMoreDisplayed,
-    chosenMovieId,
-    chosenMovie,
-    similarMoviesToChosen,
+    filteredMovies: listOfDisplayedMovies,
+    isButtonShowMoreDisplayed: displayShowMoreButton(state, listOfDisplayedMovies),
+    chosenMovieId: getChosenMovieId(state),
+    chosenMovie: getChosenMovie(state, movies),
+    similarMoviesToChosen: getSilimalMoviesToChosen(state, movies),
     playingMovie: getPlayingMovie(state),
   };
 };
