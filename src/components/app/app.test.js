@@ -101,6 +101,7 @@ const movies = [
   },
 ];
 const mockFucnc = () => {};
+const authorizationStatus = `NO_AUTH`;
 
 it(`Render App`, () => {
   const store = mockStore({
@@ -113,6 +114,9 @@ it(`Render App`, () => {
     [NameSpace.DATA]: {
       allMovies: movies,
       mainCard: movies[0],
+    },
+    [NameSpace.USER]: {
+      authorizationStatus,
     },
   });
 
@@ -132,6 +136,7 @@ it(`Render App`, () => {
             chosenMovie={movies[0]}
             similarMoviesToChosen={movies}
             isPlayerOpen={false}
+            authorizationStatus={authorizationStatus}
           />
         </Provider>, {
           createNodeMock: () => {

@@ -78,6 +78,7 @@ const movies = [
     runTime: 188,
   },
 ];
+const authorizationStatus = `AUTH`;
 
 it(`Render Main`, () => {
   const store = mockStore({
@@ -103,6 +104,7 @@ it(`Render Main`, () => {
             onShowMoreClick={mockFunc}
             onMovieClick={mockFunc}
             onPlayClick={mockFunc}
+            authorizationStatus={authorizationStatus}
           />
         </Provider>, {
           createNodeMock: () => {

@@ -44,20 +44,11 @@ Array [
           </span>
         </a>
       </div>
-      <div
+      <a
         className="user-block"
       >
-        <div
-          className="user-block__avatar"
-        >
-          <img
-            alt="User avatar"
-            height="63"
-            src="img/avatar.jpg"
-            width="63"
-          />
-        </div>
-      </div>
+        Sing in
+      </a>
     </header>
     <div
       className="movie-card__wrap"
