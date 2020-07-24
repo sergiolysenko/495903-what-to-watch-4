@@ -26,13 +26,13 @@ const Operation = {
   loadMovies: () => (dispatch, getState, api) => {
     return api.get(`/films`)
       .then((response) => {
-        dispatch(ActionCreator.setMovies(response.data));
+        dispatch(ActionCreator.setMovies(adaptMovies(response.data)));
       });
   },
   loadMainMovie: () => (dispatch, getState, api) => {
     return api.get(`/films/promo`)
       .then((response) => {
-        dispatch(ActionCreator.setMainMovie(response.data));
+        dispatch(ActionCreator.setMainMovie(adaptMovie(response.data)));
       });
   },
 };
@@ -41,11 +41,11 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.SET_MOVIES:
       return extend(state, {
-        allMovies: adaptMovies(action.payload),
+        allMovies: action.payload,
       });
     case ActionType.SET_MAIN_MOVIE:
       return extend(state, {
-        mainCard: adaptMovie(action.payload),
+        mainCard: action.payload,
       });
     default:
       return state;

@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import {movieShape} from "../utils/constants.js";
 
 const MoviePageDetails = (props) => {
   const {movie} = props;
@@ -37,13 +37,7 @@ const MoviePageDetails = (props) => {
 };
 
 MoviePageDetails.propTypes = {
-  movie: PropTypes.shape({
-    genre: PropTypes.string.isRequired,
-    year: PropTypes.number.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.arrayOf(PropTypes.string).isRequired,
-    runTime: PropTypes.number.isRequired,
-  }).isRequired
+  movie: movieShape.isRequired
 };
 
 export default MoviePageDetails;

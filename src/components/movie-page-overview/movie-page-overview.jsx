@@ -1,6 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {getRatingLevel} from "../utils/utils.js";
+import {movieShape} from "../utils/constants.js";
 
 const MoviePageOverview = (props) => {
   const {movie} = props;
@@ -26,13 +26,7 @@ const MoviePageOverview = (props) => {
 };
 
 MoviePageOverview.propTypes = {
-  movie: PropTypes.shape({
-    rating: PropTypes.number.isRequired,
-    ratingCount: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.arrayOf(PropTypes.string).isRequired,
-  }).isRequired
+  movie: movieShape.isRequired
 };
 
 export default MoviePageOverview;

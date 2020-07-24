@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {getMovieReviews} from "../utils/utils.js";
+import {movieShape} from "../utils/constants.js";
 
 const MoviePageReviews = (props) => {
   const {movie, reviews} = props;
@@ -35,9 +36,7 @@ const MoviePageReviews = (props) => {
 };
 
 MoviePageReviews.propTypes = {
-  movie: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-  }),
+  movie: movieShape.isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     user: PropTypes.shape({

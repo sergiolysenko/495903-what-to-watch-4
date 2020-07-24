@@ -5,7 +5,7 @@ import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer/app-state/app-state.js";
 import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen} from "../../reducer/app-state/selectors.js";
-import {getMovies, getMainMovie, getFilteredMoviesByGenre} from "../../reducer/data/selectors.js";
+import {getMainMovie, getFilteredMoviesByGenre} from "../../reducer/data/selectors.js";
 import MoviePage from "../movie-page/movie-page.jsx";
 import VideoPlayer from "../video-player/video-player.jsx";
 import withVideoPlayer from "../../hocs/with-video-player/with-video-player.js";
@@ -71,7 +71,6 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
   const genre = getGenre(state);
-  const movies = getMovies(state);
   const filteredMovies = getFilteredMoviesByGenre(state, genre);
   const displayedMoviesByButton = getListOfDisplayedMovies(state, filteredMovies);
 
@@ -82,7 +81,7 @@ const mapStateToProps = (state) => {
     chosenMovieId: getChosenMovieId(state),
     chosenMovie: getChosenMovie(state, filteredMovies),
     similarMoviesToChosen: getSilimalMoviesToChosen(state, filteredMovies),
-    playingMovie: getPlayingMovie(state, movies),
+    playingMovie: getPlayingMovie(state),
   };
 };
 
@@ -99,7 +98,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 App.propTypes = {
-  mainCard: PropTypes.object,
+  mainCard: movieShape,
   movies: PropTypes.arrayOf(movieShape).isRequired,
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onShowMoreClick: PropTypes.func.isRequired,

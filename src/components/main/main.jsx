@@ -99,8 +99,8 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  mainCard: PropTypes.object,
-  movies: PropTypes.arrayOf(movieShape).isRequired,
+  mainCard: movieShape,
+  movies: PropTypes.arrayOf(movieShape),
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onMovieClick: PropTypes.func.isRequired,
   onShowMoreClick: PropTypes.func.isRequired,
