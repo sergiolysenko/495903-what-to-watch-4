@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {VideoPreview} from "../utils/constants.js";
+import {VideoPreview, movieShape} from "../utils/constants.js";
 import SmallCardVideoPlayer from "../small-card-video-player/small-card-video-player.js";
 
 const SmallMovieCard = (props) => {
@@ -43,12 +43,7 @@ const SmallMovieCard = (props) => {
 };
 
 SmallMovieCard.propTypes = {
-  movie: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    cardImg: PropTypes.string.isRequired,
-    preview: PropTypes.string.isRequired,
-  }).isRequired,
+  movie: movieShape.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   onMouseEnter: PropTypes.func.isRequired,

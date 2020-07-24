@@ -50,7 +50,7 @@ const MoviePage = (props) => {
             <div className="movie-card__buttons">
 
               <PlayButton
-                onPlayClick={() => onPlayClick(movie)}
+                onPlayClick={() => onPlayClick(movie.id)}
               />
 
               <button className="btn btn--list movie-card__button" type="button">
@@ -107,9 +107,8 @@ const MoviePage = (props) => {
 };
 
 MoviePage.propTypes = {
-  movie: PropTypes.object,
-  movies: PropTypes.arrayOf(movieShape).isRequired,
-  similarMovies: PropTypes.arrayOf(movieShape).isRequired,
+  movie: movieShape,
+  similarMovies: PropTypes.arrayOf(movieShape),
   reviews: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     user: PropTypes.shape({
