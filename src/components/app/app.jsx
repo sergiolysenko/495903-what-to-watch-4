@@ -1,24 +1,26 @@
 import React from "react";
 import Main from "../main/main.jsx";
 import PropTypes from "prop-types";
+import {movieShape, commentsShape} from "../utils/constants.js";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer/app-state/app-state.js";
 import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen} from "../../reducer/app-state/selectors.js";
-import {getMainMovie, getFilteredMoviesByGenre} from "../../reducer/data/selectors.js";
+import {getMainMovie, getFilteredMoviesByGenre, getComments} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus} from "../../reducer/user/selector.js";
-import {Operation} from "../../reducer/user/user.js";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
+import {Operation as UserOperation} from "../../reducer/user/user.js";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
 import MoviePage from "../movie-page/movie-page.jsx";
 import VideoPlayer from "../video-player/video-player.jsx";
 import withVideoPlayer from "../../hocs/with-video-player/with-video-player.js";
-import {movieShape} from "../utils/constants.js";
 import {SingIn} from "../sing-in/sing-in.jsx";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
+import {AddReview} from "../add-review/add-review.jsx";
 
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 const App = (props) => {
-  const {mainCard, movies, reviews, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus, onSingInClick} = props;
+  const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus, comments, onSingInClick} = props;
 
   const renderApp = () => {
     if (playingMovie) {
@@ -54,7 +56,7 @@ const App = (props) => {
       <MoviePage
         movie={chosenMovie}
         similarMovies={similarMoviesToChosen}
-        reviews={reviews}
+        comments={comments}
         onMovieClick={onCardClick}
         onPlayClick={onPlayClick}
       />);
@@ -71,13 +73,17 @@ const App = (props) => {
             movie={movies[0]}
             similarMovies={similarMoviesToChosen}
             onMovieClick={onCardClick}
-            reviews={reviews}
+            comments={comments}
             onPlayClick={onPlayClick}
           />
         </Route>
         <Route exact path="/sing-in">
           <SingIn
             onSingInClick={onSingInClick}
+          />
+        </Route>
+        <Route exact path="/dev-review">
+          <AddReview
           />
         </Route>
       </Switch>
@@ -89,16 +95,18 @@ const mapStateToProps = (state) => {
   const genre = getGenre(state);
   const filteredMovies = getFilteredMoviesByGenre(state, genre);
   const displayedMoviesByButton = getListOfDisplayedMovies(state, filteredMovies);
+  const chosenMovieId = getChosenMovieId(state);
 
   return {
     mainCard: getMainMovie(state),
     movies: displayedMoviesByButton,
     isButtonShowMoreDisplayed: displayShowMoreButton(state, displayedMoviesByButton),
-    chosenMovieId: getChosenMovieId(state),
+    chosenMovieId,
     chosenMovie: getChosenMovie(state, filteredMovies),
     similarMoviesToChosen: getSilimalMoviesToChosen(state, filteredMovies),
     playingMovie: getPlayingMovie(state),
     authorizationStatus: getAuthorizationStatus(state),
+    comments: getComments(state, chosenMovieId),
   };
 };
 
@@ -108,12 +116,13 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onCardClick(id) {
     dispatch(ActionCreator.changeMovie(id));
+    dispatch(DataOperation.loadComments(id));
   },
   onPlayClick(id) {
     dispatch(ActionCreator.openPlayer(id));
   },
   onSingInClick(authData) {
-    dispatch(Operation.login(authData));
+    dispatch(UserOperation.login(authData));
   }
 });
 
@@ -125,16 +134,7 @@ App.propTypes = {
   chosenMovieId: PropTypes.number.isRequired,
   chosenMovie: PropTypes.object,
   similarMoviesToChosen: PropTypes.array,
-  reviews: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-    rating: PropTypes.number.isRequired,
-    comment: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-  })).isRequired,
+  comments: commentsShape,
   onCardClick: PropTypes.func.isRequired,
   onPlayClick: PropTypes.func.isRequired,
   playingMovie: PropTypes.object,

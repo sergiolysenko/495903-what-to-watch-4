@@ -4,11 +4,13 @@ import {adaptMovies, adaptMovie} from "../../adapter/movies.js";
 const initialState = {
   allMovies: [],
   mainCard: {},
+  comments: [],
 };
 
 const ActionType = {
   SET_MOVIES: `SET_MOVIES`,
   SET_MAIN_MOVIE: `SET_MAIN_MOVIE`,
+  SET_COMMENTS: `SET_COMMENTS`,
 };
 
 const ActionCreator = {
@@ -20,6 +22,10 @@ const ActionCreator = {
     type: ActionType.SET_MAIN_MOVIE,
     payload: movie,
   }),
+  setComments: (comments) => ({
+    type: ActionType.SET_COMMENTS,
+    payload: comments,
+  })
 };
 
 const Operation = {
@@ -35,6 +41,21 @@ const Operation = {
         dispatch(ActionCreator.setMainMovie(adaptMovie(response.data)));
       });
   },
+  loadComments: (movieId) => (dispatch, getState, api) => {
+    return api.get(`/comments/${movieId}`)
+      .then((response) => {
+        dispatch(ActionCreator.setComments(response.data));
+      });
+  },
+  addComment: (movieId, data) => (dispatch, getState, api) => {
+    return api.post(`/comments/${movieId}`, {
+      rating: data.rating,
+      comment: data.comment,
+    });
+    /* .then(() => {
+        dispatch(ActionCreator.addComment);
+      }); */
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -46,6 +67,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.SET_MAIN_MOVIE:
       return extend(state, {
         mainCard: action.payload,
+      });
+    case ActionType.SET_COMMENTS:
+      return extend(state, {
+        comments: action.payload,
       });
     default:
       return state;

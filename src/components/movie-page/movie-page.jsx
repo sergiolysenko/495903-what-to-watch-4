@@ -2,14 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import Tabs from "../tabs/tabs.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
-import {movieShape} from "../utils/constants.js";
+import {movieShape, commentsShape} from "../utils/constants.js";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
 import PlayButton from "../play-button/play-button.jsx";
 
 const TabsWrapped = withActiveItem(Tabs);
 
 const MoviePage = (props) => {
-  const {movie, reviews, onMovieClick, onPlayClick, similarMovies} = props;
+  const {movie, comments, onMovieClick, onPlayClick, similarMovies} = props;
   const {title, genre, year, backgroundImg, posterImg, backgroundColor} = movie;
 
   return (<React.Fragment>
@@ -73,7 +73,7 @@ const MoviePage = (props) => {
 
           <TabsWrapped
             movie={movie}
-            reviews={reviews}
+            comments={comments}
           />
 
         </div>
@@ -109,16 +109,7 @@ const MoviePage = (props) => {
 MoviePage.propTypes = {
   movie: movieShape,
   similarMovies: PropTypes.arrayOf(movieShape),
-  reviews: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-    rating: PropTypes.number.isRequired,
-    comment: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-  })).isRequired,
+  comments: commentsShape,
   onMovieClick: PropTypes.func.isRequired,
   onPlayClick: PropTypes.func.isRequired,
 };

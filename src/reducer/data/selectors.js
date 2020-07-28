@@ -11,6 +11,10 @@ export const getMainMovie = (state) => {
   return state[NameSpace.DATA].mainCard;
 };
 
+export const getComments = (state) => {
+  return state[NameSpace.DATA].comments;
+};
+
 export const getFilteredMoviesByGenre = createSelector(
     getMovies,
     (state, genre) => genre,

@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import MoviePageOverview from "../movie-page-overview/movie-page-overview.jsx";
 import MoviePageDetails from "../movie-page-details/movie-page-details.jsx";
 import MoviePageReviews from "../movie-page-reviews/movie-page-reviews.jsx";
-import {MoviePages} from "../utils/constants.js";
+import {MoviePages, commentsShape} from "../utils/constants.js";
 import {movieShape} from "../utils/constants.js";
 
 const Tabs = (props) => {
-  const {movie, reviews, activeItem, handleActive} = props;
+  const {movie, comments, activeItem, handleActive} = props;
 
   const renderSelectedTab = () => {
     switch (activeItem) {
@@ -20,7 +20,7 @@ const Tabs = (props) => {
         return (
           <MoviePageReviews
             movie={movie}
-            reviews={reviews}
+            reviews={comments}
           />);
       default:
         return (
@@ -58,16 +58,7 @@ Tabs.defaultProps = {
 
 Tabs.propTypes = {
   movie: movieShape.isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-    rating: PropTypes.number.isRequired,
-    comment: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-  })).isRequired,
+  comments: commentsShape,
   handleActive: PropTypes.func.isRequired,
   activeItem: PropTypes.string,
 };

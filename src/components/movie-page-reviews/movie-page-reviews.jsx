@@ -1,16 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
-import {getMovieReviews} from "../utils/utils.js";
-import {movieShape} from "../utils/constants.js";
+import {movieShape, commentsShape} from "../utils/constants.js";
 
 const MoviePageReviews = (props) => {
-  const {movie, reviews} = props;
-  const reviewsList = getMovieReviews(movie.id, reviews);
-  if (!reviewsList) {
-    return null;
-  }
+  const {reviews} = props;
+
   return (
-    reviewsList.map((review, i) => {
+    reviews.map((review, i) => {
       return (
         <div
           key={review.id + i}
@@ -37,16 +32,7 @@ const MoviePageReviews = (props) => {
 
 MoviePageReviews.propTypes = {
   movie: movieShape.isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-    rating: PropTypes.number.isRequired,
-    comment: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-  })).isRequired,
+  reviews: commentsShape,
 };
 
 export default MoviePageReviews;

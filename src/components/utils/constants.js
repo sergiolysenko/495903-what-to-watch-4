@@ -49,3 +49,14 @@ export const movieShape = PropTypes.shape({
   preview: PropTypes.string,
   videoLink: PropTypes.string,
 });
+
+export const commentsShape = PropTypes.arrayOf(PropTypes.shape({
+  id: PropTypes.number,
+  user: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  }),
+  rating: PropTypes.number,
+  comment: PropTypes.string,
+  date: PropTypes.string,
+}));
