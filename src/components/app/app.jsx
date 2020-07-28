@@ -21,10 +21,10 @@ import {AppRoute} from "../utils/constants.js";
 
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
-const App = (props) => {
-  const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus, comments, onSingInClick, onCommentSubmit, isCommentWriting, onAddReviewClick, isPostingComment, isPostingError} = props;
+class App extends React.PureComponent {
+  renderApp() {
+    const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus, comments, onSingInClick, onCommentSubmit, isCommentWriting, onAddReviewClick, isPostingComment, isPostingError} = this.props;
 
-  const renderApp = () => {
     if (isCommentWriting) {
       return <AddReview
         movie={chosenMovie}
@@ -73,25 +73,28 @@ const App = (props) => {
         onAddReviewClick={onAddReviewClick}
         authorizationStatus={authorizationStatus}
       />);
-  };
+  }
 
-  return (
-    <Router
-      history={history}
-    >
-      <Switch>
-        <Route exact path={AppRoute.ROOT}>
-          {renderApp()}
-        </Route>
-        <Route exact path={AppRoute.LOGIN}>
-          <SingIn
-            onSingInClick={onSingInClick}
-          />
-        </Route>
-      </Switch>
-    </Router>
-  );
-};
+  render() {
+    const {onSingInClick} = this.props;
+
+    return (
+      <Router
+        history={history}
+      >
+        <Switch>
+          <Route exact path={AppRoute.ROOT}>
+            {this.renderApp()}
+          </Route>
+          <Route exact path={AppRoute.LOGIN}>
+            <SingIn
+              onSingInClick={onSingInClick}
+            />
+          </Route>
+        </Switch>
+      </Router>);
+  }
+}
 
 const mapStateToProps = (state) => {
   const genre = getGenre(state);

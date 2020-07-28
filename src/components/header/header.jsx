@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../utils/constants.js";
+
 const Header = (props) => {
   const {authorizationStatus, children} = props;
 
@@ -10,9 +13,11 @@ const Header = (props) => {
         <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
       </div>
     </div> :
-    <a className="user-block">
-      Sing in
-    </a>;
+    <Link
+      to={AppRoute.LOGIN}
+      className="user-block__link">
+      Sign in
+    </Link>;
 
   return <header className="page-header movie-card__head">
     <div className="logo">
