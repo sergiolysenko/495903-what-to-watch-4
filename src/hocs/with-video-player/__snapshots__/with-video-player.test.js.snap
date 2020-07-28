@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render withVideoPlayer 1`] = `
+<div>
+  <video
+    autoPlay={true}
+    className="player__video"
+    onClick={[Function]}
+  />
+</div>
+`;
