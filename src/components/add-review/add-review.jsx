@@ -12,45 +12,40 @@ class AddReview extends React.PureComponent {
     this.commentRef = React.createRef();
     this.submitRef = React.createRef();
 
-    this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(evt) {
-    const {onSubmit, movie} = this.props;
+    const {onSubmit, movie, isPostingComment} = this.props;
 
     const formRef = this.formRef.current;
     const formData = new FormData(formRef);
-
-    evt.preventDefault();
-    onSubmit(movie.id, {
-      rating: formData.get(`rating`),
-      comment: formData.get(`review-text`)
-    });
-  }
-
-  handleInput() {
-    const formRef = this.formRef.current;
     const commentRef = this.commentRef.current;
-    const submitRef = this.submitRef.current;
     const isRaitingChecked = Boolean(formRef.rating.value);
     const isFormValid = commentRef.value.length >= ReviewLength.MIN;
 
-    if (isRaitingChecked && isFormValid) {
-      submitRef.removeAttribute(`disabled`);
-    } else {
-      submitRef.setAttribute(`disabled`, `disabled`);
+    evt.preventDefault();
+    if (isRaitingChecked && isFormValid && !isPostingComment) {
+      onSubmit(movie.id, {
+        rating: formData.get(`rating`),
+        comment: formData.get(`review-text`)
+      });
     }
   }
 
   render() {
-    const {movie, authorizationStatus} = this.props;
+    const {movie, authorizationStatus, isPostingComment, isPostingError} = this.props;
     const {title, posterImg, backgroundImg, backgroundColor} = movie;
+    const isDisabled = isPostingComment && `disabled`;
 
     return (
       <section
         style={{backgroundColor}}
         className="movie-card movie-card--full">
+        {isPostingError &&
+        <div
+          style={{backgroundColor: `red`, textAlign: `center`}}
+        >Ошибка отправки комментария, попробуйте повторить позднее</div>}
         <div className="movie-card__hero">
           <div className="movie-card__bg">
             <img src={backgroundImg} alt={title} />
@@ -85,32 +80,32 @@ class AddReview extends React.PureComponent {
             action="#"
             className="add-review__form">
             <div
-              onChange={this.handleInput}
               className="rating">
-              <div className="rating__stars">
-                <input className="rating__input" id="star-1" type="radio" name="rating" value="1"/>
+              <div
+                className="rating__stars">
+                <input disabled={isDisabled} className="rating__input" id="star-1" type="radio" name="rating" value="1"/>
                 <label className="rating__label" htmlFor="star-1">Rating 1</label>
 
-                <input className="rating__input" id="star-2" type="radio" name="rating" value="2" />
+                <input disabled={isDisabled} className="rating__input" id="star-2" type="radio" name="rating" value="2" />
                 <label className="rating__label" htmlFor="star-2">Rating 2</label>
 
-                <input className="rating__input" id="star-3" type="radio" name="rating" value="3"/>
+                <input disabled={isDisabled} className="rating__input" id="star-3" type="radio" name="rating" value="3"/>
                 <label className="rating__label" htmlFor="star-3">Rating 3</label>
 
-                <input className="rating__input" id="star-4" type="radio" name="rating" value="4" />
+                <input disabled={isDisabled} className="rating__input" id="star-4" type="radio" name="rating" value="4" />
                 <label className="rating__label" htmlFor="star-4">Rating 4</label>
 
-                <input className="rating__input" id="star-5" type="radio" name="rating" value="5" />
+                <input disabled={isDisabled} className="rating__input" id="star-5" type="radio" name="rating" value="5" />
                 <label className="rating__label" htmlFor="star-5">Rating 5</label>
               </div>
             </div>
 
             <div className="add-review__text">
               <textarea
+                disabled={isDisabled}
                 ref={this.commentRef}
                 minLength={ReviewLength.MIN}
                 maxLength={ReviewLength.MAX}
-                onInput={this.handleInput}
                 className="add-review__textarea"
                 name="review-text"
                 id="review-text"
@@ -120,7 +115,6 @@ class AddReview extends React.PureComponent {
                   ref={this.submitRef}
                   className="add-review__btn"
                   type="submit"
-                  disabled={`disabled`}
                 >Post</button>
               </div>
 
@@ -136,6 +130,8 @@ AddReview.propTypes = {
   movie: movieShape,
   onSubmit: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string,
+  isPostingComment: PropTypes.bool.isRequired,
+  isPostingError: PropTypes.bool.isRequired,
 };
 
 export {AddReview};

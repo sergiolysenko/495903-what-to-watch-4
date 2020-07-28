@@ -34,7 +34,6 @@ Array [
         >
           <a
             className="logo__link"
-            href="main.html"
           >
             <span
               className="logo__letter logo__letter--1"
@@ -53,20 +52,11 @@ Array [
             </span>
           </a>
         </div>
-        <div
+        <a
           className="user-block"
         >
-          <div
-            className="user-block__avatar"
-          >
-            <img
-              alt="User avatar"
-              height="63"
-              src="img/avatar.jpg"
-              width="63"
-            />
-          </div>
-        </div>
+          Sing in
+        </a>
       </header>
       <div
         className="movie-card__wrap"
@@ -131,12 +121,6 @@ Array [
                 My list
               </span>
             </button>
-            <a
-              className="btn movie-card__button"
-              href="add-review.html"
-            >
-              Add review
-            </a>
           </div>
         </div>
       </div>

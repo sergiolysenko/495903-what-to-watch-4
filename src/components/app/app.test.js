@@ -110,6 +110,9 @@ it(`Render App`, () => {
       genre: `All genres`,
       showingMoviesCount: 8,
       playingMovie: null,
+      writingComment: false,
+      postingComment: false,
+      postingError: false,
     },
     [NameSpace.DATA]: {
       allMovies: movies,
@@ -137,6 +140,9 @@ it(`Render App`, () => {
             similarMoviesToChosen={movies}
             isPlayerOpen={false}
             authorizationStatus={authorizationStatus}
+            isCommentWriting={false}
+            isPostingComment={false}
+            isPostingError={false}
           />
         </Provider>, {
           createNodeMock: () => {

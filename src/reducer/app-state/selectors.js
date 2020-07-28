@@ -32,6 +32,14 @@ export const getWritingCommentFlag = (state) => {
   return state[NameSpace.APP_STATE].writingComment;
 };
 
+export const getPostingCommentFlag = (state) => {
+  return state[NameSpace.APP_STATE].postingComment;
+};
+
+export const getPostingError = (state) => {
+  return state[NameSpace.APP_STATE].postingError;
+};
+
 export const displayShowMoreButton = createSelector(
     getShowingMoviesCount,
     (state, movies) => movies,

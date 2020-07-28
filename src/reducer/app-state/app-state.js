@@ -8,6 +8,8 @@ const initialState = {
   showingMoviesCount: SHOWING_MOVIES_COUNT_ON_START,
   playingMovie: null,
   writingComment: false,
+  postingComment: false,
+  postingError: false,
 };
 
 const ActionType = {
@@ -17,6 +19,8 @@ const ActionType = {
   RESET_MOVIES_COUNT: `RESET_MOVIES_COUNT`,
   OPEN_PLAYER: `OPEN_PLAYER`,
   WRITE_COMMENT: `WRITE_COMMENT`,
+  CHANGE_FLAG_POSTING: `CHANGE_FLAG_POSTING`,
+  CHANGE_FLAG_POSTING_ERROR: `CHANGE_FLAG_POSTING_ERROR`
 };
 
 const ActionCreator = {
@@ -44,6 +48,14 @@ const ActionCreator = {
     type: ActionType.WRITE_COMMENT,
     payload,
   }),
+  changeFlagPosting: (payload) => ({
+    type: ActionType.CHANGE_FLAG_POSTING,
+    payload,
+  }),
+  changeFlagPostingError: (payload) => ({
+    type: ActionType.CHANGE_FLAG_POSTING_ERROR,
+    payload,
+  }),
 };
 
 const Operation = {
@@ -55,6 +67,12 @@ const Operation = {
      .then(() => {
        dispatch(DataOperation.loadComments(movieId));
        dispatch(ActionCreator.writeComment(false));
+       dispatch(ActionCreator.changeFlagPosting(false));
+       dispatch(ActionCreator.changeFlagPostingError(false));
+     })
+     .catch(() => {
+       dispatch(ActionCreator.changeFlagPosting(false));
+       dispatch(ActionCreator.changeFlagPostingError(true));
      });
   }
 };
@@ -84,6 +102,14 @@ const reducer = (state = initialState, action) => {
     case ActionType.WRITE_COMMENT:
       return extend(state, {
         writingComment: action.payload,
+      });
+    case ActionType.CHANGE_FLAG_POSTING:
+      return extend(state, {
+        postingComment: action.payload,
+      });
+    case ActionType.CHANGE_FLAG_POSTING_ERROR:
+      return extend(state, {
+        postingError: action.payload,
       });
     default:
       return state;

@@ -5,7 +5,7 @@ import {movieShape, commentsShape} from "../utils/constants.js";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {ActionCreator, Operation as AppStateOperation} from "../../reducer/app-state/app-state.js";
-import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen, getWritingCommentFlag} from "../../reducer/app-state/selectors.js";
+import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen, getWritingCommentFlag, getPostingCommentFlag, getPostingError} from "../../reducer/app-state/selectors.js";
 import {getMainMovie, getFilteredMoviesByGenre, getComments} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus} from "../../reducer/user/selector.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
@@ -20,13 +20,15 @@ import {AddReview} from "../add-review/add-review.jsx";
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 const App = (props) => {
-  const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus, comments, onSingInClick, onCommentSubmit, isCommentWriting, onAddReviewClick} = props;
+  const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus, comments, onSingInClick, onCommentSubmit, isCommentWriting, onAddReviewClick, isPostingComment, isPostingError} = props;
 
   const renderApp = () => {
     if (isCommentWriting) {
       return <AddReview
         movie={chosenMovie}
         onSubmit={onCommentSubmit}
+        isPostingComment={isPostingComment}
+        isPostingError={isPostingError}
         authorizationStatus={authorizationStatus}
       />;
     }
@@ -98,6 +100,8 @@ const App = (props) => {
           <AddReview
             movie={mainCard}
             onSubmit={onCommentSubmit}
+            isPostingComment={isPostingComment}
+            isPostingError={isPostingError}
             authorizationStatus={authorizationStatus}
           />
         </Route>
@@ -123,6 +127,8 @@ const mapStateToProps = (state) => {
     authorizationStatus: getAuthorizationStatus(state),
     comments: getComments(state, chosenMovieId),
     isCommentWriting: getWritingCommentFlag(state),
+    isPostingComment: getPostingCommentFlag(state),
+    isPostingError: getPostingError(state),
   };
 };
 
@@ -141,6 +147,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(UserOperation.login(authData));
   },
   onCommentSubmit(movieId, formData) {
+    dispatch(ActionCreator.changeFlagPosting(true));
     dispatch(AppStateOperation.postComment(movieId, formData));
   },
   onAddReviewClick() {
@@ -165,6 +172,8 @@ App.propTypes = {
   onCommentSubmit: PropTypes.func.isRequired,
   onAddReviewClick: PropTypes.func.isRequired,
   isCommentWriting: PropTypes.bool.isRequired,
+  isPostingComment: PropTypes.bool.isRequired,
+  isPostingError: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -98,6 +98,7 @@ const movie = {
 };
 
 const mockFunc = () => {};
+const authorizationStatus = `NO_AUTH`;
 
 it(`Render MoviePage`, () => {
   const tree = renderer
@@ -108,6 +109,8 @@ it(`Render MoviePage`, () => {
       reviews={reviews}
       onMovieClick={mockFunc}
       onPlayClick={mockFunc}
+      onAddReviewClick={mockFunc}
+      authorizationStatus={authorizationStatus}
     />, {
       createNodeMock: () => {
         return {};
