@@ -37,6 +37,15 @@ export const ReviewLength = {
   MAX: 400,
 };
 
+export const AppRoute = {
+  ROOT: `/`,
+  LOGIN: `/login`,
+  MY_LIST: `/mylist`,
+  FILM: `/films/:id`,
+  REVIEW: `/films/:id/review`,
+  PLAYER: `/films/player/:id`,
+};
+
 export const movieShape = PropTypes.shape({
   id: PropTypes.number,
   title: PropTypes.string,

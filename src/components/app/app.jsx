@@ -2,7 +2,7 @@ import React from "react";
 import Main from "../main/main.jsx";
 import PropTypes from "prop-types";
 import {movieShape, commentsShape} from "../utils/constants.js";
-import {Switch, Route, BrowserRouter} from "react-router-dom";
+import {Switch, Route, Router} from "react-router-dom";
 import {connect} from "react-redux";
 import {ActionCreator, Operation as AppStateOperation} from "../../reducer/app-state/app-state.js";
 import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen, getWritingCommentFlag, getPostingCommentFlag, getPostingError} from "../../reducer/app-state/selectors.js";
@@ -16,6 +16,8 @@ import VideoPlayer from "../video-player/video-player.jsx";
 import withVideoPlayer from "../../hocs/with-video-player/with-video-player.js";
 import {SingIn} from "../sing-in/sing-in.jsx";
 import {AddReview} from "../add-review/add-review.jsx";
+import history from "../../history.js";
+import {AppRoute} from "../utils/constants.js";
 
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
@@ -74,39 +76,20 @@ const App = (props) => {
   };
 
   return (
-    <BrowserRouter>
+    <Router
+      history={history}
+    >
       <Switch>
-        <Route exact path="/">
+        <Route exact path={AppRoute.ROOT}>
           {renderApp()}
         </Route>
-        <Route exact path="/movie-page">
-          <MoviePage
-            movie={mainCard}
-            movies={movies}
-            similarMovies={similarMoviesToChosen}
-            onMovieClick={onCardClick}
-            comments={comments}
-            onPlayClick={onPlayClick}
-            onAddReviewClick={onAddReviewClick}
-            authorizationStatus={authorizationStatus}
-          />
-        </Route>
-        <Route exact path="/sing-in">
+        <Route exact path={AppRoute.LOGIN}>
           <SingIn
             onSingInClick={onSingInClick}
           />
         </Route>
-        <Route exact path="/dev-review">
-          <AddReview
-            movie={mainCard}
-            onSubmit={onCommentSubmit}
-            isPostingComment={isPostingComment}
-            isPostingError={isPostingError}
-            authorizationStatus={authorizationStatus}
-          />
-        </Route>
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 };
 
