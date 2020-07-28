@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import {movieShape, commentsShape} from "../utils/constants.js";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../reducer/app-state/app-state.js";
-import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen} from "../../reducer/app-state/selectors.js";
+import {ActionCreator, Operation as AppStateOperation} from "../../reducer/app-state/app-state.js";
+import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen, getWritingCommentFlag} from "../../reducer/app-state/selectors.js";
 import {getMainMovie, getFilteredMoviesByGenre, getComments} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus} from "../../reducer/user/selector.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
@@ -20,9 +20,16 @@ import {AddReview} from "../add-review/add-review.jsx";
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 const App = (props) => {
-  const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus, comments, onSingInClick} = props;
+  const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus, comments, onSingInClick, onCommentSubmit, isCommentWriting, onAddReviewClick} = props;
 
   const renderApp = () => {
+    if (isCommentWriting) {
+      return <AddReview
+        movie={chosenMovie}
+        onSubmit={onCommentSubmit}
+        authorizationStatus={authorizationStatus}
+      />;
+    }
     if (playingMovie) {
       if (authorizationStatus === AuthorizationStatus.AUTH) {
         return <VideoPlayerWrapped
@@ -59,6 +66,8 @@ const App = (props) => {
         comments={comments}
         onMovieClick={onCardClick}
         onPlayClick={onPlayClick}
+        onAddReviewClick={onAddReviewClick}
+        authorizationStatus={authorizationStatus}
       />);
   };
 
@@ -70,11 +79,14 @@ const App = (props) => {
         </Route>
         <Route exact path="/movie-page">
           <MoviePage
-            movie={movies[0]}
+            movie={mainCard}
+            movies={movies}
             similarMovies={similarMoviesToChosen}
             onMovieClick={onCardClick}
             comments={comments}
             onPlayClick={onPlayClick}
+            onAddReviewClick={onAddReviewClick}
+            authorizationStatus={authorizationStatus}
           />
         </Route>
         <Route exact path="/sing-in">
@@ -84,6 +96,9 @@ const App = (props) => {
         </Route>
         <Route exact path="/dev-review">
           <AddReview
+            movie={mainCard}
+            onSubmit={onCommentSubmit}
+            authorizationStatus={authorizationStatus}
           />
         </Route>
       </Switch>
@@ -107,6 +122,7 @@ const mapStateToProps = (state) => {
     playingMovie: getPlayingMovie(state),
     authorizationStatus: getAuthorizationStatus(state),
     comments: getComments(state, chosenMovieId),
+    isCommentWriting: getWritingCommentFlag(state),
   };
 };
 
@@ -114,15 +130,21 @@ const mapDispatchToProps = (dispatch) => ({
   onShowMoreClick() {
     dispatch(ActionCreator.increaseShowingMovies());
   },
-  onCardClick(id) {
-    dispatch(ActionCreator.changeMovie(id));
-    dispatch(DataOperation.loadComments(id));
+  onCardClick(movieId) {
+    dispatch(ActionCreator.changeMovie(movieId));
+    dispatch(DataOperation.loadComments(movieId));
   },
-  onPlayClick(id) {
-    dispatch(ActionCreator.openPlayer(id));
+  onPlayClick(movieId) {
+    dispatch(ActionCreator.openPlayer(movieId));
   },
   onSingInClick(authData) {
     dispatch(UserOperation.login(authData));
+  },
+  onCommentSubmit(movieId, formData) {
+    dispatch(AppStateOperation.postComment(movieId, formData));
+  },
+  onAddReviewClick() {
+    dispatch(ActionCreator.writeComment(true));
   }
 });
 
@@ -140,6 +162,9 @@ App.propTypes = {
   playingMovie: PropTypes.object,
   authorizationStatus: PropTypes.string.isRequired,
   onSingInClick: PropTypes.func.isRequired,
+  onCommentSubmit: PropTypes.func.isRequired,
+  onAddReviewClick: PropTypes.func.isRequired,
+  isCommentWriting: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,11 +1,13 @@
 import {extend} from "../../components/utils/utils.js";
 import {Genres, SHOWING_MOVIES_COUNT_ON_START, SHOWING_MOVIES_COUNT_BY_BUTTON} from "../../components/utils/constants.js";
+import {Operation as DataOperation} from "../data/data.js";
 
 const initialState = {
   chosenMovieId: -1,
   genre: Genres.ALL,
   showingMoviesCount: SHOWING_MOVIES_COUNT_ON_START,
   playingMovie: null,
+  writingComment: false,
 };
 
 const ActionType = {
@@ -14,6 +16,7 @@ const ActionType = {
   SHOW_MORE_MOVIES: `SHOW_MORE_MOVIES`,
   RESET_MOVIES_COUNT: `RESET_MOVIES_COUNT`,
   OPEN_PLAYER: `OPEN_PLAYER`,
+  WRITE_COMMENT: `WRITE_COMMENT`,
 };
 
 const ActionCreator = {
@@ -36,7 +39,24 @@ const ActionCreator = {
   openPlayer: (movie) => ({
     type: ActionType.OPEN_PLAYER,
     payload: movie
-  })
+  }),
+  writeComment: (payload) => ({
+    type: ActionType.WRITE_COMMENT,
+    payload,
+  }),
+};
+
+const Operation = {
+  postComment: (movieId, data) => (dispatch, getState, api) => {
+    return api.post(`/comments/${movieId}`, {
+      rating: data.rating,
+      comment: data.comment,
+    })
+     .then(() => {
+       dispatch(DataOperation.loadComments(movieId));
+       dispatch(ActionCreator.writeComment(false));
+     });
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -61,8 +81,12 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         playingMovie: action.payload,
       });
+    case ActionType.WRITE_COMMENT:
+      return extend(state, {
+        writingComment: action.payload,
+      });
     default:
       return state;
   }
 };
-export {ActionCreator, ActionType, reducer};
+export {ActionCreator, ActionType, reducer, Operation};

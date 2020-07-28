@@ -32,6 +32,11 @@ export const SHOWING_MOVIES_COUNT_BY_BUTTON = 8;
 
 export const MAX_GENRE_LIST = 10;
 
+export const ReviewLength = {
+  MIN: 50,
+  MAX: 400,
+};
+
 export const movieShape = PropTypes.shape({
   id: PropTypes.number,
   title: PropTypes.string,

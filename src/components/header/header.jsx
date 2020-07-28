@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
 const Header = (props) => {
-  const {authorizationStatus} = props;
+  const {authorizationStatus, children} = props;
 
   const userBlock = authorizationStatus === AuthorizationStatus.AUTH ?
     <div className="user-block">
@@ -22,13 +22,14 @@ const Header = (props) => {
         <span className="logo__letter logo__letter--3">W</span>
       </a>
     </div>
-
+    {children}
     {userBlock}
   </header>;
 };
 
 Header.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
+  children: PropTypes.node,
 };
 
 export {Header};

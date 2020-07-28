@@ -1,5 +1,6 @@
 import {extend} from "../../components/utils/utils.js";
 import {adaptMovies, adaptMovie} from "../../adapter/movies.js";
+import {} from "../app-state/app-state.js";
 
 const initialState = {
   allMovies: [],
@@ -25,7 +26,7 @@ const ActionCreator = {
   setComments: (comments) => ({
     type: ActionType.SET_COMMENTS,
     payload: comments,
-  })
+  }),
 };
 
 const Operation = {
@@ -47,15 +48,6 @@ const Operation = {
         dispatch(ActionCreator.setComments(response.data));
       });
   },
-  addComment: (movieId, data) => (dispatch, getState, api) => {
-    return api.post(`/comments/${movieId}`, {
-      rating: data.rating,
-      comment: data.comment,
-    });
-    /* .then(() => {
-        dispatch(ActionCreator.addComment);
-      }); */
-  }
 };
 
 const reducer = (state = initialState, action) => {

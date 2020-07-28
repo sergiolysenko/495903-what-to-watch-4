@@ -5,11 +5,13 @@ import MoviesList from "../movies-list/movies-list.jsx";
 import {movieShape, commentsShape} from "../utils/constants.js";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
 import PlayButton from "../play-button/play-button.jsx";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
+import {Header} from "../header/header.jsx";
 
 const TabsWrapped = withActiveItem(Tabs);
 
 const MoviePage = (props) => {
-  const {movie, comments, onMovieClick, onPlayClick, similarMovies} = props;
+  const {movie, comments, onMovieClick, onPlayClick, similarMovies, onAddReviewClick, authorizationStatus} = props;
   const {title, genre, year, backgroundImg, posterImg, backgroundColor} = movie;
 
   return (<React.Fragment>
@@ -23,21 +25,9 @@ const MoviePage = (props) => {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header movie-card__head">
-          <div className="logo">
-            <a href="main.html" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </div>
-        </header>
+        <Header
+          authorizationStatus={authorizationStatus}
+        />
 
         <div className="movie-card__wrap">
           <div className="movie-card__desc">
@@ -59,7 +49,12 @@ const MoviePage = (props) => {
                 </svg>
                 <span>My list</span>
               </button>
-              <a href="add-review.html" className="btn movie-card__button">Add review</a>
+              {authorizationStatus === AuthorizationStatus.AUTH && <a
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  onAddReviewClick();
+                }}
+                href="add-review.html" className="btn movie-card__button">Add review</a>}
             </div>
           </div>
         </div>
@@ -112,6 +107,8 @@ MoviePage.propTypes = {
   comments: commentsShape,
   onMovieClick: PropTypes.func.isRequired,
   onPlayClick: PropTypes.func.isRequired,
+  onAddReviewClick: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 export default MoviePage;
