@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import MoviesList from "../movies-list/movies-list.jsx";
 import GenreList from "./../genre-list/genre-list.jsx";
 import {Header} from "../header/header.jsx";
-
 import {movieShape} from "../utils/constants.js";
 import {ShowMore} from "../show-more/show-more.jsx";
 import PlayButton from "../play-button/play-button.jsx";

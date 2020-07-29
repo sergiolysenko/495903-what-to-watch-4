@@ -23,7 +23,7 @@ const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 class App extends React.PureComponent {
   renderApp() {
-    const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus, comments, onSingInClick, onCommentSubmit, isCommentWriting, onAddReviewClick, isPostingComment, isPostingError} = this.props;
+    const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus, comments, onCommentSubmit, isCommentWriting, onAddReviewClick, isPostingComment, isPostingError} = this.props;
 
     if (isCommentWriting) {
       return <AddReview
@@ -42,10 +42,6 @@ class App extends React.PureComponent {
           source={playingMovie.videoLink}
           isPlaying={true}
           onPlayClick={onPlayClick}
-        />;
-      } else if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-        return <SingIn
-          onSingInClick={onSingInClick}
         />;
       }
     }
@@ -76,20 +72,36 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const {onSingInClick} = this.props;
+    const {onSingInClick, playingMovie, onPlayClick} = this.props;
 
     return (
-      <Router
-        history={history}
-      >
+      <Router history={history}>
         <Switch>
           <Route exact path={AppRoute.ROOT}>
             {this.renderApp()}
           </Route>
-          <Route exact path={AppRoute.LOGIN}>
-            <SingIn
-              onSingInClick={onSingInClick}
-            />
+          <Route exact path={AppRoute.LOGIN}
+            render={() => {
+              return <SingIn
+                onSingInClick={onSingInClick}
+              />;
+            }}
+          >
+          </Route>
+          <Route
+            exact path={AppRoute.PLAYER}
+            render={(props) => {
+              return <VideoPlayerWrapped
+                isMuted={false}
+                poster={playingMovie.cardImg}
+                source={playingMovie.videoLink}
+                isPlaying={true}
+                onPlayClick={onPlayClick}
+                historyProps={props} />;
+            }}
+          />
+          <Route>
+            <div>404 not found</div>
           </Route>
         </Switch>
       </Router>);
