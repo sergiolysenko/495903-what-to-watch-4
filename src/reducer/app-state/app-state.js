@@ -8,7 +8,7 @@ const initialState = {
   showingMoviesCount: SHOWING_MOVIES_COUNT_ON_START,
   playingMovie: null,
   writingComment: false,
-  postingComment: false,
+  sendingCommentData: false,
   postingError: false,
 };
 
@@ -19,7 +19,7 @@ const ActionType = {
   RESET_MOVIES_COUNT: `RESET_MOVIES_COUNT`,
   OPEN_PLAYER: `OPEN_PLAYER`,
   WRITE_COMMENT: `WRITE_COMMENT`,
-  CHANGE_FLAG_POSTING: `CHANGE_FLAG_POSTING`,
+  CHANGE_FLAG_SENDING: `CHANGE_FLAG_SENDING`,
   CHANGE_FLAG_POSTING_ERROR: `CHANGE_FLAG_POSTING_ERROR`
 };
 
@@ -49,7 +49,7 @@ const ActionCreator = {
     payload,
   }),
   changeFlagPosting: (payload) => ({
-    type: ActionType.CHANGE_FLAG_POSTING,
+    type: ActionType.CHANGE_FLAG_SENDING,
     payload,
   }),
   changeFlagPostingError: (payload) => ({
@@ -60,6 +60,7 @@ const ActionCreator = {
 
 const Operation = {
   postComment: (movieId, data) => (dispatch, getState, api) => {
+    dispatch(ActionCreator.changeFlagPosting(true));
     return api.post(`/comments/${movieId}`, {
       rating: data.rating,
       comment: data.comment,
@@ -103,9 +104,9 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         writingComment: action.payload,
       });
-    case ActionType.CHANGE_FLAG_POSTING:
+    case ActionType.CHANGE_FLAG_SENDING:
       return extend(state, {
-        postingComment: action.payload,
+        sendingCommentData: action.payload,
       });
     case ActionType.CHANGE_FLAG_POSTING_ERROR:
       return extend(state, {

@@ -7,7 +7,7 @@ import NameSpace from "../../reducer/name-space.js";
 
 const mockStore = configureStore([]);
 
-const reviews = [
+const comments = [
   {
     "id": 1,
     "user": {
@@ -111,7 +111,7 @@ it(`Render App`, () => {
       showingMoviesCount: 8,
       playingMovie: null,
       writingComment: false,
-      postingComment: false,
+      isSendingCommentData: false,
       postingError: false,
     },
     [NameSpace.DATA]: {
@@ -129,7 +129,7 @@ it(`Render App`, () => {
           <App
             mainCard={movies[0]}
             filteredMovies={movies}
-            reviews={reviews}
+            comments={comments}
             isButtonShowMoreDisplayed={true}
             onShowMoreClick={mockFucnc}
             chosenMovieId={-1}
@@ -139,9 +139,9 @@ it(`Render App`, () => {
             chosenMovie={movies[0]}
             similarMoviesToChosen={movies}
             isPlayerOpen={false}
-            authorizationStatus={authorizationStatus}
+            isAuthorised={true}
             isCommentWriting={false}
-            isPostingComment={false}
+            isSendingCommentData={false}
             isPostingError={false}
           />
         </Provider>, {

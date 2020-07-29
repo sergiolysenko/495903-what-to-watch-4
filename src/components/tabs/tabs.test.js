@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import Tabs from "./tabs.jsx";
 
-const reviews = [
+const comments = [
   {
     "id": 1,
     "user": {
@@ -47,7 +47,7 @@ it(`Render Tabs`, () => {
   const tree = renderer
     .create(<Tabs
       movie={movie}
-      reviews={reviews}
+      comments={comments}
       activeItem={`Overview`}
       handleActive={() => {}}
     />

@@ -9,7 +9,7 @@ import {ShowMore} from "../show-more/show-more.jsx";
 import PlayButton from "../play-button/play-button.jsx";
 
 const Main = (props) => {
-  const {mainCard, movies, isButtonShowMoreDisplayed, onMovieClick, onShowMoreClick, onPlayClick, authorizationStatus} = props;
+  const {mainCard, movies, isButtonShowMoreDisplayed, onMovieClick, onShowMoreClick, onPlayClick, isAuthorised} = props;
 
   const {title, genre, year, backgroundImg, posterImg} = mainCard;
 
@@ -23,7 +23,7 @@ const Main = (props) => {
         <h1 className="visually-hidden">WTW</h1>
 
         <Header
-          authorizationStatus={authorizationStatus}
+          isAuthorised={isAuthorised}
         />
 
         <div className="movie-card__wrap">
@@ -95,7 +95,7 @@ Main.propTypes = {
   onMovieClick: PropTypes.func.isRequired,
   onShowMoreClick: PropTypes.func.isRequired,
   onPlayClick: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
+  isAuthorised: PropTypes.bool.isRequired,
 };
 
 export default Main;

@@ -32,8 +32,8 @@ export const getWritingCommentFlag = (state) => {
   return state[NameSpace.APP_STATE].writingComment;
 };
 
-export const getPostingCommentFlag = (state) => {
-  return state[NameSpace.APP_STATE].postingComment;
+export const getSendingCommentDataFlag = (state) => {
+  return state[NameSpace.APP_STATE].sendingCommentData;
 };
 
 export const getPostingError = (state) => {

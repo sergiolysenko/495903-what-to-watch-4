@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import MoviePageReviews from "./movie-page-reviews.jsx";
 
-const reviews = [
+const comments = [
   {
     "id": 1,
     "user": {
@@ -47,7 +47,7 @@ it(`Render MoviePageReviews`, () => {
   const tree = renderer
     .create(<MoviePageReviews
       movie={movie}
-      reviews={reviews}
+      comments={comments}
     />, {
       createNodeMock: () => {
         return {};

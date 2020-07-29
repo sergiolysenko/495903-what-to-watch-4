@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-const Header = (props) => {
-  const {authorizationStatus, children} = props;
 
-  const userBlock = authorizationStatus === AuthorizationStatus.AUTH ?
+const Header = (props) => {
+  const {isAuthorised, children} = props;
+
+  const userBlock = isAuthorised ?
     <div className="user-block">
       <div className="user-block__avatar">
         <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
@@ -28,7 +28,7 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
+  isAuthorised: PropTypes.bool.isRequired,
   children: PropTypes.node,
 };
 

@@ -5,7 +5,7 @@ import {movieShape, commentsShape} from "../utils/constants.js";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {ActionCreator, Operation as AppStateOperation} from "../../reducer/app-state/app-state.js";
-import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen, getWritingCommentFlag, getPostingCommentFlag, getPostingError} from "../../reducer/app-state/selectors.js";
+import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen, getWritingCommentFlag, getSendingCommentDataFlag, getPostingError} from "../../reducer/app-state/selectors.js";
 import {getMainMovie, getFilteredMoviesByGenre, getComments} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus} from "../../reducer/user/selector.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
@@ -20,20 +20,20 @@ import {AddReview} from "../add-review/add-review.jsx";
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 const App = (props) => {
-  const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus, comments, onSingInClick, onCommentSubmit, isCommentWriting, onAddReviewClick, isPostingComment, isPostingError} = props;
+  const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, isAuthorised, comments, onSingInClick, onCommentSubmit, isCommentWriting, onAddReviewClick, isSendingCommentData, isPostingError} = props;
 
   const renderApp = () => {
     if (isCommentWriting) {
       return <AddReview
         movie={chosenMovie}
         onSubmit={onCommentSubmit}
-        isPostingComment={isPostingComment}
+        isSendingCommentData={isSendingCommentData}
         isPostingError={isPostingError}
-        authorizationStatus={authorizationStatus}
+        isAuthorised={isAuthorised}
       />;
     }
     if (playingMovie) {
-      if (authorizationStatus === AuthorizationStatus.AUTH) {
+      if (isAuthorised) {
         return <VideoPlayerWrapped
           isMuted={false}
           poster={playingMovie.cardImg}
@@ -41,7 +41,7 @@ const App = (props) => {
           isPlaying={true}
           onPlayClick={onPlayClick}
         />;
-      } else if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      } else if (!isAuthorised) {
         return <SingIn
           onSingInClick={onSingInClick}
         />;
@@ -57,7 +57,7 @@ const App = (props) => {
           isButtonShowMoreDisplayed={isButtonShowMoreDisplayed}
           onShowMoreClick={onShowMoreClick}
           onPlayClick={onPlayClick}
-          authorizationStatus={authorizationStatus}
+          isAuthorised={isAuthorised}
         />);
     }
 
@@ -69,7 +69,7 @@ const App = (props) => {
         onMovieClick={onCardClick}
         onPlayClick={onPlayClick}
         onAddReviewClick={onAddReviewClick}
-        authorizationStatus={authorizationStatus}
+        isAuthorised={isAuthorised}
       />);
   };
 
@@ -88,7 +88,7 @@ const App = (props) => {
             comments={comments}
             onPlayClick={onPlayClick}
             onAddReviewClick={onAddReviewClick}
-            authorizationStatus={authorizationStatus}
+            isAuthorised={isAuthorised}
           />
         </Route>
         <Route exact path="/sing-in">
@@ -100,9 +100,9 @@ const App = (props) => {
           <AddReview
             movie={mainCard}
             onSubmit={onCommentSubmit}
-            isPostingComment={isPostingComment}
+            isSendingCommentData={isSendingCommentData}
             isPostingError={isPostingError}
-            authorizationStatus={authorizationStatus}
+            isAuthorised={isAuthorised}
           />
         </Route>
       </Switch>
@@ -115,6 +115,8 @@ const mapStateToProps = (state) => {
   const filteredMovies = getFilteredMoviesByGenre(state, genre);
   const displayedMoviesByButton = getListOfDisplayedMovies(state, filteredMovies);
   const chosenMovieId = getChosenMovieId(state);
+  const authorizationStatus = getAuthorizationStatus(state);
+  const isAuthorised = authorizationStatus === AuthorizationStatus.AUTH;
 
   return {
     mainCard: getMainMovie(state),
@@ -124,10 +126,10 @@ const mapStateToProps = (state) => {
     chosenMovie: getChosenMovie(state, filteredMovies),
     similarMoviesToChosen: getSilimalMoviesToChosen(state, filteredMovies),
     playingMovie: getPlayingMovie(state),
-    authorizationStatus: getAuthorizationStatus(state),
+    isAuthorised,
     comments: getComments(state, chosenMovieId),
     isCommentWriting: getWritingCommentFlag(state),
-    isPostingComment: getPostingCommentFlag(state),
+    isSendingCommentData: getSendingCommentDataFlag(state),
     isPostingError: getPostingError(state),
   };
 };
@@ -147,7 +149,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(UserOperation.login(authData));
   },
   onCommentSubmit(movieId, formData) {
-    dispatch(ActionCreator.changeFlagPosting(true));
     dispatch(AppStateOperation.postComment(movieId, formData));
   },
   onAddReviewClick() {
@@ -167,12 +168,12 @@ App.propTypes = {
   onCardClick: PropTypes.func.isRequired,
   onPlayClick: PropTypes.func.isRequired,
   playingMovie: PropTypes.object,
-  authorizationStatus: PropTypes.string.isRequired,
+  isAuthorised: PropTypes.bool.isRequired,
   onSingInClick: PropTypes.func.isRequired,
   onCommentSubmit: PropTypes.func.isRequired,
   onAddReviewClick: PropTypes.func.isRequired,
   isCommentWriting: PropTypes.bool.isRequired,
-  isPostingComment: PropTypes.bool.isRequired,
+  isSendingCommentData: PropTypes.bool.isRequired,
   isPostingError: PropTypes.bool.isRequired,
 };
 

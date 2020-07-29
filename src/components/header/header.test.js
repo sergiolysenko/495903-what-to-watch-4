@@ -2,12 +2,12 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Header} from "./header.jsx";
 
-const authorizationStatus = `AUTH`;
+const isAuthorised = true;
 
 it(`Render Header`, () => {
   const tree = renderer
     .create(<Header
-      authorizationStatus={authorizationStatus}
+      isAuthorised={isAuthorised}
     />
     ).toJSON();
 

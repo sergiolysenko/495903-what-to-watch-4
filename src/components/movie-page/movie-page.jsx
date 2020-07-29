@@ -5,13 +5,12 @@ import MoviesList from "../movies-list/movies-list.jsx";
 import {movieShape, commentsShape} from "../utils/constants.js";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
 import PlayButton from "../play-button/play-button.jsx";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
 import {Header} from "../header/header.jsx";
 
 const TabsWrapped = withActiveItem(Tabs);
 
 const MoviePage = (props) => {
-  const {movie, comments, onMovieClick, onPlayClick, similarMovies, onAddReviewClick, authorizationStatus} = props;
+  const {movie, comments, onMovieClick, onPlayClick, similarMovies, onAddReviewClick, isAuthorised} = props;
   const {title, genre, year, backgroundImg, posterImg, backgroundColor} = movie;
 
   return (<React.Fragment>
@@ -26,7 +25,7 @@ const MoviePage = (props) => {
         <h1 className="visually-hidden">WTW</h1>
 
         <Header
-          authorizationStatus={authorizationStatus}
+          isAuthorised={isAuthorised}
         />
 
         <div className="movie-card__wrap">
@@ -49,7 +48,7 @@ const MoviePage = (props) => {
                 </svg>
                 <span>My list</span>
               </button>
-              {authorizationStatus === AuthorizationStatus.AUTH && <a
+              {isAuthorised && <a
                 onClick={(evt) => {
                   evt.preventDefault();
                   onAddReviewClick();
@@ -108,7 +107,7 @@ MoviePage.propTypes = {
   onMovieClick: PropTypes.func.isRequired,
   onPlayClick: PropTypes.func.isRequired,
   onAddReviewClick: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
+  isAuthorised: PropTypes.bool.isRequired,
 };
 
 export default MoviePage;

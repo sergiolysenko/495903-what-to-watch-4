@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import App from "./components/app/app.jsx";
-import {reviews} from "./mocks/reviews.js";
 import reducer from "./reducer/reducer.js";
 import {createAPI} from "./api.js";
 import thunk from "redux-thunk";
@@ -30,9 +29,7 @@ store.dispatch(UserOperation.checkAuthorization());
 
 ReactDOM.render(
     <Provider store={store}>
-      <App
-        reviews={reviews}
-      />
+      <App/>
     </Provider>,
     document.querySelector(`#root`)
 );
