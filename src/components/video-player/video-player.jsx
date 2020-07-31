@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import history from "../../history.js";
 const VideoPlayer = (props) => {
-  const {children, progress, timeLeft, handlePlayClick, isPlaying, handleFullScreen, onPlayClick, handleMovieTime} = props;
+  const {children, progress, timeLeft, handlePlayClick, isPlaying, handleFullScreen, handleMovieTime} = props;
 
   return (
     <div className="player">
       {children}
 
       <button
-        onClick={() => onPlayClick(null)}
+        onClick={() => history.goBack()}
         type="button" className="player__exit">Exit</button>
 
       <div className="player__controls">

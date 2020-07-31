@@ -15,6 +15,14 @@ export const getComments = (state) => {
   return state[NameSpace.DATA].comments;
 };
 
+export const getMovieById = createSelector(
+    getMovies,
+    (state, id) => id,
+    (movies, id) => {
+      return movies.find((movie) => movie.id === Number(id));
+    }
+);
+
 export const getFilteredMoviesByGenre = createSelector(
     getMovies,
     (state, genre) => genre,

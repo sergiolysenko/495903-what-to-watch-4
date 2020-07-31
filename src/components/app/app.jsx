@@ -6,7 +6,7 @@ import {Switch, Route, Router} from "react-router-dom";
 import {connect} from "react-redux";
 import {ActionCreator, Operation as AppStateOperation} from "../../reducer/app-state/app-state.js";
 import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen, getWritingCommentFlag, getSendingCommentDataFlag, getPostingError} from "../../reducer/app-state/selectors.js";
-import {getMainMovie, getFilteredMoviesByGenre, getComments} from "../../reducer/data/selectors.js";
+import {getMovies, getMainMovie, getFilteredMoviesByGenre, getComments} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus} from "../../reducer/user/selector.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
 import {Operation as UserOperation} from "../../reducer/user/user.js";
@@ -18,6 +18,7 @@ import {SingIn} from "../sing-in/sing-in.jsx";
 import {AddReview} from "../add-review/add-review.jsx";
 import history from "../../history.js";
 import {AppRoute} from "../utils/constants.js";
+import {findMovieById} from "../utils/utils.js";
 
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
@@ -48,7 +49,7 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, isAuthorised, comments, onCommentSubmit, isCommentWriting, onAddReviewClick, isSendingCommentData, isPostingError, onSingInClick} = this.props;
+    const {mainCard, allMovies, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, similarMoviesToChosen, isAuthorised, comments, onCommentSubmit, isCommentWriting, onAddReviewClick, isSendingCommentData, isPostingError, onSingInClick} = this.props;
 
     return (
       <Router history={history}>
@@ -77,7 +78,9 @@ class App extends React.PureComponent {
           />
           <Route
             exact path={AppRoute.FILM}
-            render={() => {
+            render={(historyProps) => {
+              const movieId = Number(historyProps.match.params.id);
+              const chosenMovie = findMovieById(movies, movieId);
               return <MoviePage
                 movie={chosenMovie}
                 similarMovies={similarMoviesToChosen}
@@ -98,6 +101,7 @@ class App extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
+  const allMovies = getMovies(state);
   const genre = getGenre(state);
   const filteredMovies = getFilteredMoviesByGenre(state, genre);
   const displayedMoviesByButton = getListOfDisplayedMovies(state, filteredMovies);
@@ -108,6 +112,7 @@ const mapStateToProps = (state) => {
   return {
     mainCard: getMainMovie(state),
     movies: displayedMoviesByButton,
+    allMovies,
     isButtonShowMoreDisplayed: displayShowMoreButton(state, displayedMoviesByButton),
     chosenMovieId,
     chosenMovie: getChosenMovie(state, filteredMovies),
