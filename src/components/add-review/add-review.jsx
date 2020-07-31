@@ -16,7 +16,7 @@ class AddReview extends React.PureComponent {
   }
 
   handleSubmit(evt) {
-    const {onSubmit, movie, isPostingComment} = this.props;
+    const {onSubmit, movie, isSendingCommentData} = this.props;
 
     const formRef = this.formRef.current;
     const formData = new FormData(formRef);
@@ -25,7 +25,7 @@ class AddReview extends React.PureComponent {
     const isFormValid = commentRef.value.length >= ReviewLength.MIN;
 
     evt.preventDefault();
-    if (isRaitingChecked && isFormValid && !isPostingComment) {
+    if (isRaitingChecked && isFormValid && !isSendingCommentData) {
       onSubmit(movie.id, {
         rating: formData.get(`rating`),
         comment: formData.get(`review-text`)
@@ -34,9 +34,9 @@ class AddReview extends React.PureComponent {
   }
 
   render() {
-    const {movie, authorizationStatus, isPostingComment, isPostingError} = this.props;
+    const {movie, isAuthorised, isSendingCommentData, isPostingError} = this.props;
     const {title, posterImg, backgroundImg, backgroundColor} = movie;
-    const isDisabled = isPostingComment && `disabled`;
+    const disabled = isSendingCommentData && `disabled`;
 
     return (
       <section
@@ -54,7 +54,7 @@ class AddReview extends React.PureComponent {
           <h1 className="visually-hidden">WTW</h1>
 
           <Header
-            authorizationStatus={authorizationStatus}
+            isAuthorised={isAuthorised}
           >
             <nav className="breadcrumbs">
               <ul className="breadcrumbs__list">
@@ -83,26 +83,26 @@ class AddReview extends React.PureComponent {
               className="rating">
               <div
                 className="rating__stars">
-                <input disabled={isDisabled} className="rating__input" id="star-1" type="radio" name="rating" value="1"/>
+                <input disabled={disabled} className="rating__input" id="star-1" type="radio" name="rating" value="1"/>
                 <label className="rating__label" htmlFor="star-1">Rating 1</label>
 
-                <input disabled={isDisabled} className="rating__input" id="star-2" type="radio" name="rating" value="2" />
+                <input disabled={disabled} className="rating__input" id="star-2" type="radio" name="rating" value="2" />
                 <label className="rating__label" htmlFor="star-2">Rating 2</label>
 
-                <input disabled={isDisabled} className="rating__input" id="star-3" type="radio" name="rating" value="3"/>
+                <input disabled={disabled} className="rating__input" id="star-3" type="radio" name="rating" value="3"/>
                 <label className="rating__label" htmlFor="star-3">Rating 3</label>
 
-                <input disabled={isDisabled} className="rating__input" id="star-4" type="radio" name="rating" value="4" />
+                <input disabled={disabled} className="rating__input" id="star-4" type="radio" name="rating" value="4" />
                 <label className="rating__label" htmlFor="star-4">Rating 4</label>
 
-                <input disabled={isDisabled} className="rating__input" id="star-5" type="radio" name="rating" value="5" />
+                <input disabled={disabled} className="rating__input" id="star-5" type="radio" name="rating" value="5" />
                 <label className="rating__label" htmlFor="star-5">Rating 5</label>
               </div>
             </div>
 
             <div className="add-review__text">
               <textarea
-                disabled={isDisabled}
+                disabled={disabled}
                 ref={this.commentRef}
                 minLength={ReviewLength.MIN}
                 maxLength={ReviewLength.MAX}
@@ -129,8 +129,8 @@ class AddReview extends React.PureComponent {
 AddReview.propTypes = {
   movie: movieShape,
   onSubmit: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string,
-  isPostingComment: PropTypes.bool.isRequired,
+  isAuthorised: PropTypes.bool,
+  isSendingCommentData: PropTypes.bool.isRequired,
   isPostingError: PropTypes.bool.isRequired,
 };
 

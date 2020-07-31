@@ -20,7 +20,7 @@ const Tabs = (props) => {
         return (
           <MoviePageReviews
             movie={movie}
-            reviews={comments}
+            comments={comments}
           />);
       default:
         return (

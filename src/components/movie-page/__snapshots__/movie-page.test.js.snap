@@ -52,11 +52,20 @@ Array [
             </span>
           </a>
         </div>
-        <a
+        <div
           className="user-block"
         >
-          Sing in
-        </a>
+          <div
+            className="user-block__avatar"
+          >
+            <img
+              alt="User avatar"
+              height="63"
+              src="img/avatar.jpg"
+              width="63"
+            />
+          </div>
+        </div>
       </header>
       <div
         className="movie-card__wrap"
@@ -121,6 +130,13 @@ Array [
                 My list
               </span>
             </button>
+            <a
+              className="btn movie-card__button"
+              href="add-review.html"
+              onClick={[Function]}
+            >
+              Add review
+            </a>
           </div>
         </div>
       </div>

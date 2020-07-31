@@ -16,11 +16,11 @@ const getRatingLevel = (validRaiting) => {
   return `Awesome`;
 };
 
-const getMovieReviews = (movieId, reviews) => {
-  if (!reviews) {
+const getMovieReviews = (movieId, comments) => {
+  if (!comments) {
     return [];
   }
-  return reviews.filter((review) => review.id === movieId);
+  return comments.filter((comment) => comment.id === movieId);
 };
 
 const findMovieById = (movies, id) => {

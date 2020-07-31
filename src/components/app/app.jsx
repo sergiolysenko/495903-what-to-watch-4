@@ -5,7 +5,7 @@ import {movieShape, commentsShape} from "../utils/constants.js";
 import {Switch, Route, Router} from "react-router-dom";
 import {connect} from "react-redux";
 import {ActionCreator, Operation as AppStateOperation} from "../../reducer/app-state/app-state.js";
-import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen, getWritingCommentFlag, getPostingCommentFlag, getPostingError} from "../../reducer/app-state/selectors.js";
+import {getChosenMovieId, getGenre, getPlayingMovie, getChosenMovie, displayShowMoreButton, getListOfDisplayedMovies, getSilimalMoviesToChosen, getWritingCommentFlag, getSendingCommentDataFlag, getPostingError} from "../../reducer/app-state/selectors.js";
 import {getMainMovie, getFilteredMoviesByGenre, getComments} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus} from "../../reducer/user/selector.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
@@ -23,56 +23,32 @@ const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 class App extends React.PureComponent {
   renderApp() {
-    const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, authorizationStatus, comments, onCommentSubmit, isCommentWriting, onAddReviewClick, isPostingComment, isPostingError} = this.props;
+    const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, isAuthorised, comments, onCommentSubmit, isCommentWriting, onAddReviewClick, isSendingCommentData, isPostingError} = this.props;
 
     if (isCommentWriting) {
       return <AddReview
         movie={chosenMovie}
         onSubmit={onCommentSubmit}
-        isPostingComment={isPostingComment}
+        isSendingCommentData={isSendingCommentData}
         isPostingError={isPostingError}
-        authorizationStatus={authorizationStatus}
+        isAuthorised={isAuthorised}
       />;
-    }
-    if (playingMovie) {
-      if (authorizationStatus === AuthorizationStatus.AUTH) {
-        return <VideoPlayerWrapped
-          isMuted={false}
-          poster={playingMovie.cardImg}
-          source={playingMovie.videoLink}
-          isPlaying={true}
-          onPlayClick={onPlayClick}
-        />;
-      }
-    }
-
-    if (chosenMovieId === -1) {
-      return (
-        <Main
-          mainCard={mainCard}
-          movies={movies}
-          onMovieClick={onCardClick}
-          isButtonShowMoreDisplayed={isButtonShowMoreDisplayed}
-          onShowMoreClick={onShowMoreClick}
-          onPlayClick={onPlayClick}
-          authorizationStatus={authorizationStatus}
-        />);
     }
 
     return (
-      <MoviePage
-        movie={chosenMovie}
-        similarMovies={similarMoviesToChosen}
-        comments={comments}
+      <Main
+        mainCard={mainCard}
+        movies={movies}
         onMovieClick={onCardClick}
+        isButtonShowMoreDisplayed={isButtonShowMoreDisplayed}
+        onShowMoreClick={onShowMoreClick}
         onPlayClick={onPlayClick}
-        onAddReviewClick={onAddReviewClick}
-        authorizationStatus={authorizationStatus}
+        isAuthorised={isAuthorised}
       />);
   }
 
   render() {
-    const {onSingInClick, playingMovie, onPlayClick} = this.props;
+    const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, chosenMovieId, onCardClick, onPlayClick, playingMovie, chosenMovie, similarMoviesToChosen, isAuthorised, comments, onCommentSubmit, isCommentWriting, onAddReviewClick, isSendingCommentData, isPostingError, onSingInClick} = this.props;
 
     return (
       <Router history={history}>
@@ -86,18 +62,31 @@ class App extends React.PureComponent {
                 onSingInClick={onSingInClick}
               />;
             }}
-          >
-          </Route>
+          />
           <Route
             exact path={AppRoute.PLAYER}
-            render={(props) => {
+            render={() => {
               return <VideoPlayerWrapped
                 isMuted={false}
                 poster={playingMovie.cardImg}
                 source={playingMovie.videoLink}
                 isPlaying={true}
                 onPlayClick={onPlayClick}
-                historyProps={props} />;
+              />;
+            }}
+          />
+          <Route
+            exact path={AppRoute.FILM}
+            render={() => {
+              return <MoviePage
+                movie={chosenMovie}
+                similarMovies={similarMoviesToChosen}
+                comments={comments}
+                onMovieClick={onCardClick}
+                onPlayClick={onPlayClick}
+                onAddReviewClick={onAddReviewClick}
+                isAuthorised={isAuthorised}
+              />;
             }}
           />
           <Route>
@@ -113,6 +102,8 @@ const mapStateToProps = (state) => {
   const filteredMovies = getFilteredMoviesByGenre(state, genre);
   const displayedMoviesByButton = getListOfDisplayedMovies(state, filteredMovies);
   const chosenMovieId = getChosenMovieId(state);
+  const authorizationStatus = getAuthorizationStatus(state);
+  const isAuthorised = authorizationStatus === AuthorizationStatus.AUTH;
 
   return {
     mainCard: getMainMovie(state),
@@ -122,10 +113,10 @@ const mapStateToProps = (state) => {
     chosenMovie: getChosenMovie(state, filteredMovies),
     similarMoviesToChosen: getSilimalMoviesToChosen(state, filteredMovies),
     playingMovie: getPlayingMovie(state),
-    authorizationStatus: getAuthorizationStatus(state),
+    isAuthorised,
     comments: getComments(state, chosenMovieId),
     isCommentWriting: getWritingCommentFlag(state),
-    isPostingComment: getPostingCommentFlag(state),
+    isSendingCommentData: getSendingCommentDataFlag(state),
     isPostingError: getPostingError(state),
   };
 };
@@ -145,7 +136,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(UserOperation.login(authData));
   },
   onCommentSubmit(movieId, formData) {
-    dispatch(ActionCreator.changeFlagPosting(true));
     dispatch(AppStateOperation.postComment(movieId, formData));
   },
   onAddReviewClick() {
@@ -165,12 +155,12 @@ App.propTypes = {
   onCardClick: PropTypes.func.isRequired,
   onPlayClick: PropTypes.func.isRequired,
   playingMovie: PropTypes.object,
-  authorizationStatus: PropTypes.string.isRequired,
+  isAuthorised: PropTypes.bool.isRequired,
   onSingInClick: PropTypes.func.isRequired,
   onCommentSubmit: PropTypes.func.isRequired,
   onAddReviewClick: PropTypes.func.isRequired,
   isCommentWriting: PropTypes.bool.isRequired,
-  isPostingComment: PropTypes.bool.isRequired,
+  isSendingCommentData: PropTypes.bool.isRequired,
   isPostingError: PropTypes.bool.isRequired,
 };
 

@@ -26,6 +26,8 @@ Array [
       >
         <a
           className="logo__link"
+          href="/"
+          onClick={[Function]}
         >
           <span
             className="logo__letter logo__letter--1"
@@ -44,11 +46,17 @@ Array [
           </span>
         </a>
       </div>
-      <a
+      <div
         className="user-block"
       >
-        Sing in
-      </a>
+        <a
+          className="user-block__link"
+          href="/login"
+          onClick={[Function]}
+        >
+          Sign in
+        </a>
+      </div>
     </header>
     <div
       className="movie-card__wrap"

@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import MoviePage from "./movie-page.jsx";
 
-const reviews = [
+const comments = [
   {
     "id": 1,
     "user": {
@@ -98,7 +98,7 @@ const movie = {
 };
 
 const mockFunc = () => {};
-const authorizationStatus = `NO_AUTH`;
+const isAuthorised = true;
 
 it(`Render MoviePage`, () => {
   const tree = renderer
@@ -106,11 +106,11 @@ it(`Render MoviePage`, () => {
       movie={movie}
       movies={movies}
       similarMovies={movies}
-      reviews={reviews}
+      comments={comments}
       onMovieClick={mockFunc}
       onPlayClick={mockFunc}
       onAddReviewClick={mockFunc}
-      authorizationStatus={authorizationStatus}
+      isAuthorised={isAuthorised}
     />, {
       createNodeMock: () => {
         return {};

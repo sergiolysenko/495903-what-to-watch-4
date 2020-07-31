@@ -4,10 +4,12 @@ import App from "./app.jsx";
 import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
 import NameSpace from "../../reducer/name-space.js";
+import {Router} from "react-router-dom";
+import history from "./../../history.js";
 
 const mockStore = configureStore([]);
 
-const reviews = [
+const comments = [
   {
     "id": 1,
     "user": {
@@ -111,7 +113,7 @@ it(`Render App`, () => {
       showingMoviesCount: 8,
       playingMovie: null,
       writingComment: false,
-      postingComment: false,
+      isSendingCommentData: false,
       postingError: false,
     },
     [NameSpace.DATA]: {
@@ -126,24 +128,26 @@ it(`Render App`, () => {
   const tree = renderer
     .create(
         <Provider store={store}>
-          <App
-            mainCard={movies[0]}
-            filteredMovies={movies}
-            reviews={reviews}
-            isButtonShowMoreDisplayed={true}
-            onShowMoreClick={mockFucnc}
-            chosenMovieId={-1}
-            onCardClick={mockFucnc}
-            onPlayClick={mockFucnc}
-            playingMovie={movies[0]}
-            chosenMovie={movies[0]}
-            similarMoviesToChosen={movies}
-            isPlayerOpen={false}
-            authorizationStatus={authorizationStatus}
-            isCommentWriting={false}
-            isPostingComment={false}
-            isPostingError={false}
-          />
+          <Router history={history}>
+            <App
+              mainCard={movies[0]}
+              filteredMovies={movies}
+              comments={comments}
+              isButtonShowMoreDisplayed={true}
+              onShowMoreClick={mockFucnc}
+              chosenMovieId={-1}
+              onCardClick={mockFucnc}
+              onPlayClick={mockFucnc}
+              playingMovie={movies[0]}
+              chosenMovie={movies[0]}
+              similarMoviesToChosen={movies}
+              isPlayerOpen={false}
+              isAuthorised={true}
+              isCommentWriting={false}
+              isSendingCommentData={false}
+              isPostingError={false}
+            />
+          </Router>
         </Provider>, {
           createNodeMock: () => {
             return {};

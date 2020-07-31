@@ -7,7 +7,7 @@ Enzyme.configure({
   adapter: new Adapter(),
 });
 
-const reviews = [
+const comments = [
   {
     "id": 1,
     "user": {
@@ -42,7 +42,7 @@ it(`Check if state changes by click on details and rended MoviePageDetails compo
 
   const tabsComponent = mount(
       <Tabs
-        reviews={reviews}
+        comments={comments}
         movie={movie}
         activeItem={`Overview`}
         handleActive={handleActive}
