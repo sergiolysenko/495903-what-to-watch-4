@@ -7,7 +7,11 @@ import {MoviePages, commentsShape} from "../utils/constants.js";
 import {movieShape} from "../utils/constants.js";
 
 const Tabs = (props) => {
-  const {movie, comments, activeItem, handleActive} = props;
+  const {movie, movieId, activeItem, handleActive} = props;
+
+  if (!movie) {
+    return null;
+  }
 
   const renderSelectedTab = () => {
     switch (activeItem) {
@@ -19,8 +23,7 @@ const Tabs = (props) => {
       case MoviePages.REVIEWS:
         return (
           <MoviePageReviews
-            movie={movie}
-            comments={comments}
+            movieId={movieId}
           />);
       default:
         return (
@@ -38,9 +41,13 @@ const Tabs = (props) => {
             <li
               key={tabName + i}
               className={`movie-nav__item ${activeItem === tabName && `movie-nav__item--active`}`}
-              onClick={() => handleActive(tabName)}
             >
-              <a href="#" className="movie-nav__link">{tabName}</a>
+              <a
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  handleActive(tabName);
+                }}
+                href="#" className="movie-nav__link">{tabName}</a>
             </li>
           ))}
         </ul>

@@ -2,15 +2,26 @@ import React from "react";
 import PropTypes from "prop-types";
 import Tabs from "../tabs/tabs.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
-import {movieShape, commentsShape} from "../utils/constants.js";
+import {movieShape, commentsShape, MoviePages} from "../utils/constants.js";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
 import PlayButton from "../play-button/play-button.jsx";
 import {Header} from "../header/header.jsx";
-
-const TabsWrapped = withActiveItem(Tabs);
+import {connect} from "react-redux";
+import {getMovieById} from "../../reducer/data/selectors.js";
+import {getSilimalMoviesToChosen} from "../../reducer/data/selectors.js";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../utils/constants.js";
+import MyListButton from "../my-list-button/my-list-button.jsx";
 
 const MoviePage = (props) => {
-  const {movie, comments, onMovieClick, onPlayClick, similarMovies, onAddReviewClick, isAuthorised} = props;
+  const {movie, similarMovies, isAuthorised} = props;
+
+  const TabsWrapped = withActiveItem(Tabs, MoviePages.OVERVIEW);
+
+  if (!movie) {
+    return null;
+  }
+
   const {id, title, genre, year, backgroundImg, posterImg, backgroundColor} = movie;
 
   return (<React.Fragment>
@@ -40,21 +51,14 @@ const MoviePage = (props) => {
 
               <PlayButton
                 id={id}
-                onPlayClick={() => onPlayClick(movie.id)}
               />
 
-              <button className="btn btn--list movie-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"></use>
-                </svg>
-                <span>My list</span>
-              </button>
-              {isAuthorised && <a
-                onClick={(evt) => {
-                  evt.preventDefault();
-                  onAddReviewClick();
-                }}
-                href="add-review.html" className="btn movie-card__button">Add review</a>}
+              <MyListButton
+                movie={movie}
+              />
+              {isAuthorised &&
+              <Link
+                to={AppRoute.REVIEW.replace(`:id`, id)} className="btn movie-card__button">Add review</Link>}
             </div>
           </div>
         </div>
@@ -68,7 +72,7 @@ const MoviePage = (props) => {
 
           <TabsWrapped
             movie={movie}
-            comments={comments}
+            movieId={id}
           />
 
         </div>
@@ -80,7 +84,6 @@ const MoviePage = (props) => {
 
         <MoviesList
           movies={similarMovies}
-          onClick={onMovieClick}
         />
       </section>
 
@@ -101,14 +104,22 @@ const MoviePage = (props) => {
   </React.Fragment>);
 };
 
+const mapStateToProps = (state, props) => {
+  const {historyProps} = props;
+  const id = historyProps.match.params.id;
+  const chosenMovie = getMovieById(state, id);
+  return {
+    movie: chosenMovie,
+    similarMovies: getSilimalMoviesToChosen(state, chosenMovie),
+  };
+};
+
+
 MoviePage.propTypes = {
   movie: movieShape,
   similarMovies: PropTypes.arrayOf(movieShape),
   comments: commentsShape,
-  onMovieClick: PropTypes.func.isRequired,
-  onPlayClick: PropTypes.func.isRequired,
-  onAddReviewClick: PropTypes.func.isRequired,
   isAuthorised: PropTypes.bool.isRequired,
 };
 
-export default MoviePage;
+export default connect(mapStateToProps)(MoviePage);

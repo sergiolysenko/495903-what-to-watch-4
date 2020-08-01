@@ -7,14 +7,17 @@ import withPlayingCard from "../../hocs/with-playing-card/with-playing-card.js";
 const SmallCardWrapped = withPlayingCard(SmallMovieCard);
 
 const MoviesList = (props) => {
-  const {movies, onClick} = props;
+  const {movies} = props;
+
+  if (!movies) {
+    return null;
+  }
 
   return (
     <div className="catalog__movies-list">
       {movies.map((movie, i) => <SmallCardWrapped
         key={movie.title + i}
         movie={movie}
-        onClick={onClick}
       />)}
     </div>
   );
@@ -22,7 +25,6 @@ const MoviesList = (props) => {
 
 MoviesList.propTypes = {
   movies: PropTypes.arrayOf(movieShape).isRequired,
-  onClick: PropTypes.func.isRequired,
 };
 
 export default MoviesList;

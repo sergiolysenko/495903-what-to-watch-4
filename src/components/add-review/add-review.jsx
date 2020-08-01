@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 import {ReviewLength} from "../utils/constants.js";
 import {movieShape} from "../utils/constants.js";
 import {Header} from "../header/header.jsx";
+import {connect} from "react-redux";
+import {getMovieById} from "../../reducer/data/selectors.js";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../utils/constants.js";
 
 class AddReview extends React.PureComponent {
   constructor(props) {
@@ -35,7 +39,12 @@ class AddReview extends React.PureComponent {
 
   render() {
     const {movie, isAuthorised, isSendingCommentData, isPostingError} = this.props;
-    const {title, posterImg, backgroundImg, backgroundColor} = movie;
+
+    if (!movie) {
+      return null;
+    }
+
+    const {title, posterImg, backgroundImg, backgroundColor, id} = movie;
     const disabled = isSendingCommentData && `disabled`;
 
     return (
@@ -58,8 +67,11 @@ class AddReview extends React.PureComponent {
           >
             <nav className="breadcrumbs">
               <ul className="breadcrumbs__list">
+
                 <li className="breadcrumbs__item">
-                  <a href="movie-page.html" className="breadcrumbs__link">{title}</a>
+                  <Link
+                    to={AppRoute.FILM.replace(`:id`, id)}
+                    className="breadcrumbs__link">{title}</Link>
                 </li>
                 <li className="breadcrumbs__item">
                   <a className="breadcrumbs__link">Add review</a>
@@ -126,6 +138,15 @@ class AddReview extends React.PureComponent {
   }
 }
 
+const mapStateToProps = (state, props) => {
+  const {historyProps} = props;
+  const id = historyProps.match.params.id;
+  const chosenMovie = getMovieById(state, id);
+  return {
+    movie: chosenMovie,
+  };
+};
+
 AddReview.propTypes = {
   movie: movieShape,
   onSubmit: PropTypes.func.isRequired,
@@ -134,4 +155,4 @@ AddReview.propTypes = {
   isPostingError: PropTypes.bool.isRequired,
 };
 
-export {AddReview};
+export default connect(mapStateToProps)(AddReview);

@@ -6,26 +6,37 @@ const initialState = {
   allMovies: [],
   mainCard: {},
   comments: [],
+  favoriteMovies: [],
 };
 
 const ActionType = {
-  SET_MOVIES: `SET_MOVIES`,
-  SET_MAIN_MOVIE: `SET_MAIN_MOVIE`,
-  SET_COMMENTS: `SET_COMMENTS`,
+  LOAD_MOVIES: `LOAD_MOVIES`,
+  LOAD_MAIN_MOVIE: `LOAD_MAIN_MOVIE`,
+  LOAD_COMMENTS: `LOAD_COMMENTS`,
+  LOAD_FAVORITE_MOVIES: `LOAD_FAVORITE_MOVIES`,
+  UPDATE_MOVIE: `UPDATE_MOVIE`,
 };
 
 const ActionCreator = {
-  setMovies: (movies) => ({
-    type: ActionType.SET_MOVIES,
+  loadMovies: (movies) => ({
+    type: ActionType.LOAD_MOVIES,
     payload: movies,
   }),
-  setMainMovie: (movie) => ({
-    type: ActionType.SET_MAIN_MOVIE,
+  loadMainMovie: (movie) => ({
+    type: ActionType.LOAD_MAIN_MOVIE,
     payload: movie,
   }),
-  setComments: (comments) => ({
-    type: ActionType.SET_COMMENTS,
+  loadComments: (comments) => ({
+    type: ActionType.LOAD_COMMENTS,
     payload: comments,
+  }),
+  loadFavoriteMovies: (movies) => ({
+    type: ActionType.LOAD_FAVORITE_MOVIES,
+    payload: movies
+  }),
+  updateMovie: (movie) => ({
+    type: ActionType.UPDATE_MOVIE,
+    payload: movie
   }),
 };
 
@@ -33,36 +44,65 @@ const Operation = {
   loadMovies: () => (dispatch, getState, api) => {
     return api.get(`/films`)
       .then((response) => {
-        dispatch(ActionCreator.setMovies(adaptMovies(response.data)));
+        dispatch(ActionCreator.loadMovies(adaptMovies(response.data)));
       });
   },
   loadMainMovie: () => (dispatch, getState, api) => {
     return api.get(`/films/promo`)
       .then((response) => {
-        dispatch(ActionCreator.setMainMovie(adaptMovie(response.data)));
+        dispatch(ActionCreator.loadMainMovie(adaptMovie(response.data)));
       });
   },
   loadComments: (movieId) => (dispatch, getState, api) => {
     return api.get(`/comments/${movieId}`)
       .then((response) => {
-        dispatch(ActionCreator.setComments(response.data));
+        dispatch(ActionCreator.loadComments(response.data));
+      });
+  },
+  loadFavoriteMovies: () => (dispatch, getState, api) => {
+    return api.get(`/favorite`)
+      .then((response) => {
+        dispatch(ActionCreator.loadFavoriteMovies(adaptMovies(response.data)));
+      });
+  },
+  changeFlagIsFavorite: (movieId, status) => (dispatch, getState, api) => {
+    return api.post(`/favorite/${movieId}/${status}`)
+      .then((response) => {
+        dispatch(ActionCreator.loadMainMovie(adaptMovie(response.data)));
+        dispatch(ActionCreator.updateMovie(adaptMovie(response.data)));
       });
   },
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.SET_MOVIES:
+    case ActionType.LOAD_MOVIES:
       return extend(state, {
         allMovies: action.payload,
       });
-    case ActionType.SET_MAIN_MOVIE:
+    case ActionType.LOAD_MAIN_MOVIE:
       return extend(state, {
         mainCard: action.payload,
       });
-    case ActionType.SET_COMMENTS:
+    case ActionType.LOAD_COMMENTS:
       return extend(state, {
         comments: action.payload,
+      });
+    case ActionType.LOAD_FAVORITE_MOVIES:
+      return extend(state, {
+        favoriteMovies: action.payload
+      });
+    case ActionType.UPDATE_MOVIE:
+      const changedMovie = action.payload;
+      const movies = state.allMovies;
+      const allMovies = movies.map((movie) => {
+        if (movie.id === changedMovie.id) {
+          movie = Object.assign({}, movie, {isFavorite: !movie.isFavorite});
+        }
+        return movie;
+      });
+      return extend(state, {
+        allMovies
       });
     default:
       return state;

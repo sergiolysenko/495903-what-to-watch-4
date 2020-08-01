@@ -15,10 +15,6 @@ const SmallMovieCard = (props) => {
         onMouseEnter();
       }}
       onMouseLeave={() => onMouseLeave()}
-      onClick={(evt) => {
-        evt.preventDefault();
-        onClick(id);
-      }}
       className="small-movie-card catalog__movies-card">
       <Link
         className="small-movie-card__image"
@@ -37,10 +33,6 @@ const SmallMovieCard = (props) => {
       <h3 className="small-movie-card__title">
         <Link
           to={AppRoute.FILM.replace(`:id`, id)}
-          onClick={(evt) => {
-            evt.preventDefault();
-            onClick(id);
-          }}
           className="small-movie-card__link"
         >{title}</Link>
       </h3>
@@ -52,7 +44,6 @@ const SmallMovieCard = (props) => {
 SmallMovieCard.propTypes = {
   movie: movieShape.isRequired,
   isPlaying: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
 };

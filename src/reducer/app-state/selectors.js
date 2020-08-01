@@ -1,28 +1,12 @@
 import {createSelector} from "reselect";
 import NameSpace from "../name-space.js";
-import {findMovieById, getSimilarMoviesByGenre} from "../../components/utils/utils.js";
+import {getSimilarMoviesByGenre} from "../../components/utils/utils.js";
 import {SIMILAR_MOVIES_COUNT} from "../../components/utils/constants.js";
 import {getMovies} from "../data/selectors.js";
-
-export const getChosenMovieId = (state) => {
-  return state[NameSpace.APP_STATE].chosenMovieId;
-};
 
 export const getGenre = (state) => {
   return state[NameSpace.APP_STATE].genre;
 };
-
-const getPlayingMovieId = (state) => {
-  return state[NameSpace.APP_STATE].playingMovie;
-};
-
-export const getPlayingMovie = createSelector(
-    getPlayingMovieId,
-    getMovies,
-    (playingMovieId, movies) => {
-      return findMovieById(movies, playingMovieId);
-    }
-);
 
 export const getShowingMoviesCount = (state) => {
   return state[NameSpace.APP_STATE].showingMoviesCount;
@@ -56,20 +40,9 @@ export const getListOfDisplayedMovies = createSelector(
     }
 );
 
-export const getChosenMovie = createSelector(
-    getChosenMovieId,
-    (state, movies) => movies,
-    (chosenMovieId, movies) => {
-      if (chosenMovieId === -1) {
-        return null;
-      }
-      return findMovieById(movies, chosenMovieId);
-    }
-);
-
 export const getSilimalMoviesToChosen = createSelector(
-    (state, movies) => movies,
-    (state, movies) => getChosenMovie(state, movies),
+    getMovies,
+    (state, chosenMovie) =>chosenMovie,
     (movies, chosenMovie) => {
       if (!chosenMovie) {
         return null;

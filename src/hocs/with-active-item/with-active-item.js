@@ -1,12 +1,12 @@
 import React from "react";
 
-const withActiveItem = (Component) => {
+const withActiveItem = (Component, activeTab) => {
   class WithActiveItem extends React.PureComponent {
     constructor(props) {
       super(props);
 
       this.state = {
-        activeItem: undefined,
+        activeItem: activeTab,
       };
 
       this.handleActive = this.handleActive.bind(this);

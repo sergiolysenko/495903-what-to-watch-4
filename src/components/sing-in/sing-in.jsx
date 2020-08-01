@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Logo from "../logo/logo.jsx";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../utils/constants.js";
 
 class SingIn extends React.PureComponent {
   constructor(props) {
@@ -25,7 +26,14 @@ class SingIn extends React.PureComponent {
   render() {
     return <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo />
+        <Link
+          className="logo__link"
+          to={AppRoute.MY_LIST}
+        >
+          <span className="logo__letter logo__letter--1">W</span>
+          <span className="logo__letter logo__letter--2">T</span>
+          <span className="logo__letter logo__letter--3">W</span>
+        </Link>
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
 
