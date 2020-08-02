@@ -29,9 +29,9 @@ Array [
             </cite>
             <time
               className="review__date"
-              dateTime="2016-12-24"
+              dateTime="2019-05-08"
             >
-              2019-05-08T14:13:56.569Z
+              May 8, 2019
             </time>
           </footer>
         </blockquote>
@@ -70,9 +70,9 @@ Array [
             </cite>
             <time
               className="review__date"
-              dateTime="2016-12-24"
+              dateTime="2019-05-08"
             >
-              2019-05-08T14:13:56.569Z
+              May 8, 2019
             </time>
           </footer>
         </blockquote>

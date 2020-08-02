@@ -12,10 +12,6 @@ export const getShowingMoviesCount = (state) => {
   return state[NameSpace.APP_STATE].showingMoviesCount;
 };
 
-export const getWritingCommentFlag = (state) => {
-  return state[NameSpace.APP_STATE].writingComment;
-};
-
 export const getSendingCommentDataFlag = (state) => {
   return state[NameSpace.APP_STATE].sendingCommentData;
 };

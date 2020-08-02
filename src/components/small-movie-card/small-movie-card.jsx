@@ -6,7 +6,7 @@ import {AppRoute} from "../utils/constants.js";
 import {Link} from "react-router-dom";
 
 const SmallMovieCard = (props) => {
-  const {movie, isPlaying, onClick, onMouseEnter, onMouseLeave} = props;
+  const {movie, isPlaying, onMouseEnter, onMouseLeave} = props;
   const {id, title, cardImg, preview} = movie;
 
   return (

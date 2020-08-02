@@ -25,47 +25,39 @@ const movie = {
   videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
 };
 
-const mockEvent = {
-  preventDefault() {}
-};
-
 describe(`SmallMovieCardComponent`, () => {
-  it(`Check click on the title`, () => {
-    const onClick = jest.fn();
+  it(`Check on mouse enter`, () => {
+    const onMouseEnter = jest.fn();
 
     const smallMovieCard = shallow(
         <SmallMovieCard
           movie={movie}
-          onClick={onClick}
-          onHover={()=>{}}
           isPlaying={true}
-          onMouseEnter={()=>{}}
+          onMouseEnter={onMouseEnter}
           onMouseLeave={()=>{}}
         />
     );
-    const smallMovieTitle = smallMovieCard.find(`.small-movie-card__link`);
-    smallMovieTitle.simulate(`click`, mockEvent);
+    const smallMovie = smallMovieCard.find(`article.small-movie-card`);
+    smallMovie.simulate(`mouseenter`);
 
-    expect(onClick.mock.calls.length).toBe(1);
+    expect(onMouseEnter).toHaveBeenCalledTimes(1);
   });
 
-  it(`Check click on the card`, () => {
-    const onClick = jest.fn();
+  it(`Check on mouse leave`, () => {
+    const onMouseLeave = jest.fn();
 
     const smallMovieCard = shallow(
         <SmallMovieCard
           movie={movie}
-          onClick={onClick}
-          onHover={()=>{}}
           isPlaying={true}
           onMouseEnter={()=>{}}
-          onMouseLeave={()=>{}}
+          onMouseLeave={onMouseLeave}
         />
     );
-    const smallMovieTitle = smallMovieCard.find(`article.small-movie-card`);
-    smallMovieTitle.simulate(`click`, mockEvent);
+    const smallMovie = smallMovieCard.find(`article.small-movie-card`);
+    smallMovie.simulate(`mouseleave`);
 
-    expect(onClick.mock.calls.length).toBe(1);
+    expect(onMouseLeave).toHaveBeenCalledTimes(1);
   });
 
   it(`Check if state changed by hover on the card`, () => {

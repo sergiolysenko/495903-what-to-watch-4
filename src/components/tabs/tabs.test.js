@@ -48,6 +48,7 @@ it(`Render Tabs`, () => {
     .create(<Tabs
       movie={movie}
       comments={comments}
+      movieId={2}
       activeItem={`Overview`}
       handleActive={() => {}}
     />

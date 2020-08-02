@@ -1,30 +1,13 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import MoviePage from "./movie-page.jsx";
+import configureStore from "redux-mock-store";
+import {Provider} from "react-redux";
+import NameSpace from "../../reducer/name-space.js";
+import {Router} from "react-router-dom";
+import history from "./../../history.js";
 
-const comments = [
-  {
-    "id": 1,
-    "user": {
-      "id": 4,
-      "name": `Kate Muir`
-    },
-    "rating": 8.9,
-    "comment": `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
-    "date": `2019-05-08T14:13:56.569Z`
-  },
-  {
-    "id": 2,
-    "user": {
-      "id": 4,
-      "name": `Kate Muir`
-    },
-    "rating": 8.9,
-    "comment": `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
-    "date": `2019-05-08T14:13:56.569Z`
-  },
-];
-
+const mockStore = configureStore([]);
 const movies = [
   {
     id: 1,
@@ -78,7 +61,6 @@ const movies = [
     videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
   },
 ];
-
 const movie = {
   id: 1,
   title: `Aviator`,
@@ -97,25 +79,46 @@ const movie = {
   videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
 };
 
-const mockFunc = () => {};
 const isAuthorised = true;
+const historyProps = {
+  match: {
+    params: {id: 1}
+  }
+};
 
 it(`Render MoviePage`, () => {
+  const store = mockStore({
+    [NameSpace.APP_STATE]: {
+      genre: `All genres`,
+      showingMoviesCount: 8,
+      isSendingCommentData: false,
+      postingError: false,
+    },
+    [NameSpace.DATA]: {
+      allMovies: movies,
+      mainCard: movies[0],
+    },
+    [NameSpace.USER]: {
+      authorizationStatus: true,
+    },
+  });
+
   const tree = renderer
-    .create(<MoviePage
-      movie={movie}
-      movies={movies}
-      similarMovies={movies}
-      comments={comments}
-      onMovieClick={mockFunc}
-      onPlayClick={mockFunc}
-      onAddReviewClick={mockFunc}
-      isAuthorised={isAuthorised}
-    />, {
-      createNodeMock: () => {
-        return {};
-      }
-    })
+    .create(
+        <Provider store={store}>
+          <Router history={history}>
+            <MoviePage
+              movie={movie}
+              similarMovies={movies}
+              isAuthorised={isAuthorised}
+              historyProps={historyProps}
+            />
+          </Router>
+        </Provider>, {
+          createNodeMock: () => {
+            return {};
+          }
+        })
       .toJSON();
 
   expect(tree).toMatchSnapshot();

@@ -65,6 +65,7 @@ Tabs.defaultProps = {
 
 Tabs.propTypes = {
   movie: movieShape.isRequired,
+  movieId: PropTypes.number,
   comments: commentsShape,
   handleActive: PropTypes.func.isRequired,
   activeItem: PropTypes.string,

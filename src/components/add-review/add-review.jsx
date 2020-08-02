@@ -155,4 +155,6 @@ AddReview.propTypes = {
   isPostingError: PropTypes.bool.isRequired,
 };
 
+export {AddReview};
+
 export default connect(mapStateToProps)(AddReview);

@@ -2,13 +2,15 @@
 
 exports[`Render Header 1`] = `
 <header
-  className="page-header movie-card__head"
+  className="page-header "
 >
   <div
     className="logo"
   >
     <a
       className="logo__link"
+      href="/"
+      onClick={[Function]}
     >
       <span
         className="logo__letter logo__letter--1"
@@ -33,12 +35,17 @@ exports[`Render Header 1`] = `
     <div
       className="user-block__avatar"
     >
-      <img
-        alt="User avatar"
-        height="63"
-        src="img/avatar.jpg"
-        width="63"
-      />
+      <a
+        href="/mylist"
+        onClick={[Function]}
+      >
+        <img
+          alt="User avatar"
+          height="63"
+          src="img/avatar.jpg"
+          width="63"
+        />
+      </a>
     </div>
   </div>
 </header>

@@ -44,11 +44,12 @@ it(`Check if state changes by click on details and rended MoviePageDetails compo
       <Tabs
         comments={comments}
         movie={movie}
+        movieId={2}
         activeItem={`Overview`}
         handleActive={handleActive}
       />
   );
-  const tabs = tabsComponent.find(`.movie-nav__item`);
+  const tabs = tabsComponent.find(`.movie-nav__link`);
   const detailsTab = tabs.at(1);
 
   detailsTab.simulate(`click`);

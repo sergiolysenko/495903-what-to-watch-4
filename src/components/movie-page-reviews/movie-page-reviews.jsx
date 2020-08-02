@@ -74,5 +74,5 @@ MoviePageReviews.propTypes = {
   movieId: PropTypes.number.isRequired,
   comments: commentsShape,
 };
-
+export {MoviePageReviews};
 export default connect(mapStateToProps, mapDispatchToProps)(MoviePageReviews);

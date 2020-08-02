@@ -137,6 +137,7 @@ const composedWithVideoPlayer = compose(
     connect(mapStateToProps),
     withVideoPlayer
 );
+export {withVideoPlayer};
 
 export default composedWithVideoPlayer;
 

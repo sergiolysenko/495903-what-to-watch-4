@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Render PlayButton 1`] = `
-<button
+<a
   className="btn btn--play movie-card__button"
+  href="/films/player/1"
   onClick={[Function]}
   type="button"
 >
@@ -18,5 +19,5 @@ exports[`Render PlayButton 1`] = `
   <span>
     Play
   </span>
-</button>
+</a>
 `;

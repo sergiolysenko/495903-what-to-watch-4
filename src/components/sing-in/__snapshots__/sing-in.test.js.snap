@@ -7,30 +7,27 @@ exports[`Render SingIn 1`] = `
   <header
     className="page-header user-page__head"
   >
-    <div
-      className="logo"
+    <a
+      className="logo__link"
+      href="/mylist"
+      onClick={[Function]}
     >
-      <a
-        className="logo__link"
-        href="main.html"
+      <span
+        className="logo__letter logo__letter--1"
       >
-        <span
-          className="logo__letter logo__letter--1"
-        >
-          W
-        </span>
-        <span
-          className="logo__letter logo__letter--2"
-        >
-          T
-        </span>
-        <span
-          className="logo__letter logo__letter--3"
-        >
-          W
-        </span>
-      </a>
-    </div>
+        W
+      </span>
+      <span
+        className="logo__letter logo__letter--2"
+      >
+        T
+      </span>
+      <span
+        className="logo__letter logo__letter--3"
+      >
+        W
+      </span>
+    </a>
     <h1
       className="page-title user-page__title"
     >

@@ -9,29 +9,6 @@ import history from "./../../history.js";
 
 const mockStore = configureStore([]);
 
-const comments = [
-  {
-    "id": 1,
-    "user": {
-      "id": 4,
-      "name": `Kate Muir`
-    },
-    "rating": 8.9,
-    "comment": `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
-    "date": `2019-05-08T14:13:56.569Z`
-  },
-  {
-    "id": 2,
-    "user": {
-      "id": 4,
-      "name": `Kate Muir`
-    },
-    "rating": 8.9,
-    "comment": `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
-    "date": `2019-05-08T14:13:56.569Z`
-  },
-];
-
 const movies = [
   {
     id: 1,
@@ -102,17 +79,14 @@ const movies = [
     runTime: 188,
   },
 ];
-const mockFucnc = () => {};
+const mockFunc = () => {};
 const authorizationStatus = `NO_AUTH`;
 
 it(`Render App`, () => {
   const store = mockStore({
     [NameSpace.APP_STATE]: {
-      chosenMovieId: -1,
       genre: `All genres`,
       showingMoviesCount: 8,
-      playingMovie: null,
-      writingComment: false,
       isSendingCommentData: false,
       postingError: false,
     },
@@ -131,19 +105,12 @@ it(`Render App`, () => {
           <Router history={history}>
             <App
               mainCard={movies[0]}
-              filteredMovies={movies}
-              comments={comments}
+              movies={movies}
               isButtonShowMoreDisplayed={true}
-              onShowMoreClick={mockFucnc}
-              chosenMovieId={-1}
-              onCardClick={mockFucnc}
-              onPlayClick={mockFucnc}
-              playingMovie={movies[0]}
-              chosenMovie={movies[0]}
-              similarMoviesToChosen={movies}
-              isPlayerOpen={false}
+              onShowMoreClick={mockFunc}
               isAuthorised={true}
-              isCommentWriting={false}
+              onSingInClick={mockFunc}
+              onCommentSubmit={mockFunc}
               isSendingCommentData={false}
               isPostingError={false}
             />

@@ -5,8 +5,8 @@ import {movieShape} from "../utils/constants.js";
 import {Switch, Route, Router} from "react-router-dom";
 import {connect} from "react-redux";
 import {ActionCreator, Operation as AppStateOperation} from "../../reducer/app-state/app-state.js";
-import {getGenre, displayShowMoreButton, getListOfDisplayedMovies, getWritingCommentFlag, getSendingCommentDataFlag, getPostingError} from "../../reducer/app-state/selectors.js";
-import {getMovies, getMainMovie, getFilteredMoviesByGenre} from "../../reducer/data/selectors.js";
+import {getGenre, displayShowMoreButton, getListOfDisplayedMovies, getSendingCommentDataFlag, getPostingError} from "../../reducer/app-state/selectors.js";
+import {getMainMovie, getFilteredMoviesByGenre} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus} from "../../reducer/user/selector.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
 import {Operation as UserOperation} from "../../reducer/user/user.js";
@@ -94,7 +94,6 @@ class App extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
-  const allMovies = getMovies(state);
   const genre = getGenre(state);
   const filteredMovies = getFilteredMoviesByGenre(state, genre);
   const displayedMoviesByButton = getListOfDisplayedMovies(state, filteredMovies);
@@ -103,10 +102,8 @@ const mapStateToProps = (state) => {
   return {
     mainCard: getMainMovie(state),
     movies: displayedMoviesByButton,
-    allMovies,
     isButtonShowMoreDisplayed: displayShowMoreButton(state, displayedMoviesByButton),
     isAuthorised,
-    isCommentWriting: getWritingCommentFlag(state),
     isSendingCommentData: getSendingCommentDataFlag(state),
     isPostingError: getPostingError(state),
   };
@@ -129,13 +126,10 @@ App.propTypes = {
   movies: PropTypes.arrayOf(movieShape).isRequired,
   isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
   onShowMoreClick: PropTypes.func.isRequired,
-  chosenMovie: PropTypes.object,
-  similarMoviesToChosen: PropTypes.array,
   isAuthorised: PropTypes.bool.isRequired,
   onSingInClick: PropTypes.func.isRequired,
   onCommentSubmit: PropTypes.func.isRequired,
-  isCommentWriting: PropTypes.bool.isRequired,
-  isSendingCommentData: PropTypes.bool.isRequired,
+  isSendingCommentData: PropTypes.bool,
   isPostingError: PropTypes.bool.isRequired,
 };
 

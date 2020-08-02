@@ -1,7 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import {withVideoPlayer} from "./with-video-player.js";
-import PropTypes from "prop-types";
+import {MyListButton} from "./my-list-button.jsx";
+
 const movie = {
   id: 1,
   title: `Aviator`,
@@ -12,35 +12,20 @@ const movie = {
   posterImg: `img/the-grand-budapest-hotel-poster.jpg`,
   rating: 5,
   ratingCount: 188,
-  description: `murder.`,
+  description: `hief suspect in her murder.`,
   director: `Leo Dicaprio`,
-  starring: [`Bill Goldblum`],
+  starring: [`ldblum`],
   preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
   runTime: 125,
   videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
 };
-const MockComponent = (props) => {
-  const {children} = props;
 
-  return <div>
-    {children}
-  </div>;
-};
-
-MockComponent.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-const MockComponentWrapped = withVideoPlayer(MockComponent);
-
-it(`render withVideoPlayer`, () => {
+it(`render favorite MyListButton`, () => {
   const tree = renderer.create(
-      <MockComponentWrapped
+      <MyListButton
         movie={movie}
-      />, {
-        createNodeMock: () => {
-          return {};
-        }}
+        onMyListClick={() => {}}
+      />
   ).toJSON();
 
   expect(tree).toMatchSnapshot();
