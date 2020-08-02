@@ -9,7 +9,7 @@ exports[`Render SingIn 1`] = `
   >
     <a
       className="logo__link"
-      href="/mylist"
+      href="/"
       onClick={[Function]}
     >
       <span

@@ -8,9 +8,16 @@ import {createAPI} from "./api.js";
 import thunk from "redux-thunk";
 import {Operation as DataOperation} from "./reducer/data/data.js";
 import {Operation as UserOperation, ActionCreator, AuthorizationStatus} from "./reducer/user/user.js";
+import history from "./history.js";
+import {AppRoute} from "./components/utils/constants.js";
 
-const onUnauthorized = () => {
+const onUnauthorized = (response) => {
+  const {config} = response;
+
   store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH));
+  if (config.method !== `get` && config.url !== `/login`) {
+    history.push(AppRoute.LOGIN);
+  }
 };
 
 const api = createAPI(onUnauthorized);

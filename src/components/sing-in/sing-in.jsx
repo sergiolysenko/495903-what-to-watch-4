@@ -28,7 +28,7 @@ class SingIn extends React.PureComponent {
       <header className="page-header user-page__head">
         <Link
           className="logo__link"
-          to={AppRoute.MY_LIST}
+          to={AppRoute.ROOT}
         >
           <span className="logo__letter logo__letter--1">W</span>
           <span className="logo__letter logo__letter--2">T</span>

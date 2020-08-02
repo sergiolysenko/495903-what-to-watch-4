@@ -2,7 +2,7 @@ import React from "react";
 import Main from "../main/main.jsx";
 import PropTypes from "prop-types";
 import {movieShape} from "../utils/constants.js";
-import {Switch, Route, Router} from "react-router-dom";
+import {Switch, Route, Router, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {ActionCreator, Operation as AppStateOperation} from "../../reducer/app-state/app-state.js";
 import {getGenre, displayShowMoreButton, getListOfDisplayedMovies, getSendingCommentDataFlag, getPostingError} from "../../reducer/app-state/selectors.js";
@@ -18,12 +18,16 @@ import AddReview from "../add-review/add-review.jsx";
 import history from "../../history.js";
 import {AppRoute} from "../utils/constants.js";
 import MyList from "../my-list/my-list.jsx";
+import PrivateRoute from "../private-route/private-route.jsx";
 
 const VideoPlayerWrapped = withVideoPlayer(VideoPlayer);
 
 class App extends React.PureComponent {
   renderApp() {
     const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, isAuthorised} = this.props;
+    if (!movies || !mainCard) {
+      return null;
+    }
 
     return (
       <Main
@@ -44,16 +48,14 @@ class App extends React.PureComponent {
           <Route exact path={AppRoute.ROOT}>
             {this.renderApp()}
           </Route>
-          <Route exact path={AppRoute.MY_LIST}
-            render={() => {
-              return <MyList />;
-            }}
-          />
           <Route exact path={AppRoute.LOGIN}
             render={() => {
-              return <SingIn
-                onSingInClick={onSingInClick}
-              />;
+              return isAuthorised ?
+                <Redirect to={AppRoute.ROOT} />
+                :
+                <SingIn
+                  onSingInClick={onSingInClick}
+                />;
             }}
           />
           <Route
@@ -73,7 +75,13 @@ class App extends React.PureComponent {
               />;
             }}
           />
-          <Route
+          <PrivateRoute
+            exact path={AppRoute.MY_LIST}
+            render={() => {
+              return <MyList />;
+            }}
+          />
+          <PrivateRoute
             exact path={AppRoute.REVIEW}
             render={(historyProps) => {
               return <AddReview
