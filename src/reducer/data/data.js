@@ -10,32 +10,32 @@ const initialState = {
 };
 
 const ActionType = {
-  LOAD_MOVIES: `LOAD_MOVIES`,
-  LOAD_MAIN_MOVIE: `LOAD_MAIN_MOVIE`,
-  LOAD_COMMENTS: `LOAD_COMMENTS`,
-  LOAD_FAVORITE_MOVIES: `LOAD_FAVORITE_MOVIES`,
-  UPDATE_MOVIE: `UPDATE_MOVIE`,
+  SET_MOVIES: `SET_MOVIES`,
+  SET_MAIN_MOVIE: `SET_MAIN_MOVIE`,
+  SET_COMMENTS: `SET_COMMENTS`,
+  SET_FAVORITE_MOVIES: `SET_FAVORITE_MOVIES`,
+  UPDATE_MOVIES: `UPDATE_MOVIES`,
 };
 
 const ActionCreator = {
-  loadMovies: (movies) => ({
-    type: ActionType.LOAD_MOVIES,
+  setMovies: (movies) => ({
+    type: ActionType.SET_MOVIES,
     payload: movies,
   }),
-  loadMainMovie: (movie) => ({
-    type: ActionType.LOAD_MAIN_MOVIE,
+  setMainMovie: (movie) => ({
+    type: ActionType.SET_MAIN_MOVIE,
     payload: movie,
   }),
-  loadComments: (comments) => ({
-    type: ActionType.LOAD_COMMENTS,
+  setComments: (comments) => ({
+    type: ActionType.SET_COMMENTS,
     payload: comments,
   }),
-  loadFavoriteMovies: (movies) => ({
-    type: ActionType.LOAD_FAVORITE_MOVIES,
+  setFavoriteMovies: (movies) => ({
+    type: ActionType.SET_FAVORITE_MOVIES,
     payload: movies
   }),
-  updateMovie: (movie) => ({
-    type: ActionType.UPDATE_MOVIE,
+  updateMovies: (movie) => ({
+    type: ActionType.UPDATE_MOVIES,
     payload: movie
   }),
 };
@@ -44,63 +44,69 @@ const Operation = {
   loadMovies: () => (dispatch, getState, api) => {
     return api.get(`/films`)
       .then((response) => {
-        dispatch(ActionCreator.loadMovies(adaptMovies(response.data)));
+        dispatch(ActionCreator.setMovies(adaptMovies(response.data)));
       });
   },
   loadMainMovie: () => (dispatch, getState, api) => {
     return api.get(`/films/promo`)
       .then((response) => {
-        dispatch(ActionCreator.loadMainMovie(adaptMovie(response.data)));
+        dispatch(ActionCreator.setMainMovie(adaptMovie(response.data)));
       });
   },
   loadComments: (movieId) => (dispatch, getState, api) => {
     return api.get(`/comments/${movieId}`)
       .then((response) => {
-        dispatch(ActionCreator.loadComments(response.data));
+        dispatch(ActionCreator.setComments(response.data));
       });
   },
   loadFavoriteMovies: () => (dispatch, getState, api) => {
     return api.get(`/favorite`)
       .then((response) => {
-        dispatch(ActionCreator.loadFavoriteMovies(adaptMovies(response.data)));
+        dispatch(ActionCreator.setFavoriteMovies(adaptMovies(response.data)));
       });
   },
   changeFlagIsFavorite: (movieId, status) => (dispatch, getState, api) => {
     return api.post(`/favorite/${movieId}/${status}`)
       .then((response) => {
-        dispatch(ActionCreator.loadMainMovie(adaptMovie(response.data)));
-        dispatch(ActionCreator.updateMovie(adaptMovie(response.data)));
+        dispatch(ActionCreator.updateMovies(adaptMovie(response.data)));
       });
   },
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.LOAD_MOVIES:
+    case ActionType.SET_MOVIES:
       return extend(state, {
         allMovies: action.payload,
       });
-    case ActionType.LOAD_MAIN_MOVIE:
+    case ActionType.SET_MAIN_MOVIE:
       return extend(state, {
         mainCard: action.payload,
       });
-    case ActionType.LOAD_COMMENTS:
+    case ActionType.SET_COMMENTS:
       return extend(state, {
         comments: action.payload,
       });
-    case ActionType.LOAD_FAVORITE_MOVIES:
+    case ActionType.SET_FAVORITE_MOVIES:
       return extend(state, {
         favoriteMovies: action.payload
       });
-    case ActionType.UPDATE_MOVIE:
+    case ActionType.UPDATE_MOVIES:
       const changedMovie = action.payload;
       const movies = state.allMovies;
+      const mainMovie = state.mainCard;
       const allMovies = movies.map((movie) => {
         if (movie.id === changedMovie.id) {
-          movie = Object.assign({}, movie, {isFavorite: !movie.isFavorite});
+          movie = changedMovie;
         }
         return movie;
       });
+      if (mainMovie.id === changedMovie.id) {
+        return extend(state, {
+          mainCard: changedMovie,
+          allMovies,
+        });
+      }
       return extend(state, {
         allMovies
       });

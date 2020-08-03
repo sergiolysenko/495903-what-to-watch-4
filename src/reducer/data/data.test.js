@@ -174,91 +174,92 @@ describe(`Data reducer test`, () => {
       favoriteMovies: [],
     });
   });
-  it(`load movies`, () => {
+  it(`set movies`, () => {
     expect(reducer({
       allMovies: [],
     }, {
-      type: ActionType.LOAD_MOVIES,
+      type: ActionType.SET_MOVIES,
       payload: movies,
     })).toEqual({
       allMovies: movies,
     });
   });
-  it(`load main movie`, () => {
+  it(`set main movie`, () => {
     expect(reducer({
       mainCard: [],
     }, {
-      type: ActionType.LOAD_MAIN_MOVIE,
+      type: ActionType.SET_MAIN_MOVIE,
       payload: movies[0],
     })).toEqual({
       mainCard: movies[0],
     });
   });
-  it(`load comments`, () => {
+  it(`set comments`, () => {
     expect(reducer({
       comments: [],
     }, {
-      type: ActionType.LOAD_COMMENTS,
+      type: ActionType.SET_COMMENTS,
       payload: comments,
     })).toEqual({
       comments,
     });
   });
-  it(`load favorite movies`, () => {
+  it(`set favorite movies`, () => {
     expect(reducer({
       favoriteMovies: [],
-    },
-    {
-      type: ActionType.LOAD_FAVORITE_MOVIES,
+    }, {
+      type: ActionType.SET_FAVORITE_MOVIES,
       payload: movies,
     })).toEqual({
       favoriteMovies: movies,
     });
   });
-  it(`update film`, () => {
+  it(`update movies`, () => {
     expect(reducer({
       allMovies: movies,
+      mainCard: movies[0],
     }, {
-      type: ActionType.UPDATE_MOVIE,
+      type: ActionType.UPDATE_MOVIES,
       payload: newMovie
     })).toEqual({
       allMovies: newMovies,
+      mainCard: newMovie,
     });
   });
 });
 
 describe(`Data action creator works correctly`, () => {
-  it(`Action creator load movies`, () => {
-    expect(ActionCreator.loadMovies(movies)).toEqual({
-      type: ActionType.LOAD_MOVIES,
+  it(`Action creator set movies`, () => {
+    expect(ActionCreator.setMovies(movies)).toEqual({
+      type: ActionType.SET_MOVIES,
       payload: movies,
     });
   });
 
-  it(`Action creator load main movie`, () => {
-    expect(ActionCreator.loadMainMovie(newMovie)).toEqual({
-      type: ActionType.LOAD_MAIN_MOVIE,
+  it(`Action creator set main movie`, () => {
+    expect(ActionCreator.setMainMovie(newMovie)).toEqual({
+      type: ActionType.SET_MAIN_MOVIE,
       payload: newMovie,
     });
   });
 
-  it(`Action creator load comments`, () => {
-    expect(ActionCreator.loadComments(comments)).toEqual({
-      type: ActionType.LOAD_COMMENTS,
+  it(`Action creator set comments`, () => {
+    expect(ActionCreator.setComments(comments)).toEqual({
+      type: ActionType.SET_COMMENTS,
       payload: comments,
     });
   });
 
-  it(`Action creator load favorite movies`, () => {
-    expect(ActionCreator.loadFavoriteMovies(movies)).toEqual({
-      type: ActionType.LOAD_FAVORITE_MOVIES,
+  it(`Action creator set favorite movies`, () => {
+    expect(ActionCreator.setFavoriteMovies(movies)).toEqual({
+      type: ActionType.SET_FAVORITE_MOVIES,
       payload: movies,
     });
   });
 
-  it(`Action creator change flag posting error`, () => {
-    expect(ActionCreator.updateMovie(newMovie)).toEqual({
-      type: ActionType.UPDATE_MOVIE,
+  it(`Action creator update movies`, () => {
+    expect(ActionCreator.updateMovies(newMovie)).toEqual({
+      type: ActionType.UPDATE_MOVIES,
       payload: newMovie,
     });
   });
@@ -280,7 +281,7 @@ describe(`Operation work correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_MOVIES,
+          type: ActionType.SET_MOVIES,
           payload: recivedMovies
         });
       });
@@ -296,7 +297,7 @@ describe(`Operation work correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_MAIN_MOVIE,
+          type: ActionType.SET_MAIN_MOVIE,
           payload: recivedMovies[0],
         });
       });
@@ -312,7 +313,7 @@ describe(`Operation work correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_FAVORITE_MOVIES,
+          type: ActionType.SET_FAVORITE_MOVIES,
           payload: recivedMovies,
         });
       });
@@ -328,13 +329,9 @@ describe(`Operation work correctly`, () => {
 
     return changeFlagIsFavorite(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_MAIN_MOVIE,
-          payload: recivedMovies[0]
-        });
-        expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: ActionType.UPDATE_MOVIE,
+          type: ActionType.UPDATE_MOVIES,
           payload: recivedMovies[0]
         });
       });
