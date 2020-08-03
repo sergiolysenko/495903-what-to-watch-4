@@ -96,6 +96,7 @@ it(`Render App`, () => {
     },
     [NameSpace.USER]: {
       authorizationStatus,
+      isEmailValid: true,
     },
   });
 
@@ -113,6 +114,7 @@ it(`Render App`, () => {
               onCommentSubmit={mockFunc}
               isSendingCommentData={false}
               isPostingError={false}
+              isEmailValid={true}
             />
           </Router>
         </Provider>, {

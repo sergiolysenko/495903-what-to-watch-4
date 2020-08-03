@@ -11,6 +11,7 @@ describe(`user reducer test`, () => {
   it(`Check initial state`, () => {
     expect(reducer(undefined, {})).toEqual({
       authorizationStatus: AuthorizationStatus.NO_AUTH,
+      isEmailValid: true,
     });
   });
 
@@ -24,6 +25,17 @@ describe(`user reducer test`, () => {
       authorizationStatus: AuthorizationStatus.AUTH,
     });
   });
+
+  it(`change valid email flag`, () => {
+    expect(reducer({
+      isEmailValid: true,
+    }, {
+      type: ActionType.CHANGE_FLAG_EMAIL_VALID,
+      payload: false
+    })).toEqual({
+      isEmailValid: false,
+    });
+  });
 });
 
 describe(`user action creator work correctly`, () => {
@@ -31,6 +43,13 @@ describe(`user action creator work correctly`, () => {
     expect(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)).toEqual({
       type: ActionType.REQUIRE_AUTHORIZATION,
       payload: AuthorizationStatus.AUTH
+    });
+  });
+
+  it(`Action creator change flag email valid`, () => {
+    expect(ActionCreator.changeFlagEmailValid(false)).toEqual({
+      type: ActionType.CHANGE_FLAG_EMAIL_VALID,
+      payload: false,
     });
   });
 });
@@ -65,10 +84,7 @@ describe(`user operation works correctly`, () => {
 
     return login(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(3);
-      })
-      .catch(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledTimes(2);
       });
   });
 });

@@ -45,7 +45,7 @@ exports[`Render SingIn 1`] = `
         className="sign-in__fields"
       >
         <div
-          className="sign-in__field"
+          className="sign-in__field false"
         >
           <input
             className="sign-in__input"

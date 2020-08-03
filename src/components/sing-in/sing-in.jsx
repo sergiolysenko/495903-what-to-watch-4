@@ -25,6 +25,8 @@ class SingIn extends React.PureComponent {
   }
 
   render() {
+    const {isEmailValid} = this.props;
+
     return <div className="user-page">
       <header className="page-header user-page__head">
         <Link
@@ -40,8 +42,13 @@ class SingIn extends React.PureComponent {
 
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__form">
+          {!isEmailValid &&
+          <div className="sign-in__message">
+            <p>Please enter a valid email address</p>
+          </div>}
+
           <div className="sign-in__fields">
-            <div className="sign-in__field">
+            <div className={`sign-in__field ${!isEmailValid && `sign-in__field--error`}`}>
               <input
                 ref={this.emailRef}
                 className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
@@ -70,6 +77,7 @@ class SingIn extends React.PureComponent {
 
 SingIn.propTypes = {
   onSingInClick: PropTypes.func.isRequired,
+  isEmailValid: PropTypes.bool.isRequired,
 };
 
 export {SingIn};

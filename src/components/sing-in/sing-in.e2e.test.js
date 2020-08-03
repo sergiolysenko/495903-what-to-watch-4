@@ -17,6 +17,7 @@ it(`Check click on button submit`, () => {
   const singInComponent = shallow(
       <SingIn
         onSingInClick={onSingInClick}
+        isEmailValid={true}
       />, {
         createNodeMock: () => {
           return {};

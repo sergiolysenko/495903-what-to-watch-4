@@ -7,16 +7,22 @@ const AuthorizationStatus = {
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  isEmailValid: true,
 };
 
 const ActionType = {
   REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
+  CHANGE_FLAG_EMAIL_VALID: `CHANGE_FLAG_EMAIL_VALID`,
 };
 
 const ActionCreator = {
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRE_AUTHORIZATION,
     payload: status,
+  }),
+  changeFlagEmailValid: (flag) => ({
+    type: ActionType.CHANGE_FLAG_EMAIL_VALID,
+    payload: flag,
   }),
 };
 
@@ -37,9 +43,10 @@ const Operation = {
     })
     .then(() => {
       dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+      dispatch(ActionCreator.changeFlagEmailValid(true));
     })
-    .catch((err) => {
-      throw err;
+    .catch(() => {
+      dispatch(ActionCreator.changeFlagEmailValid(false));
     });
   }
 };
@@ -49,6 +56,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.REQUIRE_AUTHORIZATION:
       return extend(state, {
         authorizationStatus: action.payload,
+      });
+    case ActionType.CHANGE_FLAG_EMAIL_VALID:
+      return extend(state, {
+        isEmailValid: action.payload,
       });
     default:
       return state;

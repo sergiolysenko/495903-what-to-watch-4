@@ -11,6 +11,7 @@ it(`Render SingIn`, () => {
         <Router history={history}>
           <SingIn
             onSingInClick={mockFunck}
+            isEmailValid={true}
           />
         </Router>
     ).toJSON();

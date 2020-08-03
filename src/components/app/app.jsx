@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 import {ActionCreator, Operation as AppStateOperation} from "../../reducer/app-state/app-state.js";
 import {getGenre, displayShowMoreButton, getListOfDisplayedMovies, getSendingCommentDataFlag, getPostingError} from "../../reducer/app-state/selectors.js";
 import {getMainMovie, getFilteredMoviesByGenre} from "../../reducer/data/selectors.js";
-import {getAuthorizationStatus} from "../../reducer/user/selector.js";
+import {getAuthorizationStatus, getFlagEmailValid} from "../../reducer/user/selector.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
 import {Operation as UserOperation} from "../../reducer/user/user.js";
 import MoviePage from "../movie-page/movie-page.jsx";
@@ -40,7 +40,7 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const {isAuthorised, onCommentSubmit, isSendingCommentData, isPostingError, onSingInClick} = this.props;
+    const {isAuthorised, onCommentSubmit, isSendingCommentData, isPostingError, onSingInClick, isEmailValid} = this.props;
 
     return (
       <Router history={history}>
@@ -55,6 +55,7 @@ class App extends React.PureComponent {
                 :
                 <SingIn
                   onSingInClick={onSingInClick}
+                  isEmailValid={isEmailValid}
                 />;
             }}
           />
@@ -114,6 +115,7 @@ const mapStateToProps = (state) => {
     isAuthorised,
     isSendingCommentData: getSendingCommentDataFlag(state),
     isPostingError: getPostingError(state),
+    isEmailValid: getFlagEmailValid(state),
   };
 };
 
@@ -139,6 +141,7 @@ App.propTypes = {
   onCommentSubmit: PropTypes.func.isRequired,
   isSendingCommentData: PropTypes.bool,
   isPostingError: PropTypes.bool.isRequired,
+  isEmailValid: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
