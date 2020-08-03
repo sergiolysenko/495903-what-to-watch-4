@@ -7,6 +7,8 @@ import {movieShape} from "../utils/constants.js";
 import {ShowMore} from "../show-more/show-more.jsx";
 import PlayButton from "../play-button/play-button.jsx";
 import MyListButton from "../my-list-button/my-list-button.jsx";
+import Footer from "../footer/footer.jsx";
+
 const Main = (props) => {
   const {mainCard, movies, isButtonShowMoreDisplayed, onShowMoreClick, isAuthorised} = props;
 
@@ -67,19 +69,9 @@ const Main = (props) => {
           }
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer
+          isActiveLogoLink={false}
+        />
       </div>
     </React.Fragment>
   );

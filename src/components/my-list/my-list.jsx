@@ -6,6 +6,7 @@ import {Operation} from "../../reducer/data/data";
 import {getFavoriteMovies} from "../../reducer/data/selectors";
 import PropTypes from "prop-types";
 import {movieShape} from "../utils/constants.js";
+import Footer from "../footer/footer.jsx";
 
 class MyList extends PureComponent {
   constructor(props) {
@@ -34,6 +35,7 @@ class MyList extends PureComponent {
           movies={movies}
         />
       </section>
+      <Footer />
     </div>;
   }
 
