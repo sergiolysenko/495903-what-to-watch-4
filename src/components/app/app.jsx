@@ -63,7 +63,7 @@ class App extends React.PureComponent {
             exact path={AppRoute.PLAYER}
             render={(historyProps) => {
               return <VideoPlayerWrapped
-                historyProps={historyProps}
+                id={historyProps.match.params.id}
               />;
             }}
           />
@@ -71,7 +71,7 @@ class App extends React.PureComponent {
             exact path={AppRoute.FILM}
             render={(historyProps) => {
               return <MoviePage
-                historyProps={historyProps}
+                id={historyProps.match.params.id}
                 isAuthorised={isAuthorised}
               />;
             }}
@@ -86,7 +86,7 @@ class App extends React.PureComponent {
             exact path={AppRoute.REVIEW}
             render={(historyProps) => {
               return <AddReview
-                historyProps={historyProps}
+                id={historyProps.match.params.id}
                 onSubmit={onCommentSubmit}
                 isSendingCommentData={isSendingCommentData}
                 isPostingError={isPostingError}

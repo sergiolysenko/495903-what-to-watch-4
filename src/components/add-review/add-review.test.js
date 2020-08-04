@@ -45,11 +45,7 @@ const movies = [
   }];
 const mockFunc = () => {};
 const authorizationStatus = `AUTH`;
-const historyProps = {
-  match: {
-    params: {id: 1}
-  }
-};
+
 it(`Render AddReview`, () => {
   const store = mockStore({
     [NameSpace.APP_STATE]: {
@@ -77,7 +73,7 @@ it(`Render AddReview`, () => {
               isAuthorised={true}
               isSendingCommentData={false}
               isPostingError={false}
-              historyProps={historyProps}
+              id={1}
             />
           </Router>
         </Provider>, {

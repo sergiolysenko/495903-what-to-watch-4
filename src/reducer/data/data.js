@@ -1,6 +1,6 @@
 import {extend} from "../../components/utils/utils.js";
 import {adaptMovies, adaptMovie} from "../../adapter/movies.js";
-import {} from "../app-state/app-state.js";
+import {FavoriteStatus} from "../../components/utils/constants.js";
 
 const initialState = {
   allMovies: [],
@@ -65,7 +65,8 @@ const Operation = {
         dispatch(ActionCreator.setFavoriteMovies(adaptMovies(response.data)));
       });
   },
-  changeFlagIsFavorite: (movieId, status) => (dispatch, getState, api) => {
+  changeFlagIsFavorite: (movieId, isFavorite) => (dispatch, getState, api) => {
+    const status = isFavorite ? FavoriteStatus.REMOVE : FavoriteStatus.ADD;
     return api.post(`/favorite/${movieId}/${status}`)
       .then((response) => {
         dispatch(ActionCreator.updateMovies(adaptMovie(response.data)));

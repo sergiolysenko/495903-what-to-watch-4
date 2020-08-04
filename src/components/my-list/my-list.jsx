@@ -12,7 +12,11 @@ class MyList extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.props.onLoad();
+  }
+
+  componentDidMount() {
+    const {onLoad} = this.props;
+    onLoad();
   }
 
   render() {
@@ -21,7 +25,7 @@ class MyList extends PureComponent {
     return <div className="user-page">
       <Header
         isAuthorised={true}
-        uniqueClasses="user-page__head"
+        className="user-page__head"
         isUserLinkActive={false}
       >
         <h1 className="page-title user-page__title">My list</h1>

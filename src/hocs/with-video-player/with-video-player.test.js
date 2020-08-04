@@ -37,6 +37,7 @@ it(`render withVideoPlayer`, () => {
   const tree = renderer.create(
       <MockComponentWrapped
         movie={movie}
+        id={1}
       />, {
         createNodeMock: () => {
           return {};

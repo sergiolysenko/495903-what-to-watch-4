@@ -26,11 +26,6 @@ const movie = {
   videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
 };
 
-const historyProps = {
-  match: {
-    params: {id: 1}
-  }
-};
 const MockComponent = (props) => {
   const {children, handlePlayClick, handleFullScreen} = props;
 
@@ -57,7 +52,7 @@ it(`Check on pause click`, () => {
   const withVideoPlayerComponent = mount(
       <MockComponentWrapped
         movie={movie}
-        historyProps={historyProps}
+        id={1}
       />
   );
 

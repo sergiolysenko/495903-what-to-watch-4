@@ -21,15 +21,15 @@ export const getFavoriteMovies = (state) => {
 
 export const getMovieById = createSelector(
     getMovies,
-    (state, id) => id,
+    (state, id) => Number(id),
     (movies, id) => {
-      return movies.find((movie) => movie.id === Number(id));
+      return movies.find((movie) => movie.id === id);
     }
 );
 
 export const getSilimalMoviesToChosen = createSelector(
     getMovies,
-    (state, chosenMovie) =>chosenMovie,
+    (state, chosenMovie) => chosenMovie,
     (movies, chosenMovie) => {
       if (!chosenMovie) {
         return null;

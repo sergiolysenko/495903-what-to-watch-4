@@ -3,11 +3,6 @@ import {connect} from "react-redux";
 import {Operation} from "../../reducer/data/data.js";
 import PropTypes from "prop-types";
 
-const Status = {
-  REMOVE: 0,
-  ADD: 1,
-};
-
 class MyListButton extends PureComponent {
   constructor(props) {
     super(props);
@@ -18,9 +13,8 @@ class MyListButton extends PureComponent {
   handleMyListClick() {
     const {movie, onMyListClick} = this.props;
     const {isFavorite, id} = movie;
-    const status = isFavorite ? Status.REMOVE : Status.ADD;
 
-    onMyListClick(id, status);
+    onMyListClick(id, isFavorite);
   }
 
   render() {
@@ -47,8 +41,8 @@ MyListButton.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onMyListClick(movieId, status) {
-    dispatch(Operation.changeFlagIsFavorite(movieId, status));
+  onMyListClick(movieId, isFavorite) {
+    dispatch(Operation.changeFlagIsFavorite(movieId, isFavorite));
   }
 });
 

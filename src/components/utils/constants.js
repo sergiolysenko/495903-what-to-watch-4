@@ -46,6 +46,12 @@ export const AppRoute = {
   PLAYER: `/films/player/:id`,
 };
 
+
+export const FavoriteStatus = {
+  REMOVE: 0,
+  ADD: 1,
+};
+
 export const movieShape = PropTypes.shape({
   id: PropTypes.number,
   title: PropTypes.string,

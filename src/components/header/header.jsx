@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {AppRoute} from "../utils/constants.js";
 
 const Header = (props) => {
-  const {isAuthorised, isUserLinkActive = true, isActiveLogoLink = true, uniqueClasses = ``, children} = props;
+  const {isAuthorised, isUserLinkActive = true, isActiveLogoLink = true, className = ``, children} = props;
 
   const avatar = <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />;
 
@@ -46,7 +46,7 @@ const Header = (props) => {
       {logo}
     </a>;
 
-  return <header className={`page-header ${uniqueClasses}`}>
+  return <header className={`page-header ${className}`}>
     <div className="logo">
       {logoLink}
     </div>
@@ -63,7 +63,7 @@ Header.propTypes = {
   isAuthorised: PropTypes.bool.isRequired,
   isUserLinkActive: PropTypes.bool,
   isActiveLogoLink: PropTypes.bool,
-  uniqueClasses: PropTypes.string,
+  className: PropTypes.string,
   children: PropTypes.node,
 };
 

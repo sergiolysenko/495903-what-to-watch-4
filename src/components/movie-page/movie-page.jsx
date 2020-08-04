@@ -94,8 +94,8 @@ const MoviePage = (props) => {
 };
 
 const mapStateToProps = (state, props) => {
-  const {historyProps} = props;
-  const id = historyProps.match.params.id;
+  const {id} = props;
+
   const chosenMovie = getMovieById(state, id);
   return {
     movie: chosenMovie,

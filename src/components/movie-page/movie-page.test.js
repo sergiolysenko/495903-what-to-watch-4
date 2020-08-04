@@ -80,11 +80,6 @@ const movie = {
 };
 
 const isAuthorised = true;
-const historyProps = {
-  match: {
-    params: {id: 1}
-  }
-};
 
 it(`Render MoviePage`, () => {
   const store = mockStore({
@@ -111,7 +106,7 @@ it(`Render MoviePage`, () => {
               movie={movie}
               similarMovies={movies}
               isAuthorised={isAuthorised}
-              historyProps={historyProps}
+              id={1}
             />
           </Router>
         </Provider>, {

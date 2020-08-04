@@ -325,7 +325,7 @@ describe(`Operation work correctly`, () => {
       .reply(`200`, [{fake: true}]);
 
     const dispatch = jest.fn();
-    const changeFlagIsFavorite = Operation.changeFlagIsFavorite(1, 1);
+    const changeFlagIsFavorite = Operation.changeFlagIsFavorite(1, false);
 
     return changeFlagIsFavorite(dispatch, () => {}, api)
       .then(() => {

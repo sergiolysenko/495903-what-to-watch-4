@@ -125,8 +125,7 @@ const withVideoPlayer = (Component) => {
 };
 
 const mapStateToProps = (state, props) => {
-  const {historyProps} = props;
-  const id = historyProps.match.params.id;
+  const {id} = props;
 
   return {
     movie: getMovieById(state, id),

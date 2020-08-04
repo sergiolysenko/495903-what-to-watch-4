@@ -23,11 +23,7 @@ const movie = {
   preview: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
   runTime: 125,
   videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
-};
-
-const State = {
-  REMOVE_FROM_MY_LIST: 0,
-  ADD_TO_MY_LIST: 1,
+  isFavorite: true,
 };
 
 it(`Click add on my-list button`, () => {
@@ -42,5 +38,5 @@ it(`Click add on my-list button`, () => {
 
   myListButton.find(`button.btn--list`).simulate(`click`);
   expect(onMyListClick).toHaveBeenCalledTimes(1);
-  expect(onMyListClick).toHaveBeenNthCalledWith(1, 1, State.ADD_TO_MY_LIST);
+  expect(onMyListClick).toHaveBeenNthCalledWith(1, 1, true);
 });
