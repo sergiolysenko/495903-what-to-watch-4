@@ -1,5 +1,5 @@
 import React from "react";
-import {VideoPreview} from "../../components/utils/constants.js";
+import {VideoPreview} from "../../constants.js";
 
 const withPlayingCard = (Component) => {
   class WithPlayingCard extends React.PureComponent {

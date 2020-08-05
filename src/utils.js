@@ -1,7 +1,6 @@
 import {Genres} from "./constants.js";
 
-const getRatingLevel = (raiting) => {
-  const validRaiting = Number(raiting.replace(`,`, `.`));
+const getRatingLevel = (validRaiting) => {
   if (validRaiting >= 8 && validRaiting < 10) {
     return `Very good`;
   }
@@ -15,20 +14,6 @@ const getRatingLevel = (raiting) => {
     return `Bad`;
   }
   return `Awesome`;
-};
-
-const getMovieReviews = (movieId, reviews) => {
-  if (!reviews) {
-    return [];
-  }
-  return reviews.filter((review) => review.id === movieId);
-};
-
-const findMovieById = (movies, id) => {
-  if (!movies) {
-    return [];
-  }
-  return movies.find((movie) => movie.id === id);
 };
 
 const removeCurrentMovieFromSimilar = (arr, id) => {
@@ -80,4 +65,4 @@ const secondsToTime = (seconds) => {
   return timeString;
 };
 
-export {getRatingLevel, findMovieById, getMovieReviews, getSimilarMoviesByGenre, extend, getGenreList, getFilteredMovies, secondsToTime};
+export {getRatingLevel, getSimilarMoviesByGenre, extend, getGenreList, getFilteredMovies, secondsToTime};

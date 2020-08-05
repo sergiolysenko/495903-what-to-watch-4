@@ -12,33 +12,33 @@ exports[`Render Tabs 1`] = `
     >
       <li
         className="movie-nav__item movie-nav__item--active"
-        onClick={[Function]}
       >
         <a
           className="movie-nav__link"
           href="#"
+          onClick={[Function]}
         >
           Overview
         </a>
       </li>
       <li
         className="movie-nav__item false"
-        onClick={[Function]}
       >
         <a
           className="movie-nav__link"
           href="#"
+          onClick={[Function]}
         >
           Details
         </a>
       </li>
       <li
         className="movie-nav__item false"
-        onClick={[Function]}
       >
         <a
           className="movie-nav__link"
           href="#"
+          onClick={[Function]}
         >
           Reviews
         </a>
@@ -51,7 +51,7 @@ exports[`Render Tabs 1`] = `
     <div
       className="movie-rating__score"
     >
-      6,3
+      3
     </div>
     <p
       className="movie-rating__meta"
@@ -59,7 +59,7 @@ exports[`Render Tabs 1`] = `
       <span
         className="movie-rating__level"
       >
-        Good
+        Normal
       </span>
       <span
         className="movie-rating__count"

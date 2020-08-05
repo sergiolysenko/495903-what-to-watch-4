@@ -17,6 +17,8 @@ export default class SmallCardVideoPlayer extends React.PureComponent {
     video.width = width;
     video.height = height;
     video.poster = poster;
+    video.autoPlay = false;
+    video.preload = `none`;
   }
 
   componentWillUnmount() {

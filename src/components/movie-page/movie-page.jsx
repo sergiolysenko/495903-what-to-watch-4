@@ -1,19 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
 import Tabs from "../tabs/tabs.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
-import {movieShape} from "../utils/constants.js";
+import {movieShape, commentsShape, MoviePages, AppRoute} from "../../constants.js";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
 import PlayButton from "../play-button/play-button.jsx";
-
-const TabsWrapped = withActiveItem(Tabs);
+import {Header} from "../header/header.jsx";
+import {getMovieById, getSilimalMoviesToChosen} from "../../reducer/data/selectors.js";
+import {Link} from "react-router-dom";
+import MyListButton from "../my-list-button/my-list-button.jsx";
+import Footer from "../footer/footer.jsx";
 
 const MoviePage = (props) => {
-  const {movie, reviews, onMovieClick, onPlayClick, similarMovies} = props;
-  const {title, genre, year, backgroundImg, posterImg} = movie;
+  const {movie, similarMovies, isAuthorised} = props;
+
+  const TabsWrapped = withActiveItem(Tabs, MoviePages.OVERVIEW);
+
+  if (!movie) {
+    return null;
+  }
+
+  const {id, title, genre, year, backgroundImg, posterImg, backgroundColor} = movie;
 
   return (<React.Fragment>
-    <section className="movie-card movie-card--full">
+    <section
+      style={{backgroundColor}}
+      className="movie-card movie-card--full">
       <div className="movie-card__hero">
         <div className="movie-card__bg">
           <img src={backgroundImg} alt={title} />
@@ -21,21 +34,9 @@ const MoviePage = (props) => {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header movie-card__head">
-          <div className="logo">
-            <a href="main.html" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </div>
-        </header>
+        <Header
+          isAuthorised={isAuthorised}
+        />
 
         <div className="movie-card__wrap">
           <div className="movie-card__desc">
@@ -48,16 +49,15 @@ const MoviePage = (props) => {
             <div className="movie-card__buttons">
 
               <PlayButton
-                onPlayClick={() => onPlayClick(movie)}
+                id={id}
               />
 
-              <button className="btn btn--list movie-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"></use>
-                </svg>
-                <span>My list</span>
-              </button>
-              <a href="add-review.html" className="btn movie-card__button">Add review</a>
+              <MyListButton
+                movie={movie}
+              />
+              {isAuthorised &&
+              <Link
+                to={AppRoute.REVIEW.replace(`:id`, id)} className="btn movie-card__button">Add review</Link>}
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@ const MoviePage = (props) => {
 
           <TabsWrapped
             movie={movie}
-            reviews={reviews}
+            movieId={id}
           />
 
         </div>
@@ -83,43 +83,29 @@ const MoviePage = (props) => {
 
         <MoviesList
           movies={similarMovies}
-          onClick={onMovieClick}
         />
       </section>
 
-      <footer className="page-footer">
-        <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   </React.Fragment>);
 };
 
 MoviePage.propTypes = {
-  movie: movieShape.isRequired,
-  movies: PropTypes.arrayOf(movieShape).isRequired,
-  similarMovies: PropTypes.arrayOf(movieShape).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-    rating: PropTypes.number.isRequired,
-    comment: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-  })).isRequired,
-  onMovieClick: PropTypes.func.isRequired,
-  onPlayClick: PropTypes.func.isRequired,
+  movie: movieShape,
+  similarMovies: PropTypes.arrayOf(movieShape),
+  comments: commentsShape,
+  isAuthorised: PropTypes.bool.isRequired,
 };
 
-export default MoviePage;
+const mapStateToProps = (state, props) => {
+  const {id} = props;
+
+  const chosenMovie = getMovieById(state, id);
+  return {
+    movie: chosenMovie,
+    similarMovies: getSilimalMoviesToChosen(state, chosenMovie),
+  };
+};
+
+export default connect(mapStateToProps)(MoviePage);

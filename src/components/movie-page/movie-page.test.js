@@ -1,30 +1,13 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import MoviePage from "./movie-page.jsx";
+import configureStore from "redux-mock-store";
+import {Provider} from "react-redux";
+import NameSpace from "../../reducer/name-space.js";
+import {Router} from "react-router-dom";
+import history from "./../../history.js";
 
-const reviews = [
-  {
-    "id": 1,
-    "user": {
-      "id": 4,
-      "name": `Kate Muir`
-    },
-    "rating": 8.9,
-    "comment": `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
-    "date": `2019-05-08T14:13:56.569Z`
-  },
-  {
-    "id": 2,
-    "user": {
-      "id": 4,
-      "name": `Kate Muir`
-    },
-    "rating": 8.9,
-    "comment": `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
-    "date": `2019-05-08T14:13:56.569Z`
-  },
-];
-
+const mockStore = configureStore([]);
 const movies = [
   {
     id: 1,
@@ -34,7 +17,7 @@ const movies = [
     year: 2014,
     backgroundImg: `img/bg-the-grand-budapest-hotel.jpg`,
     posterImg: `img/the-grand-budapest-hotel-poster.jpg`,
-    rating: `6,3`,
+    rating: 5,
     ratingCount: 40,
     description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege. Gustave prides himself on providing first-class service to the hotel's guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave's lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
     director: `Wes Andreson`,
@@ -51,7 +34,7 @@ const movies = [
     year: 2000,
     backgroundImg: `img/bg-the-grand-budapest-hotel.jpg`,
     posterImg: `img/the-grand-budapest-hotel-poster.jpg`,
-    rating: `2,2`,
+    rating: 2,
     ratingCount: 240,
     description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege. Gustave prides himself on providing first-class service to the hotel's guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave's lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
     director: `Wes Andreson`,
@@ -68,7 +51,7 @@ const movies = [
     year: 2002,
     backgroundImg: `img/bg-the-grand-budapest-hotel.jpg`,
     posterImg: `img/the-grand-budapest-hotel-poster.jpg`,
-    rating: `4,3`,
+    rating: 4,
     ratingCount: 240,
     description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege. Gustave prides himself on providing first-class service to the hotel's guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave's lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
     director: `Wes Andreson`,
@@ -78,7 +61,6 @@ const movies = [
     videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
   },
 ];
-
 const movie = {
   id: 1,
   title: `Aviator`,
@@ -87,7 +69,7 @@ const movie = {
   year: 1988,
   backgroundImg: `img/bg-the-grand-budapest-hotel.jpg`,
   posterImg: `img/the-grand-budapest-hotel-poster.jpg`,
-  rating: `5,6`,
+  rating: 5,
   ratingCount: 188,
   description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege. Gustave prides himself on providing first-class service to the hotel's guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave's lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.`,
   director: `Leo Dicaprio`,
@@ -97,22 +79,41 @@ const movie = {
   videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
 };
 
-const mockFunc = () => {};
+const isAuthorised = true;
 
 it(`Render MoviePage`, () => {
+  const store = mockStore({
+    [NameSpace.APP_STATE]: {
+      genre: `All genres`,
+      showingMoviesCount: 8,
+      isSendingCommentData: false,
+      postingError: false,
+    },
+    [NameSpace.DATA]: {
+      allMovies: movies,
+      mainCard: movies[0],
+    },
+    [NameSpace.USER]: {
+      authorizationStatus: true,
+    },
+  });
+
   const tree = renderer
-    .create(<MoviePage
-      movie={movie}
-      movies={movies}
-      similarMovies={movies}
-      reviews={reviews}
-      onMovieClick={mockFunc}
-      onPlayClick={mockFunc}
-    />, {
-      createNodeMock: () => {
-        return {};
-      }
-    })
+    .create(
+        <Provider store={store}>
+          <Router history={history}>
+            <MoviePage
+              movie={movie}
+              similarMovies={movies}
+              isAuthorised={isAuthorised}
+              id={1}
+            />
+          </Router>
+        </Provider>, {
+          createNodeMock: () => {
+            return {};
+          }
+        })
       .toJSON();
 
   expect(tree).toMatchSnapshot();

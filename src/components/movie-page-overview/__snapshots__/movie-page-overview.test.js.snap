@@ -8,7 +8,7 @@ Array [
     <div
       className="movie-rating__score"
     >
-      6,3
+      2
     </div>
     <p
       className="movie-rating__meta"
@@ -16,7 +16,7 @@ Array [
       <span
         className="movie-rating__level"
       >
-        Good
+        Bad
       </span>
       <span
         className="movie-rating__count"

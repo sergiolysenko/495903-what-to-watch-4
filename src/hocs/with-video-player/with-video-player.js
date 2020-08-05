@@ -1,6 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
-import {secondsToTime} from "../../components/utils/utils.js";
+import {secondsToTime} from "../../utils.js";
+import {getMovieById} from "../../reducer/data/selectors.js";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {movieShape} from "../../constants.js";
 
 const withVideoPlayer = (Component) => {
   class WithVideoPlayer extends React.PureComponent {
@@ -10,7 +13,7 @@ const withVideoPlayer = (Component) => {
       this.videoRef = React.createRef();
 
       this.state = {
-        isPlaying: this.props.isPlaying,
+        isPlaying: false,
         currentTime: 0,
       };
 
@@ -23,27 +26,10 @@ const withVideoPlayer = (Component) => {
       const video = this.videoRef.current;
 
       if (video.fullscreenElement) {
-        video.exitFullScreen();
+        video.exitFullscreen();
       } else {
         video.requestFullscreen();
       }
-    }
-
-    componentDidMount() {
-      const {isMuted, source, poster, width, height} = this.props;
-
-      const video = this.videoRef.current;
-      video.muted = isMuted;
-      video.src = source;
-      video.width = width;
-      video.height = height;
-      video.poster = poster;
-
-      video.ontimeupdate = () => {
-        this.setState({
-          currentTime: video.currentTime,
-        });
-      };
     }
 
     handleMovieTime(evt) {
@@ -54,34 +40,55 @@ const withVideoPlayer = (Component) => {
     }
 
     componentDidUpdate() {
-      const video = this.videoRef.current;
+      const {movie} = this.props;
 
-      if (this.state.isPlaying) {
-        video.play();
-      } else {
-        video.pause();
+      if (movie) {
+        const video = this.videoRef.current;
+
+        if (this.state.isPlaying) {
+          video.play();
+          video.ontimeupdate = () => {
+            this.setState({
+              currentTime: Math.round(video.currentTime),
+            });
+          };
+        } else {
+          video.pause();
+        }
       }
     }
 
     componentWillUnmount() {
-      const video = this.videoRef.current;
+      const {movie} = this.props;
 
-      video.onplay = null;
-      video.onpause = null;
-      video.ontimeupdate = null;
-      video.src = ``;
+      if (movie) {
+        const video = this.videoRef.current;
+
+        video.onplay = null;
+        video.onpause = null;
+        video.onloadedmetadata = null;
+        video.ontimeupdate = null;
+        video.src = ``;
+      }
     }
 
     render() {
       const {isPlaying} = this.state;
+      const {movie} = this.props;
       const video = this.videoRef.current;
       let progress = 0;
       let timeLeft = `00:00:00`;
-      if (video) {
-        progress = Math.floor(this.state.currentTime / video.duration * 100);
+
+      if (!movie) {
+        return null;
+      }
+
+      if (video && video.duration) {
+        progress = this.state.currentTime / video.duration * 100;
         timeLeft = secondsToTime(video.duration - this.state.currentTime);
       }
 
+      const {videoLink, cardImg} = movie;
       return (
         <Component
           {...this.props}
@@ -93,10 +100,13 @@ const withVideoPlayer = (Component) => {
           handleMovieTime={this.handleMovieTime}
         >
           <video
-            autoPlay={true}
+            muted={false}
+            src={videoLink}
+            poster={cardImg}
+            autoPlay={false}
             onClick={this.handlePlayClick}
-            className="player__video"
             ref={this.videoRef}
+            className="player__video"
           />
         </Component>
       );
@@ -106,18 +116,28 @@ const withVideoPlayer = (Component) => {
       this.setState((prevState) => ({isPlaying: !prevState.isPlaying}));
     }
   }
+
   WithVideoPlayer.propTypes = {
-    isMuted: PropTypes.bool.isRequired,
-    source: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    isPlaying: PropTypes.bool,
+    movie: movieShape,
   };
 
   return WithVideoPlayer;
 };
 
-export default withVideoPlayer;
+const mapStateToProps = (state, props) => {
+  const {id} = props;
+
+  return {
+    movie: getMovieById(state, id),
+  };
+};
+
+const composedWithVideoPlayer = compose(
+    connect(mapStateToProps),
+    withVideoPlayer
+);
+export {withVideoPlayer};
+
+export default composedWithVideoPlayer;
 
 

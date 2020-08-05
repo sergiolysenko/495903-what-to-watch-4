@@ -1,30 +1,42 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {createStore} from "redux";
+import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import App from "./components/app/app.jsx";
-import {reviews} from "./mocks/reviews.js";
-import {reducer} from "./reducer.js";
+import reducer from "./reducer/reducer.js";
+import {createAPI} from "./api.js";
+import thunk from "redux-thunk";
+import {Operation as DataOperation} from "./reducer/data/data.js";
+import {Operation as UserOperation, ActionCreator, AuthorizationStatus} from "./reducer/user/user.js";
+import history from "./history.js";
+import {AppRoute} from "../src/constants.js";
 
-const MainMovieData = {
-  TITLE: `The Grand Budapest Hotel`,
-  GENRE: `Drama`,
-  YEAR: 2014
+const onUnauthorized = (response) => {
+  const {config} = response;
+
+  store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH));
+  if (config.method !== `get` && config.url !== `/login`) {
+    history.push(AppRoute.LOGIN);
+  }
 };
+
+const api = createAPI(onUnauthorized);
 
 const store = createStore(
     reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+    compose(
+        applyMiddleware(thunk.withExtraArgument(api)),
+        window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+    )
 );
+
+store.dispatch(DataOperation.loadMovies());
+store.dispatch(DataOperation.loadMainMovie());
+store.dispatch(UserOperation.checkAuthorization());
 
 ReactDOM.render(
     <Provider store={store}>
-      <App
-        mainCardTitle={MainMovieData.TITLE}
-        mainCardGenre={MainMovieData.GENRE}
-        mainCardYear={MainMovieData.YEAR}
-        reviews={reviews}
-      />
+      <App/>
     </Provider>,
     document.querySelector(`#root`)
 );

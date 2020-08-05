@@ -1,24 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../../constants.js";
 
 const PlayButton = (props) => {
-  const {onPlayClick} = props;
+  const {id} = props;
 
   return (
-    <button
-      onClick={() => onPlayClick()}
+    <Link
+      to={AppRoute.PLAYER.replace(`:id`, id)}
       className="btn btn--play movie-card__button"
       type="button">
       <svg viewBox="0 0 19 19" width="19" height="19">
         <use xlinkHref="#play-s"></use>
       </svg>
       <span>Play</span>
-    </button>
+    </Link>
   );
 };
 
 PlayButton.propTypes = {
-  onPlayClick: PropTypes.func.isRequired,
+  id: PropTypes.number,
 };
 
 export default PlayButton;

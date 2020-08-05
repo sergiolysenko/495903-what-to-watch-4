@@ -7,7 +7,7 @@ Enzyme.configure({
   adapter: new Adapter(),
 });
 
-const reviews = [
+const comments = [
   {
     "id": 1,
     "user": {
@@ -27,7 +27,7 @@ const movie = {
   year: 2014,
   backgroundImg: `img/bg-the-grand-budapest-hotel.jpg`,
   posterImg: `img/the-grand-budapest-hotel-poster.jpg`,
-  rating: `6,3`,
+  rating: 3,
   ratingCount: 40,
   description: `chief suspect in her murder.`,
   director: `Wes Andreson`,
@@ -42,13 +42,14 @@ it(`Check if state changes by click on details and rended MoviePageDetails compo
 
   const tabsComponent = mount(
       <Tabs
-        reviews={reviews}
+        comments={comments}
         movie={movie}
+        movieId={2}
         activeItem={`Overview`}
         handleActive={handleActive}
       />
   );
-  const tabs = tabsComponent.find(`.movie-nav__item`);
+  const tabs = tabsComponent.find(`.movie-nav__link`);
   const detailsTab = tabs.at(1);
 
   detailsTab.simulate(`click`);

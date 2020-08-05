@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render withVideoPlayer 1`] = `
+<div>
+  <video
+    autoPlay={false}
+    className="player__video"
+    muted={false}
+    onClick={[Function]}
+    poster="../../img/aviator.jpg"
+    src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4"
+  />
+</div>
+`;
