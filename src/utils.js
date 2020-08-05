@@ -16,20 +16,6 @@ const getRatingLevel = (validRaiting) => {
   return `Awesome`;
 };
 
-const getMovieReviews = (movieId, comments) => {
-  if (!comments) {
-    return [];
-  }
-  return comments.filter((comment) => comment.id === movieId);
-};
-
-const findMovieById = (movies, id) => {
-  if (!movies) {
-    return [];
-  }
-  return movies.find((movie) => movie.id === id);
-};
-
 const removeCurrentMovieFromSimilar = (arr, id) => {
   if (!arr) {
     return [];
@@ -79,4 +65,4 @@ const secondsToTime = (seconds) => {
   return timeString;
 };
 
-export {getRatingLevel, findMovieById, getMovieReviews, getSimilarMoviesByGenre, extend, getGenreList, getFilteredMovies, secondsToTime};
+export {getRatingLevel, getSimilarMoviesByGenre, extend, getGenreList, getFilteredMovies, secondsToTime};

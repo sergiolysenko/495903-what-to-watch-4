@@ -1,7 +1,22 @@
 import {reducer, ActionCreator, ActionType, Operation} from "./app-state.js";
 import MockAdapter from "axios-mock-adapter";
 import {createAPI} from "../../api.js";
-import {Genres, SHOWING_MOVIES_COUNT_ON_START, SHOWING_MOVIES_COUNT_BY_BUTTON} from "../../components/utils/constants.js";
+
+const Genres = {
+  ALL: `All genres`,
+  COMEDIES: `Comedies`,
+  CRIME: `Crime`,
+  DOCUMENTARY: `Documentary`,
+  DRAMA: `Drama`,
+  HORROR: `Horror`,
+  KIDS_FAMILY: `Kids & Family`,
+  ROMANCE: `Romance`,
+  SCI_FI: `Sci-Fi`,
+  THRILLERS: `Thrillers`,
+};
+
+const SHOWING_MOVIES_COUNT_ON_START = 8;
+const SHOWING_MOVIES_COUNT_BY_BUTTON = 8;
 
 describe(`app-state reducer test`, () => {
   it(`Check if initial state is correct`, () => {

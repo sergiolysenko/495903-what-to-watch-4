@@ -1,12 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {ReviewLength} from "../utils/constants.js";
-import {movieShape} from "../utils/constants.js";
+import {ReviewLength, movieShape, AppRoute} from "../../constants.js";
 import {Header} from "../header/header.jsx";
 import {connect} from "react-redux";
 import {getMovieById} from "../../reducer/data/selectors.js";
 import {Link} from "react-router-dom";
-import {AppRoute} from "../utils/constants.js";
 
 class AddReview extends React.PureComponent {
   constructor(props) {
@@ -138,14 +136,6 @@ class AddReview extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state, props) => {
-  const {id} = props;
-  const chosenMovie = getMovieById(state, id);
-  return {
-    movie: chosenMovie,
-  };
-};
-
 AddReview.propTypes = {
   movie: movieShape,
   onSubmit: PropTypes.func.isRequired,
@@ -154,6 +144,13 @@ AddReview.propTypes = {
   isPostingError: PropTypes.bool.isRequired,
 };
 
+const mapStateToProps = (state, props) => {
+  const {id} = props;
+  const chosenMovie = getMovieById(state, id);
+  return {
+    movie: chosenMovie,
+  };
+};
 export {AddReview};
 
 export default connect(mapStateToProps)(AddReview);

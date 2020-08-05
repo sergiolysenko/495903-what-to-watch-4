@@ -9,7 +9,7 @@ import thunk from "redux-thunk";
 import {Operation as DataOperation} from "./reducer/data/data.js";
 import {Operation as UserOperation, ActionCreator, AuthorizationStatus} from "./reducer/user/user.js";
 import history from "./history.js";
-import {AppRoute} from "./components/utils/constants.js";
+import {AppRoute} from "../src/constants.js";
 
 const onUnauthorized = (response) => {
   const {config} = response;

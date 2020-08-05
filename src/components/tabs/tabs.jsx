@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import MoviePageOverview from "../movie-page-overview/movie-page-overview.jsx";
 import MoviePageDetails from "../movie-page-details/movie-page-details.jsx";
 import MoviePageReviews from "../movie-page-reviews/movie-page-reviews.jsx";
-import {MoviePages, commentsShape} from "../utils/constants.js";
-import {movieShape} from "../utils/constants.js";
+import {MoviePages, commentsShape, movieShape} from "../../constants.js";
 
 const Tabs = (props) => {
   const {movie, movieId, activeItem, handleActive} = props;

@@ -1,5 +1,5 @@
-import {extend} from "../../components/utils/utils.js";
-import {Genres, SHOWING_MOVIES_COUNT_ON_START, SHOWING_MOVIES_COUNT_BY_BUTTON} from "../../components/utils/constants.js";
+import {extend} from "../../utils.js";
+import {Genres, SHOWING_MOVIES_COUNT_ON_START, SHOWING_MOVIES_COUNT_BY_BUTTON} from "../../constants.js";
 import history from "../../history.js";
 
 const initialState = {

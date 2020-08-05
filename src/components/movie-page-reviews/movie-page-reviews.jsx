@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {commentsShape} from "../utils/constants.js";
+import {commentsShape} from "../../constants.js";
 import {connect} from "react-redux";
 import {getComments} from "../../reducer/data/selectors.js";
 import {Operation as DataOperation} from "../../reducer/data/data.js";

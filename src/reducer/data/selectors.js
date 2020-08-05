@@ -1,7 +1,7 @@
 import {createSelector} from "reselect";
 import NameSpace from "../name-space.js";
-import {Genres, SIMILAR_MOVIES_COUNT} from "../../components/utils/constants.js";
-import {getFilteredMovies, getSimilarMoviesByGenre} from "../../components/utils/utils.js";
+import {Genres, SIMILAR_MOVIES_COUNT} from "../../constants.js";
+import {getFilteredMovies, getSimilarMoviesByGenre} from "../../utils.js";
 
 export const getMovies = (state) => {
   return state[NameSpace.DATA].allMovies;

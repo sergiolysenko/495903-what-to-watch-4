@@ -1,22 +1,20 @@
 import React from "react";
 import Main from "../main/main.jsx";
 import PropTypes from "prop-types";
-import {movieShape} from "../utils/constants.js";
+import {movieShape, AppRoute} from "../../constants.js";
 import {Switch, Route, Router, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {ActionCreator, Operation as AppStateOperation} from "../../reducer/app-state/app-state.js";
 import {getGenre, displayShowMoreButton, getListOfDisplayedMovies, getSendingCommentDataFlag, getPostingError} from "../../reducer/app-state/selectors.js";
 import {getMainMovie, getFilteredMoviesByGenre} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus, getFlagEmailValid} from "../../reducer/user/selector.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {Operation as UserOperation} from "../../reducer/user/user.js";
+import {AuthorizationStatus, Operation as UserOperation} from "../../reducer/user/user.js";
 import MoviePage from "../movie-page/movie-page.jsx";
 import VideoPlayer from "../video-player/video-player.jsx";
 import withVideoPlayer from "../../hocs/with-video-player/with-video-player.js";
 import {SingIn} from "../sing-in/sing-in.jsx";
 import AddReview from "../add-review/add-review.jsx";
 import history from "../../history.js";
-import {AppRoute} from "../utils/constants.js";
 import MyList from "../my-list/my-list.jsx";
 import PrivateRoute from "../private-route/private-route.jsx";
 
@@ -102,6 +100,19 @@ class App extends React.PureComponent {
   }
 }
 
+App.propTypes = {
+  mainCard: movieShape,
+  movies: PropTypes.arrayOf(movieShape).isRequired,
+  isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
+  onShowMoreClick: PropTypes.func.isRequired,
+  isAuthorised: PropTypes.bool.isRequired,
+  onSingInClick: PropTypes.func.isRequired,
+  onCommentSubmit: PropTypes.func.isRequired,
+  isSendingCommentData: PropTypes.bool,
+  isPostingError: PropTypes.bool.isRequired,
+  isEmailValid: PropTypes.bool.isRequired,
+};
+
 const mapStateToProps = (state) => {
   const genre = getGenre(state);
   const filteredMovies = getFilteredMoviesByGenre(state, genre);
@@ -130,18 +141,5 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(AppStateOperation.postComment(movieId, formData));
   },
 });
-
-App.propTypes = {
-  mainCard: movieShape,
-  movies: PropTypes.arrayOf(movieShape).isRequired,
-  isButtonShowMoreDisplayed: PropTypes.bool.isRequired,
-  onShowMoreClick: PropTypes.func.isRequired,
-  isAuthorised: PropTypes.bool.isRequired,
-  onSingInClick: PropTypes.func.isRequired,
-  onCommentSubmit: PropTypes.func.isRequired,
-  isSendingCommentData: PropTypes.bool,
-  isPostingError: PropTypes.bool.isRequired,
-  isEmailValid: PropTypes.bool.isRequired,
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

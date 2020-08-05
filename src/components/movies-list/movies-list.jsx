@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SmallMovieCard from "../small-movie-card/small-movie-card.jsx";
-import {movieShape} from "../utils/constants.js";
+import {movieShape} from "../../constants.js";
 import withPlayingCard from "../../hocs/with-playing-card/with-playing-card.js";
 
 const SmallCardWrapped = withPlayingCard(SmallMovieCard);

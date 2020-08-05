@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import {AppRoute} from "../utils/constants.js";
+import {AppRoute} from "../../constants.js";
 import Footer from "../footer/footer.jsx";
 
 class SingIn extends React.PureComponent {

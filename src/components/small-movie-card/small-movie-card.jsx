@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {VideoPreview, movieShape} from "../utils/constants.js";
+import {VideoPreview, movieShape, AppRoute} from "../../constants.js";
 import SmallCardVideoPlayer from "../small-card-video-player/small-card-video-player.js";
-import {AppRoute} from "../utils/constants.js";
 import {Link} from "react-router-dom";
 
 const SmallMovieCard = (props) => {

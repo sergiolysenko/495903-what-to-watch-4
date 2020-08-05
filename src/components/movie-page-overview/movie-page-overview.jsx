@@ -1,6 +1,6 @@
 import React from "react";
-import {getRatingLevel} from "../utils/utils.js";
-import {movieShape} from "../utils/constants.js";
+import {getRatingLevel} from "../../utils.js";
+import {movieShape} from "../../constants.js";
 
 const MoviePageOverview = (props) => {
   const {movie} = props;

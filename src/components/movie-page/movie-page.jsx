@@ -1,16 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
 import Tabs from "../tabs/tabs.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
-import {movieShape, commentsShape, MoviePages} from "../utils/constants.js";
+import {movieShape, commentsShape, MoviePages, AppRoute} from "../../constants.js";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.js";
 import PlayButton from "../play-button/play-button.jsx";
 import {Header} from "../header/header.jsx";
-import {connect} from "react-redux";
-import {getMovieById} from "../../reducer/data/selectors.js";
-import {getSilimalMoviesToChosen} from "../../reducer/data/selectors.js";
+import {getMovieById, getSilimalMoviesToChosen} from "../../reducer/data/selectors.js";
 import {Link} from "react-router-dom";
-import {AppRoute} from "../utils/constants.js";
 import MyListButton from "../my-list-button/my-list-button.jsx";
 import Footer from "../footer/footer.jsx";
 
@@ -93,6 +91,13 @@ const MoviePage = (props) => {
   </React.Fragment>);
 };
 
+MoviePage.propTypes = {
+  movie: movieShape,
+  similarMovies: PropTypes.arrayOf(movieShape),
+  comments: commentsShape,
+  isAuthorised: PropTypes.bool.isRequired,
+};
+
 const mapStateToProps = (state, props) => {
   const {id} = props;
 
@@ -101,14 +106,6 @@ const mapStateToProps = (state, props) => {
     movie: chosenMovie,
     similarMovies: getSilimalMoviesToChosen(state, chosenMovie),
   };
-};
-
-
-MoviePage.propTypes = {
-  movie: movieShape,
-  similarMovies: PropTypes.arrayOf(movieShape),
-  comments: commentsShape,
-  isAuthorised: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(MoviePage);

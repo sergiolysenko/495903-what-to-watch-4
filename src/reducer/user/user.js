@@ -1,4 +1,4 @@
-import {extend} from "../../components/utils/utils.js";
+import {extend} from "../../utils.js";
 
 const AuthorizationStatus = {
   AUTH: `AUTH`,

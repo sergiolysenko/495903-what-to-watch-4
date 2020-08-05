@@ -1,6 +1,6 @@
-import {extend} from "../../components/utils/utils.js";
+import {extend} from "../../utils.js";
 import {adaptMovies, adaptMovie} from "../../adapter/movies.js";
-import {FavoriteStatus} from "../../components/utils/constants.js";
+import {FavoriteStatus} from "../../constants.js";
 
 const initialState = {
   allMovies: [],

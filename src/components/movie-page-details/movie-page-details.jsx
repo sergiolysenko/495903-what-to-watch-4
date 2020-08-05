@@ -1,5 +1,5 @@
 import React from "react";
-import {movieShape} from "../utils/constants.js";
+import {movieShape} from "../../constants.js";
 
 const MoviePageDetails = (props) => {
   const {movie} = props;

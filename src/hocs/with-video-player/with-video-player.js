@@ -1,9 +1,9 @@
 import React from "react";
-import {secondsToTime} from "../../components/utils/utils.js";
+import {secondsToTime} from "../../utils.js";
 import {getMovieById} from "../../reducer/data/selectors.js";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {movieShape} from "../../components/utils/constants.js";
+import {movieShape} from "../../constants.js";
 
 const withVideoPlayer = (Component) => {
   class WithVideoPlayer extends React.PureComponent {
@@ -26,7 +26,7 @@ const withVideoPlayer = (Component) => {
       const video = this.videoRef.current;
 
       if (video.fullscreenElement) {
-        video.exitFullScreen();
+        video.exitFullscreen();
       } else {
         video.requestFullscreen();
       }
