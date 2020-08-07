@@ -33,10 +33,11 @@ it(`Click add on my-list button`, () => {
       <MyListButton
         movie={movie}
         onMyListClick={onMyListClick}
+        isMainCardUpdate={false}
       />
   );
 
   myListButton.find(`button.btn--list`).simulate(`click`);
   expect(onMyListClick).toHaveBeenCalledTimes(1);
-  expect(onMyListClick).toHaveBeenNthCalledWith(1, 1, true);
+  expect(onMyListClick).toHaveBeenNthCalledWith(1, 1, true, false);
 });

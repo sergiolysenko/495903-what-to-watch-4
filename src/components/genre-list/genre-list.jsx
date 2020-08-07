@@ -36,7 +36,7 @@ const GenreList = (props) => {
 GenreList.propTypes = {
   activeGenre: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  genreList: PropTypes.array.isRequired,
+  genreList: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = (state) => {

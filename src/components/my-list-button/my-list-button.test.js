@@ -25,6 +25,7 @@ it(`render favorite MyListButton`, () => {
       <MyListButton
         movie={movie}
         onMyListClick={() => {}}
+        isMainCardUpdate={false}
       />
   ).toJSON();
 

@@ -65,4 +65,13 @@ const secondsToTime = (seconds) => {
   return timeString;
 };
 
-export {getRatingLevel, getSimilarMoviesByGenre, extend, getGenreList, getFilteredMovies, secondsToTime};
+const updateMoviesOnChange = (movies, changedMovie) => {
+  return movies.map((movie) => {
+    if (movie.id === changedMovie.id) {
+      movie = changedMovie;
+    }
+    return movie;
+  });
+};
+
+export {getRatingLevel, getSimilarMoviesByGenre, extend, getGenreList, getFilteredMovies, secondsToTime, updateMoviesOnChange};

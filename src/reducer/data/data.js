@@ -1,6 +1,7 @@
 import {extend} from "../../utils.js";
 import {adaptMovies, adaptMovie} from "../../adapter/movies.js";
 import {FavoriteStatus} from "../../constants.js";
+import {updateMoviesOnChange} from "../../utils.js";
 
 const initialState = {
   allMovies: [],
@@ -15,6 +16,7 @@ const ActionType = {
   SET_COMMENTS: `SET_COMMENTS`,
   SET_FAVORITE_MOVIES: `SET_FAVORITE_MOVIES`,
   UPDATE_MOVIES: `UPDATE_MOVIES`,
+  UPDATE_MAIN_CARD: `UPDATE_MAIN_CARD`,
 };
 
 const ActionCreator = {
@@ -36,6 +38,10 @@ const ActionCreator = {
   }),
   updateMovies: (movie) => ({
     type: ActionType.UPDATE_MOVIES,
+    payload: movie
+  }),
+  updateMainCard: (movie) => ({
+    type: ActionType.UPDATE_MAIN_CARD,
     payload: movie
   }),
 };
@@ -65,11 +71,14 @@ const Operation = {
         dispatch(ActionCreator.setFavoriteMovies(adaptMovies(response.data)));
       });
   },
-  changeFlagIsFavorite: (movieId, isFavorite) => (dispatch, getState, api) => {
+  changeFlagIsFavorite: (movieId, isFavorite, isMainCardUpdate) => (dispatch, getState, api) => {
     const status = isFavorite ? FavoriteStatus.REMOVE : FavoriteStatus.ADD;
     return api.post(`/favorite/${movieId}/${status}`)
       .then((response) => {
         dispatch(ActionCreator.updateMovies(adaptMovie(response.data)));
+        if (isMainCardUpdate) {
+          dispatch(ActionCreator.updateMainCard(adaptMovie(response.data)));
+        }
       });
   },
 };
@@ -93,23 +102,12 @@ const reducer = (state = initialState, action) => {
         favoriteMovies: action.payload
       });
     case ActionType.UPDATE_MOVIES:
-      const changedMovie = action.payload;
-      const movies = state.allMovies;
-      const mainMovie = state.mainCard;
-      const allMovies = movies.map((movie) => {
-        if (movie.id === changedMovie.id) {
-          movie = changedMovie;
-        }
-        return movie;
-      });
-      if (mainMovie.id === changedMovie.id) {
-        return extend(state, {
-          mainCard: changedMovie,
-          allMovies,
-        });
-      }
       return extend(state, {
-        allMovies
+        allMovies: updateMoviesOnChange(state.allMovies, action.payload),
+      });
+    case ActionType.UPDATE_MAIN_CARD:
+      return extend(state, {
+        mainCard: action.payload,
       });
     default:
       return state;

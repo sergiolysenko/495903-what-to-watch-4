@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import {connect} from "react-redux";
 import {Operation} from "../../reducer/data/data.js";
+import {getMainMovie} from "../../reducer/data/selectors.js";
 import PropTypes from "prop-types";
 
 class MyListButton extends PureComponent {
@@ -11,10 +12,10 @@ class MyListButton extends PureComponent {
   }
 
   handleMyListClick() {
-    const {movie, onMyListClick} = this.props;
+    const {movie, onMyListClick, isMainCardUpdate} = this.props;
     const {isFavorite, id} = movie;
 
-    onMyListClick(id, isFavorite);
+    onMyListClick(id, isFavorite, isMainCardUpdate);
   }
 
   render() {
@@ -38,13 +39,23 @@ class MyListButton extends PureComponent {
 MyListButton.propTypes = {
   movie: PropTypes.object,
   onMyListClick: PropTypes.func.isRequired,
+  isMainCardUpdate: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state, props) => {
+  const {movie} = props;
+  const mainCard = getMainMovie(state);
+  const isMainCardUpdate = mainCard.id === movie.id;
+  return {
+    isMainCardUpdate,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onMyListClick(movieId, isFavorite) {
-    dispatch(Operation.changeFlagIsFavorite(movieId, isFavorite));
+  onMyListClick(movieId, isFavorite, isMainCardUpdate) {
+    dispatch(Operation.changeFlagIsFavorite(movieId, isFavorite, isMainCardUpdate));
   }
 });
 
 export {MyListButton};
-export default connect(null, mapDispatchToProps)(MyListButton);
+export default connect(mapStateToProps, mapDispatchToProps)(MyListButton);

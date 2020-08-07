@@ -217,12 +217,20 @@ describe(`Data reducer test`, () => {
   it(`update movies`, () => {
     expect(reducer({
       allMovies: movies,
-      mainCard: movies[0],
     }, {
       type: ActionType.UPDATE_MOVIES,
       payload: newMovie
     })).toEqual({
       allMovies: newMovies,
+    });
+  });
+  it(`update mainCard`, () => {
+    expect(reducer({
+      mainCard: movies[0],
+    }, {
+      type: ActionType.UPDATE_MAIN_CARD,
+      payload: newMovie
+    })).toEqual({
       mainCard: newMovie,
     });
   });
@@ -260,6 +268,13 @@ describe(`Data action creator works correctly`, () => {
   it(`Action creator update movies`, () => {
     expect(ActionCreator.updateMovies(newMovie)).toEqual({
       type: ActionType.UPDATE_MOVIES,
+      payload: newMovie,
+    });
+  });
+
+  it(`Action creator update main card`, () => {
+    expect(ActionCreator.updateMainCard(newMovie)).toEqual({
+      type: ActionType.UPDATE_MAIN_CARD,
       payload: newMovie,
     });
   });
